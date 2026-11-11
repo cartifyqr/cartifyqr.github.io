@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0A5A70">
+<title>La Ola Cevichería</title>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;800&family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: carta móvil de una columna (máx. 480px); cabecera con ola, pestañas fijas, platos y barra de pedido. Tema único claro y marino */
+:root{
+  --sea:#0A5A70; --sea2:#0E9AA6; --foam:#F3FAFA; --card:#FFFFFF; --ink:#0D2730; --muted:#5D7880; --line:#DCEBEC;
+  --lime:#B7E35A; --chili:#E8452C; --wa:#25D366;
+  --display:"Sora", system-ui, sans-serif; --body:"Figtree", system-ui, sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{background:#DCEBEC}
+body{margin:0;background:#DCEBEC;color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5}
+.app{max-width:480px;margin:0 auto;background:var(--foam);min-height:100vh;padding-bottom:calc(170px + env(safe-area-inset-bottom,0px));box-shadow:0 0 40px rgba(10,90,112,.15)}
+.pad{padding-left:max(18px, env(safe-area-inset-left, 0px));padding-right:max(18px, env(safe-area-inset-right, 0px))}
+h1,h2,h3{font-family:var(--display);margin:0;line-height:1.1}
+p{margin:0}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+:focus-visible{outline:3px solid var(--sea2);outline-offset:2px}
+
+.demo{font-size:.78rem;text-align:center;background:var(--ink);color:#fff;padding:6px 12px}
+.demo a{color:var(--lime)}
+
+header{position:relative;background:linear-gradient(160deg,rgba(14,154,166,.88),rgba(10,90,112,.94)),url('https://images.unsplash.com/photo-1761314036709-f6f68a3d7cf1?w=960&q=70&auto=format') center/cover;color:#fff;padding-top:calc(26px + env(safe-area-inset-top,0px));padding-bottom:58px;overflow:hidden}
+header .row{display:flex;gap:14px;align-items:center}
+.logo{width:62px;height:62px;border-radius:18px;background:#fff;display:grid;place-items:center;flex:none}
+.logo svg{width:42px;height:42px}
+header h1{font-size:1.9rem;font-weight:800;letter-spacing:-.02em}
+header .sub{opacity:.9;font-size:.95rem}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:.85rem;font-weight:600;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);padding:5px 12px;border-radius:999px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--lime);animation:pulse 1.6s ease-in-out infinite}
+.closed .dot{background:#FF9B8A;animation:none}
+@keyframes pulse{50%{opacity:.35}}
+.wave{position:absolute;left:0;right:0;bottom:-1px;height:44px;width:100%}
+.wave path{fill:var(--foam)}
+
+.tabs{position:sticky;top:0;z-index:5;background:var(--foam);display:flex;gap:8px;overflow-x:auto;padding-block:12px;border-bottom:1px solid var(--line);scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:none;padding:9px 16px;border-radius:999px;font-weight:700;font-size:.92rem;color:var(--sea);background:#E1F1F2}
+.tab[aria-selected="true"]{background:var(--sea);color:#fff}
+
+.cat{padding-top:22px}
+.cat h2{font-size:1.2rem;font-weight:800;margin-bottom:12px;display:flex;justify-content:space-between;align-items:baseline}
+.cat h2 small{font-family:var(--body);font-weight:500;font-size:.85rem;color:var(--muted)}
+.list{display:grid;gap:12px}
+.dish{display:grid;grid-template-columns:92px 1fr;gap:14px;background:var(--card);border-radius:18px;padding:10px;box-shadow:0 2px 10px rgba(10,90,112,.07);animation:in .35s ease both}
+@keyframes in{from{transform:translateY(6px)}to{transform:none}}
+.ph{width:92px;height:92px;border-radius:14px;object-fit:cover;display:block;background:#DCEBEC}
+
+.info{display:grid;gap:4px;align-content:start;min-width:0;padding-top:2px}
+.info h3{font-size:1rem;font-weight:700;font-family:var(--body)}
+.info p{font-size:.86rem;color:var(--muted);line-height:1.35}
+.tag{justify-self:start;font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--chili)}
+.bot{display:flex;justify-content:space-between;align-items:center;margin-top:4px}
+.price{font-weight:800;font-size:1.05rem;color:var(--sea);font-variant-numeric:tabular-nums}
+.add{background:var(--sea);color:#fff;font-weight:700;font-size:.88rem;padding:7px 14px;border-radius:999px}
+.qty{display:flex;align-items:center;gap:10px;background:#E1F1F2;border-radius:999px;padding:3px}
+.qty button{width:30px;height:30px;border-radius:50%;background:#fff;color:var(--sea);font-weight:800;font-size:1.05rem;line-height:1}
+.qty span{font-weight:800;min-width:1.2ch;text-align:center;font-variant-numeric:tabular-nums}
+
+.extra{margin-top:28px;display:grid;gap:12px}
+.box{background:var(--card);border-radius:18px;padding:16px;display:grid;gap:10px;box-shadow:0 2px 10px rgba(10,90,112,.07)}
+.box h3{font-size:1rem}
+.payrow{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.payrow b{font-size:1.15rem;font-variant-numeric:tabular-nums;user-select:all}
+.pays{display:flex;gap:6px}
+.pays span{font-size:.78rem;font-weight:800;padding:3px 10px;border-radius:6px;color:#fff}
+.copy{background:#E1F1F2;color:var(--sea);font-weight:700;padding:8px 14px;border-radius:999px;font-size:.88rem}
+.links{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.lnk{display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;font-weight:700;color:var(--sea);background:var(--card);border-radius:14px;padding:14px;box-shadow:0 2px 10px rgba(10,90,112,.07)}
+.hrs{display:grid;grid-template-columns:1fr auto;gap:2px 10px;font-size:.92rem;font-variant-numeric:tabular-nums}
+.hrs .t{font-weight:700;color:var(--sea)}
+.made{text-align:center;color:var(--muted);font-size:.8rem;padding-top:22px}
+
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:10;display:flex;justify-content:center;pointer-events:none;
+  padding:0 max(12px, env(safe-area-inset-right, 0px)) calc(64px + env(safe-area-inset-bottom,0px)) max(12px, env(safe-area-inset-left, 0px))}
+.bar-in{pointer-events:auto;width:100%;max-width:456px;background:var(--ink);color:#fff;border-radius:20px;padding:12px 12px 12px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 12px 30px rgba(13,39,48,.35);transition:transform .25s ease,opacity .25s}
+.bar.empty .bar-in{transform:translateY(130%);opacity:0}
+.bar small{display:block;opacity:.75;font-size:.8rem}
+.bar .tot{font-family:var(--display);font-weight:800;font-size:1.25rem;font-variant-numeric:tabular-nums}
+.send{display:inline-flex;align-items:center;gap:8px;background:var(--wa);color:#063B1D;font-weight:800;text-decoration:none;padding:12px 16px;border-radius:14px;white-space:nowrap}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+
+<div class="app">
+  <header class="pad">
+    <div class="row">
+      <div class="logo" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M4 30c6 0 6-5 12-5s6 5 12 5 6-5 12-5 4 2 4 2v9H4z" fill="#0E9AA6"/><path d="M4 22c6 0 6-5 12-5s6 5 12 5 6-5 12-5 4 2 4 2" fill="none" stroke="#0A5A70" stroke-width="3.5" stroke-linecap="round"/><circle cx="35" cy="10" r="4" fill="#B7E35A"/></svg></div>
+      <div><h1>La Ola</h1><p class="sub">Cevichería · pescado fresco del día</p></div>
+    </div>
+    <div class="chips">
+      <span class="chip" id="st"><span class="dot"></span><span id="stText">Abierto</span></span>
+      <span class="chip">★ 4,8 (ejemplo)</span>
+      <span class="chip">Delivery y recojo</span>
+    </div>
+    <svg class="wave" viewBox="0 0 480 44" preserveAspectRatio="none" aria-hidden="true"><path d="M0 22 C 80 0, 160 44, 240 22 S 400 0, 480 22 V44 H0Z"/></svg>
+  </header>
+
+  <nav class="tabs pad" id="tabs" role="tablist"></nav>
+  <main class="pad" id="menu"></main>
+
+  <div class="pad">
+    <div class="extra">
+      <div class="box">
+        <h3>Paga con Yape o Plin</h3>
+        <div class="payrow"><div><div class="pays"><span style="background:#742284">Yape</span><span style="background:#00A6C0">Plin</span></div><b id="num">900 000 000</b></div><button class="copy" id="copy" type="button">Copiar número</button></div>
+      </div>
+      <div class="links">
+        <a class="lnk" href="https://www.google.com/maps" target="_blank" rel="noopener">📍 Cómo llegar</a>
+        <a class="lnk" href="https://www.instagram.com" target="_blank" rel="noopener">📷 Instagram</a>
+      </div>
+      <div class="box"><h3>Horario</h3><div class="hrs"><span>Martes a domingo</span><span class="t">11:00 – 17:00</span><span>Lunes</span><span>Cerrado</span></div></div>
+    </div>
+    <p class="made">Carta de ejemplo · hecha por Cartify</p>
+  </div>
+</div>
+
+<div class="bar empty" id="bar" aria-live="polite">
+  <div class="bar-in">
+    <div><small id="cnt">0 platos</small><span class="tot" id="tot">S/ 0</span></div>
+    <a class="send" id="send" href="#" target="_blank" rel="noopener">Pedir por WhatsApp →</a>
+  </div>
+</div>
+
+<script>
+var CATS=[
+ {id:'ceviches',name:'Ceviches',note:'Con camote y choclo',items:[
+  {id:'clasico',name:'Ceviche clásico',desc:'Pescado del día, limón, ají limo y cebolla.',price:32,tag:'El favorito',img:'1761314036542-6570ef45dbb3'},
+  {id:'mixto',name:'Ceviche mixto',desc:'Pescado, langostinos, pulpo y calamar.',price:38,img:'1761314037195-1508e44c6bd2'},
+  {id:'tigre',name:'Leche de tigre',desc:'En vaso, con chicharrón de pota.',price:18,img:'1626663011352-cacdcfe333f8'}]},
+ {id:'compartir',name:'Para compartir',note:'Para 2 personas',items:[
+  {id:'jalea',name:'Jalea mixta',desc:'Mariscos fritos con yuca y sarsa criolla.',price:45,tag:'Para 2',img:'1780823231663-6f08dde9b54c'},
+  {id:'chicharron',name:'Chicharrón de pescado',desc:'Crocante, con tártara de la casa.',price:34,img:'1763467940825-d067fb3baf22'},
+  {id:'causa',name:'Causa de langostinos',desc:'Papa amarilla, palta y langostinos.',price:26,img:'1766456127047-806cdecdc139'},
+  {id:'combo',name:'Combo marino',desc:'Ceviche clásico + chicharrón de pescado + chicha.',price:69,tag:'Ahorra S/ 12',img:'1681394421550-83cc9341b9f8'}]},
+ {id:'bebidas',name:'Bebidas',note:'Bien heladas',items:[
+  {id:'chicha',name:'Chicha morada',desc:'Jarra de 1 litro, receta de la casa.',price:15,img:'1745725247846-12a3e3109bbf'},
+  {id:'limonada',name:'Limonada frozen',desc:'Con hierbabuena.',price:9,img:'1620400183452-c6e4c7933bd3'}]}
+];
+var ALL=[];CATS.forEach(function(c){c.items.forEach(function(i){ALL.push(i)})});
+var cart={}, active='ceviches';
+
+function photo(id,alt){return '<img class="ph" loading="lazy" alt="'+alt+'" src="https://images.unsplash.com/photo-'+id+'?w=240&h=240&fit=crop&q=70&auto=format">'}
+function renderTabs(){
+  var t=document.getElementById('tabs');t.innerHTML='';
+  CATS.forEach(function(c){var b=document.createElement('button');b.className='tab';b.type='button';b.setAttribute('role','tab');b.setAttribute('aria-selected',c.id===active);b.textContent=c.name;
+    b.onclick=function(){active=c.id;renderTabs();var s=document.getElementById('c-'+c.id);if(s)window.scrollTo({top:s.offsetTop-64,behavior:'smooth'});};t.appendChild(b);});
+}
+function renderMenu(){
+  var m=document.getElementById('menu');m.innerHTML='';
+  CATS.forEach(function(c){
+    var s=document.createElement('section');s.className='cat';s.id='c-'+c.id;
+    s.innerHTML='<h2>'+c.name+'<small>'+c.note+'</small></h2><div class="list"></div>';
+    var l=s.querySelector('.list');
+    c.items.forEach(function(i){
+      var q=cart[i.id]||0,d=document.createElement('article');d.className='dish';
+      d.innerHTML=photo(i.img,i.name)+'<div class="info">'+(i.tag?'<span class="tag">'+i.tag+'</span>':'')+'<h3>'+i.name+'</h3><p>'+i.desc+'</p><div class="bot"><span class="price">S/ '+i.price+'</span><span class="ctl"></span></div></div>';
+      var ctl=d.querySelector('.ctl');
+      if(!q){var a=document.createElement('button');a.type='button';a.className='add';a.textContent='Agregar';a.onclick=function(){set(i.id,1)};ctl.appendChild(a);}
+      else{var w=document.createElement('div');w.className='qty';
+        var mi=document.createElement('button');mi.type='button';mi.textContent='−';mi.setAttribute('aria-label','Quitar uno');mi.onclick=function(){set(i.id,q-1)};
+        var n=document.createElement('span');n.textContent=q;
+        var pl=document.createElement('button');pl.type='button';pl.textContent='+';pl.setAttribute('aria-label','Agregar uno');pl.onclick=function(){set(i.id,q+1)};
+        w.append(mi,n,pl);ctl.appendChild(w);}
+      l.appendChild(d);
+    });
+    m.appendChild(s);
+  });
+}
+function set(id,q){if(q<=0)delete cart[id];else cart[id]=q;renderMenu();bar();}
+function bar(){
+  var n=0,t=0,lines=[];
+  ALL.forEach(function(i){var q=cart[i.id];if(q){n+=q;t+=q*i.price;lines.push(q+'x '+i.name+' — S/ '+(q*i.price));}});
+  document.getElementById('bar').classList.toggle('empty',!n);
+  document.getElementById('cnt').textContent=n+(n===1?' plato':' platos');
+  document.getElementById('tot').textContent='S/ '+t;
+  document.getElementById('send').href='https://wa.me/51900000000?text='+encodeURIComponent('Hola La Ola, quiero pedir:\n'+lines.join('\n')+'\nTotal: S/ '+t);
+}
+// pestaña activa según el scroll
+window.addEventListener('scroll',function(){
+  var cur=CATS[0].id;CATS.forEach(function(c){var s=document.getElementById('c-'+c.id);if(s&&s.getBoundingClientRect().top<120)cur=c.id;});
+  if(cur!==active){active=cur;renderTabs();}
+},{passive:true});
+// copiar número
+document.getElementById('copy').onclick=function(){
+  var b=this,txt=document.getElementById('num').textContent;
+  function ok(){b.textContent='¡Copiado!';setTimeout(function(){b.textContent='Copiar número'},1800)}
+  function fb(){var r=document.createRange();r.selectNodeContents(document.getElementById('num'));var s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='Selecciona y copia'}
+  try{navigator.clipboard.writeText(txt).then(ok,fb)}catch(e){fb()}
+};
+// abierto o cerrado (hora de Lima): martes a domingo 11:00–17:00
+(function(){
+  var d,h;
+  try{var p=new Intl.DateTimeFormat('en-US',{timeZone:'America/Lima',weekday:'short',hour:'numeric',hour12:false}).formatToParts(new Date()),o={};p.forEach(function(x){o[x.type]=x.value});
+    d=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].indexOf(o.weekday);h=+o.hour%24;}catch(e){var n=new Date();d=n.getDay();h=n.getHours();}
+  var open=d!==1&&h>=11&&h<17;
+  document.getElementById('st').classList.toggle('closed',!open);
+  document.getElementById('stText').textContent=open?'Abierto hasta las 5 p. m.':'Cerrado · abre a las 11 a. m.';
+})();
+cart={clasico:1,chicha:1};renderTabs();renderMenu();bar();
+</script>
+</body>
+</html>
