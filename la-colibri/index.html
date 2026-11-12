@@ -64,6 +64,8 @@ header .sub{opacity:.92;font-size:.92rem;margin-top:4px}
 .qty{display:flex;align-items:center;gap:10px;background:var(--soft);border-radius:999px;padding:3px}
 .qty button{width:30px;height:30px;border-radius:50%;background:#fff;color:var(--teal);font-weight:800;font-size:1.05rem;line-height:1}
 .qty span{font-weight:800;min-width:1.2ch;text-align:center;font-variant-numeric:tabular-nums}
+.veg{grid-column:1/-1;justify-self:start;display:inline-flex;align-items:center;gap:6px;font-size:.84rem;font-weight:700;color:var(--leaf);background:#fff;border:2px solid #CFE0C3;padding:6px 12px;border-radius:999px;margin-top:2px}
+.veg[aria-pressed="true"]{background:var(--leaf);border-color:var(--leaf);color:#fff}
 .note{margin-top:10px;font-size:.85rem;color:var(--muted);background:var(--soft);border-radius:12px;padding:8px 12px}
 .note b{color:var(--teal)}
 
@@ -138,13 +140,13 @@ var CATS=[
  {id:'caliente',name:'Café caliente',note:'Granos de especialidad',items:[
   {id:'espresso',name:'Espresso',desc:'Corto e intenso, para empezar bien el día.',price:7,img:'1610889556528-9a770e32642f'},
   {id:'americano',name:'Americano',desc:'Espresso alargado con agua caliente.',price:8,img:'1510591509098-f4fdc6d0ff04'},
-  {id:'cappuccino',name:'Cappuccino',desc:'Espresso con leche cremosa y latte art.',price:10,tag:'El más pedido',img:'1593443320739-77f74939d0da'},
-  {id:'latte',name:'Latte',desc:'Suave, con más leche y espuma fina.',price:12,img:'1503240778100-fd245e17a273'}],
-  extra:'<b>Leche vegetal</b> en cualquier bebida: + S/ 3'},
+  {id:'cappuccino',name:'Cappuccino',desc:'Espresso con leche cremosa y latte art.',price:10,tag:'El más pedido',milk:1,img:'1593443320739-77f74939d0da'},
+  {id:'latte',name:'Latte',desc:'Suave, con más leche y espuma fina.',price:12,milk:1,img:'1503240778100-fd245e17a273'}],
+  extra:'🌱 ¿Prefieres <b>leche vegetal</b>? Actívala en tu bebida por + S/ 3'},
  {id:'helado',name:'Café helado',note:'Para el calor',items:[
   {id:'orangecb',name:'Orange Cold Brew',desc:'Cold brew de 24 horas con naranja.',price:16,tag:'De la casa',img:'1604298362990-85cbe660aede'},
-  {id:'iced',name:'Iced Latte',desc:'Espresso, leche fría y hielo.',price:13,img:'1764298490445-6add12301888'},
-  {id:'frappe',name:'Frappé La Colibrí',desc:'Nuestro frappé cremoso de café.',price:17,img:'1578314675249-a6910f80cc4e'}]},
+  {id:'iced',name:'Iced Latte',desc:'Espresso, leche fría y hielo.',price:13,milk:1,img:'1764298490445-6add12301888'},
+  {id:'frappe',name:'Frappé La Colibrí',desc:'Nuestro frappé cremoso de café.',price:17,milk:1,img:'1578314675249-a6910f80cc4e'}]},
  {id:'panaderia',name:'Para acompañar',note:'Recién horneado',items:[
   {id:'focaccia',name:'Focaccia de la Colibrí',desc:'Rellena de tomate fresco, queso andino, olivo y rúcula.',price:22,tag:'Favorita',img:'1621852004158-f3bc188ace2d'},
   {id:'toston',name:'Tostón de palta',desc:'Pan de masa madre, tomate, palta cremosa y brotes.',price:22,img:'1783307525039-b92506474dc8'},
@@ -152,7 +154,8 @@ var CATS=[
   {id:'pain',name:'Pain au chocolat',desc:'Hojaldre de mantequilla con chocolate al 70 %.',price:12,img:'1652285953276-e3d323c87eb9'}]}
 ];
 var ALL=[];CATS.forEach(function(c){c.items.forEach(function(i){ALL.push(i)})});
-var cart={}, active=CATS[0].id;
+var cart={}, veg={}, VEG=3, active=CATS[0].id;
+function unit(i){return i.price+(i.milk&&veg[i.id]?VEG:0)}
 
 function photo(id,alt){return '<img class="ph" loading="lazy" alt="'+alt+'" src="https://images.unsplash.com/photo-'+id+'?w=240&h=240&fit=crop&q=70&auto=format">'}
 function renderTabs(){
@@ -168,7 +171,7 @@ function renderMenu(){
     var l=s.querySelector('.list');
     c.items.forEach(function(i){
       var q=cart[i.id]||0,d=document.createElement('article');d.className='dish';
-      d.innerHTML=photo(i.img,i.name)+'<div class="info">'+(i.tag?'<span class="tag">'+i.tag+'</span>':'')+'<h3>'+i.name+'</h3><p>'+i.desc+'</p><div class="bot"><span class="price">S/ '+i.price+'</span><span class="ctl"></span></div></div>';
+      d.innerHTML=photo(i.img,i.name)+'<div class="info">'+(i.tag?'<span class="tag">'+i.tag+'</span>':'')+'<h3>'+i.name+'</h3><p>'+i.desc+'</p><div class="bot"><span class="price">S/ '+unit(i)+'</span><span class="ctl"></span></div></div>';
       var ctl=d.querySelector('.ctl');
       if(!q){var a=document.createElement('button');a.type='button';a.className='add';a.textContent='Agregar';a.onclick=function(){set(i.id,1)};ctl.appendChild(a);}
       else{var w=document.createElement('div');w.className='qty';
@@ -176,15 +179,19 @@ function renderMenu(){
         var n=document.createElement('span');n.textContent=q;
         var pl=document.createElement('button');pl.type='button';pl.textContent='+';pl.setAttribute('aria-label','Agregar uno');pl.onclick=function(){set(i.id,q+1)};
         w.append(mi,n,pl);ctl.appendChild(w);}
+      if(i.milk){var v=document.createElement('button');v.type='button';v.className='veg';v.setAttribute('aria-pressed',!!veg[i.id]);
+        v.textContent=veg[i.id]?'✓ Con leche vegetal (+ S/ 3)':'🌱 Leche vegetal + S/ 3';
+        v.onclick=function(){veg[i.id]=!veg[i.id];if(veg[i.id]&&!cart[i.id])cart[i.id]=1;renderMenu();bar();};
+        d.querySelector('.info').appendChild(v);}
       l.appendChild(d);
     });
     m.appendChild(s);
   });
 }
-function set(id,q){if(q<=0)delete cart[id];else cart[id]=q;renderMenu();bar();}
+function set(id,q){if(q<=0){delete cart[id];delete veg[id];}else cart[id]=q;renderMenu();bar();}
 function bar(){
   var n=0,t=0,lines=[];
-  ALL.forEach(function(i){var q=cart[i.id];if(q){n+=q;t+=q*i.price;lines.push(q+'x '+i.name+' — S/ '+(q*i.price));}});
+  ALL.forEach(function(i){var q=cart[i.id];if(q){var u=unit(i);n+=q;t+=q*u;lines.push(q+'x '+i.name+(i.milk&&veg[i.id]?' (con leche vegetal)':'')+' — S/ '+(q*u));}});
   document.getElementById('bar').classList.toggle('empty',!n);
   document.getElementById('cnt').textContent=n+(n===1?' producto':' productos');
   document.getElementById('tot').textContent='S/ '+t;
