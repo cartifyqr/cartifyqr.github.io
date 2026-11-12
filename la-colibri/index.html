@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1F6F75">
+<title>La Colibrí Café · Carta</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Figtree:wght@400;500;600;700;800&display=swap">
+<style>
+/* Muestra corta: carta móvil de una columna (máx. 480px). Estética de La Colibrí: crema, verde azulado, terracota y hojas */
+:root{
+  --teal:#1F6F75; --teal2:#2A8C8F; --cream:#FBF6EE; --card:#FFFFFF; --ink:#23302F; --muted:#6B7774; --line:#EADFCF;
+  --terra:#D06A35; --leaf:#6E9F55; --soft:#F3E9DA; --wa:#25D366;
+  --display:"Fredoka", system-ui, sans-serif; --body:"Figtree", system-ui, sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{background:#EFE4D3}
+body{margin:0;background:#EFE4D3;color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5}
+.app{max-width:480px;margin:0 auto;background:var(--cream);min-height:100vh;padding-bottom:calc(120px + env(safe-area-inset-bottom,0px));box-shadow:0 0 40px rgba(31,111,117,.15)}
+.pad{padding-left:max(18px, env(safe-area-inset-left, 0px));padding-right:max(18px, env(safe-area-inset-right, 0px))}
+h1,h2,h3{font-family:var(--display);margin:0;line-height:1.1}
+p{margin:0}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+:focus-visible{outline:3px solid var(--terra);outline-offset:2px}
+
+.demo{font-size:.78rem;font-weight:600;text-align:center;background:var(--terra);color:#fff;padding:6px 12px}
+
+header{position:relative;background:linear-gradient(165deg,rgba(42,140,143,.86),rgba(31,111,117,.95)),url('https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=960&q=70&auto=format') center/cover;color:#fff;padding-top:calc(24px + env(safe-area-inset-top,0px));padding-bottom:58px;overflow:hidden}
+header .row{display:flex;gap:14px;align-items:center}
+.logo{width:66px;height:66px;border-radius:50%;background:#fff;display:grid;place-items:center;flex:none;box-shadow:0 0 0 3px rgba(255,255,255,.35)}
+.logo svg{width:50px;height:50px}
+header h1{font-size:2rem;font-weight:700;letter-spacing:-.01em}
+header h1 span{display:block;font-size:.95rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:#FFD9BF;margin-top:2px}
+header .sub{opacity:.92;font-size:.92rem;margin-top:4px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:.85rem;font-weight:600;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);padding:5px 12px;border-radius:999px}
+.dot{width:8px;height:8px;border-radius:50%;background:#B9E08F;animation:pulse 1.6s ease-in-out infinite}
+.closed .dot{background:#FFB08A;animation:none}
+@keyframes pulse{50%{opacity:.35}}
+.leaf{position:absolute;right:-10px;top:10px;width:120px;opacity:.25}
+.curve{position:absolute;left:0;right:0;bottom:-1px;height:40px;width:100%}
+.curve path{fill:var(--cream)}
+
+.tabs{position:sticky;top:0;z-index:5;background:var(--cream);display:flex;gap:8px;overflow-x:auto;padding-block:12px;border-bottom:1px solid var(--line);scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:none;padding:9px 16px;border-radius:999px;font-weight:700;font-size:.92rem;color:var(--teal);background:var(--soft)}
+.tab[aria-selected="true"]{background:var(--teal);color:#fff}
+
+.cat{padding-top:22px}
+.cat h2{font-size:1.3rem;font-weight:700;color:var(--terra);margin-bottom:12px;display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.cat h2 small{font-family:var(--body);font-weight:500;font-size:.82rem;color:var(--muted);text-align:right}
+.list{display:grid;gap:12px}
+.dish{display:grid;grid-template-columns:92px 1fr;gap:14px;background:var(--card);border-radius:18px;padding:10px;box-shadow:0 2px 10px rgba(80,60,30,.07);animation:in .35s ease both}
+@keyframes in{from{transform:translateY(6px)}to{transform:none}}
+.ph{width:92px;height:92px;border-radius:14px;object-fit:cover;display:block;background:var(--soft)}
+.info{display:grid;gap:4px;align-content:start;min-width:0;padding-top:2px}
+.info h3{font-size:1rem;font-weight:700;font-family:var(--body)}
+.info p{font-size:.86rem;color:var(--muted);line-height:1.35}
+.tag{justify-self:start;font-size:.7rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--leaf)}
+.bot{display:flex;justify-content:space-between;align-items:center;margin-top:4px}
+.price{font-weight:800;font-size:1.05rem;color:var(--teal);font-variant-numeric:tabular-nums}
+.add{background:var(--teal);color:#fff;font-weight:700;font-size:.88rem;padding:7px 14px;border-radius:999px}
+.qty{display:flex;align-items:center;gap:10px;background:var(--soft);border-radius:999px;padding:3px}
+.qty button{width:30px;height:30px;border-radius:50%;background:#fff;color:var(--teal);font-weight:800;font-size:1.05rem;line-height:1}
+.qty span{font-weight:800;min-width:1.2ch;text-align:center;font-variant-numeric:tabular-nums}
+.note{margin-top:10px;font-size:.85rem;color:var(--muted);background:var(--soft);border-radius:12px;padding:8px 12px}
+.note b{color:var(--teal)}
+
+.extra{margin-top:28px;display:grid;gap:12px}
+.box{background:var(--card);border-radius:18px;padding:16px;display:grid;gap:10px;box-shadow:0 2px 10px rgba(80,60,30,.07)}
+.box h3{font-size:1.05rem;color:var(--terra)}
+.hrs{display:grid;grid-template-columns:1fr auto;gap:2px 10px;font-size:.92rem;font-variant-numeric:tabular-nums}
+.hrs .t{font-weight:700;color:var(--teal)}
+.more{text-align:center;font-size:.9rem;color:var(--muted);border:2px dashed var(--line);border-radius:18px;padding:14px}
+.made{text-align:center;color:var(--muted);font-size:.8rem;padding-top:22px}
+
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:10;display:flex;justify-content:center;pointer-events:none;
+  padding:0 max(12px, env(safe-area-inset-right, 0px)) calc(14px + env(safe-area-inset-bottom,0px)) max(12px, env(safe-area-inset-left, 0px))}
+.bar-in{pointer-events:auto;width:100%;max-width:456px;background:var(--teal);color:#fff;border-radius:20px;padding:12px 12px 12px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 12px 30px rgba(31,111,117,.35);transition:transform .25s ease,opacity .25s}
+.bar.empty .bar-in{transform:translateY(130%);opacity:0}
+.bar small{display:block;opacity:.8;font-size:.8rem}
+.bar .tot{font-family:var(--display);font-weight:700;font-size:1.3rem;font-variant-numeric:tabular-nums}
+.send{display:inline-flex;align-items:center;gap:8px;background:var(--wa);color:#063B1D;font-weight:800;text-decoration:none;padding:12px 16px;border-radius:14px;white-space:nowrap}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <p class="demo">Muestra hecha para La Colibrí Café</p>
+  <header class="pad">
+    <svg class="leaf" viewBox="0 0 100 100" aria-hidden="true"><path d="M90 10C40 10 10 40 10 90c50 0 80-30 80-80z" fill="#fff"/><path d="M85 15 15 85" stroke="#1F6F75" stroke-width="3"/></svg>
+    <div class="row">
+      <div class="logo" aria-hidden="true">
+        <svg viewBox="0 0 64 64">
+          <path d="M40 22c6-10 14-14 22-14-4 6-8 12-16 16z" fill="#D06A35"/>
+          <path d="M38 24c4-12 10-18 18-20-2 8-6 14-14 20z" fill="#6E9F55"/>
+          <path d="M36 25c0-10 4-17 10-21 0 8-2 15-8 22z" fill="#E9A23B"/>
+          <ellipse cx="30" cy="34" rx="13" ry="9" transform="rotate(-25 30 34)" fill="#1F6F75"/>
+          <path d="M20 40c-6 6-10 12-12 18 6-3 11-8 15-14z" fill="#2A8C8F"/>
+          <circle cx="22" cy="27" r="6.5" fill="#1F6F75"/>
+          <circle cx="20.5" cy="26" r="1.6" fill="#fff"/>
+          <path d="M16 26 2 22" stroke="#23302F" stroke-width="2.2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div><h1>La Colibrí<span>Café</span></h1><p class="sub">Cafetería de especialidad</p></div>
+    </div>
+    <div class="chips">
+      <span class="chip" id="st"><span class="dot"></span><span id="stText">Abierto</span></span>
+      <span class="chip">☕ Café de especialidad</span>
+      <span class="chip">🥐 Panadería</span>
+    </div>
+    <svg class="curve" viewBox="0 0 480 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40 C 120 0, 360 0, 480 40Z"/></svg>
+  </header>
+
+  <nav class="tabs pad" id="tabs" role="tablist"></nav>
+  <main class="pad" id="menu"></main>
+
+  <div class="pad">
+    <div class="extra">
+      <p class="more">Esta es una versión corta. La carta completa incluye infusiones, batidos, postres, empanadas y más.</p>
+      <div class="box"><h3>Horario</h3><div class="hrs"><span>Martes a sábado</span><span class="t">9:00 – 21:00</span><span>Domingo</span><span class="t">9:00 – 17:00</span><span>Lunes</span><span>Cerrado</span></div></div>
+    </div>
+    <p class="made">Carta de muestra · hecha por Cartify</p>
+  </div>
+</div>
+
+<div class="bar empty" id="bar" aria-live="polite">
+  <div class="bar-in">
+    <div><small id="cnt">0 productos</small><span class="tot" id="tot">S/ 0</span></div>
+    <a class="send" id="send" href="#" target="_blank" rel="noopener">Pedir por WhatsApp →</a>
+  </div>
+</div>
+
+<script>
+var CATS=[
+ {id:'caliente',name:'Café caliente',note:'Granos de especialidad',items:[
+  {id:'espresso',name:'Espresso',desc:'Corto e intenso, para empezar bien el día.',price:7,img:'1610889556528-9a770e32642f'},
+  {id:'americano',name:'Americano',desc:'Espresso alargado con agua caliente.',price:8,img:'1510591509098-f4fdc6d0ff04'},
+  {id:'cappuccino',name:'Cappuccino',desc:'Espresso con leche cremosa y latte art.',price:10,tag:'El más pedido',img:'1593443320739-77f74939d0da'},
+  {id:'latte',name:'Latte',desc:'Suave, con más leche y espuma fina.',price:12,img:'1503240778100-fd245e17a273'}],
+  extra:'<b>Leche vegetal</b> en cualquier bebida: + S/ 3'},
+ {id:'helado',name:'Café helado',note:'Para el calor',items:[
+  {id:'orangecb',name:'Orange Cold Brew',desc:'Cold brew de 24 horas con naranja.',price:16,tag:'De la casa',img:'1604298362990-85cbe660aede'},
+  {id:'iced',name:'Iced Latte',desc:'Espresso, leche fría y hielo.',price:13,img:'1764298490445-6add12301888'},
+  {id:'frappe',name:'Frappé La Colibrí',desc:'Nuestro frappé cremoso de café.',price:17,img:'1578314675249-a6910f80cc4e'}]},
+ {id:'panaderia',name:'Para acompañar',note:'Recién horneado',items:[
+  {id:'focaccia',name:'Focaccia de la Colibrí',desc:'Rellena de tomate fresco, queso andino, olivo y rúcula.',price:22,tag:'Favorita',img:'1621852004158-f3bc188ace2d'},
+  {id:'toston',name:'Tostón de palta',desc:'Pan de masa madre, tomate, palta cremosa y brotes.',price:22,img:'1783307525039-b92506474dc8'},
+  {id:'oasis',name:'Croissant Oasis',desc:'Queso andino, jamón inglés y cebolla caramelizada.',price:20,img:'1613929231151-d7571591259e'},
+  {id:'pain',name:'Pain au chocolat',desc:'Hojaldre de mantequilla con chocolate al 70 %.',price:12,img:'1652285953276-e3d323c87eb9'}]}
+];
+var ALL=[];CATS.forEach(function(c){c.items.forEach(function(i){ALL.push(i)})});
+var cart={}, active=CATS[0].id;
+
+function photo(id,alt){return '<img class="ph" loading="lazy" alt="'+alt+'" src="https://images.unsplash.com/photo-'+id+'?w=240&h=240&fit=crop&q=70&auto=format">'}
+function renderTabs(){
+  var t=document.getElementById('tabs');t.innerHTML='';
+  CATS.forEach(function(c){var b=document.createElement('button');b.className='tab';b.type='button';b.setAttribute('role','tab');b.setAttribute('aria-selected',c.id===active);b.textContent=c.name;
+    b.onclick=function(){active=c.id;renderTabs();var s=document.getElementById('c-'+c.id);if(s)window.scrollTo({top:s.offsetTop-64,behavior:'smooth'});};t.appendChild(b);});
+}
+function renderMenu(){
+  var m=document.getElementById('menu');m.innerHTML='';
+  CATS.forEach(function(c){
+    var s=document.createElement('section');s.className='cat';s.id='c-'+c.id;
+    s.innerHTML='<h2>'+c.name+'<small>'+c.note+'</small></h2><div class="list"></div>'+(c.extra?'<p class="note">'+c.extra+'</p>':'');
+    var l=s.querySelector('.list');
+    c.items.forEach(function(i){
+      var q=cart[i.id]||0,d=document.createElement('article');d.className='dish';
+      d.innerHTML=photo(i.img,i.name)+'<div class="info">'+(i.tag?'<span class="tag">'+i.tag+'</span>':'')+'<h3>'+i.name+'</h3><p>'+i.desc+'</p><div class="bot"><span class="price">S/ '+i.price+'</span><span class="ctl"></span></div></div>';
+      var ctl=d.querySelector('.ctl');
+      if(!q){var a=document.createElement('button');a.type='button';a.className='add';a.textContent='Agregar';a.onclick=function(){set(i.id,1)};ctl.appendChild(a);}
+      else{var w=document.createElement('div');w.className='qty';
+        var mi=document.createElement('button');mi.type='button';mi.textContent='−';mi.setAttribute('aria-label','Quitar uno');mi.onclick=function(){set(i.id,q-1)};
+        var n=document.createElement('span');n.textContent=q;
+        var pl=document.createElement('button');pl.type='button';pl.textContent='+';pl.setAttribute('aria-label','Agregar uno');pl.onclick=function(){set(i.id,q+1)};
+        w.append(mi,n,pl);ctl.appendChild(w);}
+      l.appendChild(d);
+    });
+    m.appendChild(s);
+  });
+}
+function set(id,q){if(q<=0)delete cart[id];else cart[id]=q;renderMenu();bar();}
+function bar(){
+  var n=0,t=0,lines=[];
+  ALL.forEach(function(i){var q=cart[i.id];if(q){n+=q;t+=q*i.price;lines.push(q+'x '+i.name+' — S/ '+(q*i.price));}});
+  document.getElementById('bar').classList.toggle('empty',!n);
+  document.getElementById('cnt').textContent=n+(n===1?' producto':' productos');
+  document.getElementById('tot').textContent='S/ '+t;
+  document.getElementById('send').href='https://wa.me/51900000000?text='+encodeURIComponent('Hola La Colibrí Café, quiero pedir:\n'+lines.join('\n')+'\nTotal: S/ '+t);
+}
+window.addEventListener('scroll',function(){
+  var cur=CATS[0].id;CATS.forEach(function(c){var s=document.getElementById('c-'+c.id);if(s&&s.getBoundingClientRect().top<120)cur=c.id;});
+  if(cur!==active){active=cur;renderTabs();}
+},{passive:true});
+// abierto o cerrado (hora de Lima): mar–sáb 9–21, dom 9–17, lunes cerrado
+(function(){
+  var d,h;
+  try{var p=new Intl.DateTimeFormat('en-US',{timeZone:'America/Lima',weekday:'short',hour:'numeric',hour12:false}).formatToParts(new Date()),o={};p.forEach(function(x){o[x.type]=x.value});
+    d=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].indexOf(o.weekday);h=+o.hour%24;}catch(e){var n=new Date();d=n.getDay();h=n.getHours();}
+  var close=d===0?17:21, open=d!==1&&h>=9&&h<close, txt;
+  if(open)txt='Abierto hasta las '+(close===21?'9 p. m.':'5 p. m.');
+  else if(d===1||(d===0&&h>=17))txt='Cerrado · abre el martes 9 a. m.';
+  else txt=h<9?'Cerrado · abre a las 9 a. m.':'Cerrado · abre mañana 9 a. m.';
+  document.getElementById('st').classList.toggle('closed',!open);
+  document.getElementById('stText').textContent=txt;
+})();
+cart={cappuccino:1,oasis:1};renderTabs();renderMenu();bar();
+</script>
+</body>
+</html>
