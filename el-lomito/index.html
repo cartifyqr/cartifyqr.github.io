@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#B83A12">
+<title>El Lomito · Carta</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lobster&family=Figtree:wght@400;500;600;700;800;900&display=swap">
+<style>
+/* Muestra corta: carta móvil de una columna (máx. 480px). Estética de El Lomito: naranja ladrillo, crema y letra cursiva */
+:root{
+  --brick:#B83A12; --brick2:#D4561E; --cream:#FFF7EE; --card:#FFFFFF; --ink:#2B1A12; --muted:#7A6255; --line:#F1DFCF;
+  --gold:#F4B740; --soft:#FCE9D8; --wa:#25D366;
+  --script:"Lobster", cursive; --body:"Figtree", system-ui, sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{background:#F3DCC6}
+body{margin:0;background:#F3DCC6;color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5}
+.app{max-width:480px;margin:0 auto;background:var(--cream);min-height:100vh;padding-bottom:calc(120px + env(safe-area-inset-bottom,0px));box-shadow:0 0 40px rgba(184,58,18,.15)}
+.pad{padding-left:max(18px, env(safe-area-inset-left, 0px));padding-right:max(18px, env(safe-area-inset-right, 0px))}
+h1,h2,h3{margin:0;line-height:1.1}
+p{margin:0}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+
+.demo{font-size:.78rem;font-weight:700;text-align:center;background:var(--ink);color:var(--gold);padding:6px 12px}
+
+header{position:relative;background:linear-gradient(165deg,rgba(212,86,30,.9),rgba(184,58,18,.96)),url('https://images.unsplash.com/photo-1624234734133-7f1342047e30?w=960&q=70&auto=format') center/cover;color:#fff;padding-top:calc(26px + env(safe-area-inset-top,0px));padding-bottom:58px;overflow:hidden;text-align:center}
+header h1{font-family:var(--script);font-weight:400;font-size:3rem;letter-spacing:.01em;text-shadow:0 3px 0 rgba(0,0,0,.15)}
+header h1 q{quotes:"“" "”"}
+.kicker{font-weight:800;letter-spacing:.32em;font-size:.82rem;text-transform:uppercase;margin-top:2px}
+.sub{margin-top:8px;font-size:.95rem;opacity:.95}
+.sub b{color:var(--gold)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:16px}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:.85rem;font-weight:700;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.32);padding:5px 12px;border-radius:999px}
+.dot{width:8px;height:8px;border-radius:50%;background:#B9F08F;animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.35}}
+.curve{position:absolute;left:0;right:0;bottom:-1px;height:40px;width:100%}
+.curve path{fill:var(--cream)}
+
+.tabs{position:sticky;top:0;z-index:5;background:var(--cream);display:flex;gap:8px;overflow-x:auto;padding-block:12px;border-bottom:1px solid var(--line);scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:none;padding:9px 16px;border-radius:999px;font-weight:800;font-size:.92rem;color:var(--brick);background:var(--soft)}
+.tab[aria-selected="true"]{background:var(--brick);color:#fff}
+
+.cat{padding-top:22px}
+.cat h2{font-family:var(--script);font-weight:400;font-size:1.7rem;color:var(--brick);margin-bottom:12px;display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.cat h2 small{font-family:var(--body);font-weight:600;font-size:.82rem;color:var(--muted);text-align:right}
+.list{display:grid;gap:12px}
+.dish{display:grid;grid-template-columns:92px 1fr;gap:14px;background:var(--card);border-radius:18px;padding:10px;box-shadow:0 2px 10px rgba(90,40,10,.08);animation:in .35s ease both}
+@keyframes in{from{transform:translateY(6px)}to{transform:none}}
+.ph{width:92px;height:92px;border-radius:14px;object-fit:cover;display:block;background:var(--soft)}
+.info{display:grid;gap:4px;align-content:start;min-width:0;padding-top:2px}
+.info h3{font-size:1rem;font-weight:800}
+.info p{font-size:.86rem;color:var(--muted);line-height:1.35}
+.tag{justify-self:start;font-size:.7rem;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:var(--brick);padding:2px 8px;border-radius:6px}
+.bot{display:flex;justify-content:space-between;align-items:center;margin-top:4px}
+.price{font-weight:900;font-size:1.08rem;color:var(--brick);font-variant-numeric:tabular-nums}
+.add{background:var(--brick);color:#fff;font-weight:800;font-size:.88rem;padding:7px 14px;border-radius:999px}
+.qty{display:flex;align-items:center;gap:10px;background:var(--soft);border-radius:999px;padding:3px}
+.qty button{width:30px;height:30px;border-radius:50%;background:#fff;color:var(--brick);font-weight:900;font-size:1.05rem;line-height:1}
+.qty span{font-weight:900;min-width:1.2ch;text-align:center;font-variant-numeric:tabular-nums}
+.opt{justify-self:start;display:inline-flex;align-items:center;gap:6px;font-size:.84rem;font-weight:800;color:var(--brick);background:#fff;border:2px solid #F0C9AE;padding:6px 12px;border-radius:999px;margin-top:2px}
+.opt[aria-pressed="true"]{background:var(--gold);border-color:var(--gold);color:var(--ink)}
+
+.extra{margin-top:28px;display:grid;gap:12px}
+.box{background:var(--card);border-radius:18px;padding:16px;display:grid;gap:8px;box-shadow:0 2px 10px rgba(90,40,10,.08)}
+.box h3{font-family:var(--script);font-weight:400;font-size:1.35rem;color:var(--brick)}
+.box p{font-size:.92rem;color:var(--muted)}
+.box p b{color:var(--ink)}
+.more{text-align:center;font-size:.9rem;color:var(--muted);border:2px dashed var(--line);border-radius:18px;padding:14px}
+.made{text-align:center;color:var(--muted);font-size:.8rem;padding-top:22px}
+
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:10;display:flex;justify-content:center;pointer-events:none;
+  padding:0 max(12px, env(safe-area-inset-right, 0px)) calc(14px + env(safe-area-inset-bottom,0px)) max(12px, env(safe-area-inset-left, 0px))}
+.bar-in{pointer-events:auto;width:100%;max-width:456px;background:var(--ink);color:#fff;border-radius:20px;padding:12px 12px 12px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 12px 30px rgba(43,26,18,.35);transition:transform .25s ease,opacity .25s}
+.bar.empty .bar-in{transform:translateY(130%);opacity:0}
+.bar small{display:block;opacity:.8;font-size:.8rem}
+.bar .tot{font-weight:900;font-size:1.3rem;color:var(--gold);font-variant-numeric:tabular-nums}
+.send{display:inline-flex;align-items:center;gap:8px;background:var(--wa);color:#063B1D;font-weight:800;text-decoration:none;padding:12px 16px;border-radius:14px;white-space:nowrap}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <p class="demo">Muestra hecha para El Lomito</p>
+  <header class="pad">
+    <h1><q>El Lomito</q></h1>
+    <p class="kicker">Restaurante</p>
+    <p class="sub"><b>La especialista</b> en caldos · San Borja</p>
+    <div class="chips">
+      <span class="chip"><span class="dot"></span>Abierto las 24 horas</span>
+      <span class="chip">🛵 Delivery y recojo</span>
+    </div>
+    <svg class="curve" viewBox="0 0 480 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40 C 120 0, 360 0, 480 40Z"/></svg>
+  </header>
+
+  <nav class="tabs pad" id="tabs" role="tablist"></nav>
+  <main class="pad" id="menu"></main>
+
+  <div class="pad">
+    <div class="extra">
+      <p class="more">Esta es una versión corta. La carta completa incluye todos los caldos, carnes, pollos, tallarines y bebidas.</p>
+      <div class="box"><h3>Te esperamos</h3><p><b>Av. Aviación 2953, San Borja</b><br>Abierto todos los días, las 24 horas.</p></div>
+    </div>
+    <p class="made">Carta de muestra · hecha por Cartify</p>
+  </div>
+</div>
+
+<div class="bar empty" id="bar" aria-live="polite">
+  <div class="bar-in">
+    <div><small id="cnt">0 platos</small><span class="tot" id="tot">S/ 0</span></div>
+    <a class="send" id="send" href="#" target="_blank" rel="noopener">Pedir por WhatsApp →</a>
+  </div>
+</div>
+
+<script>
+var CATS=[
+ {id:'caldos',name:'Caldos',note:'Nuestra especialidad',items:[
+  {id:'caldo',name:'Caldo de gallina',desc:'Caldo bien concentrado con fideo nacional.',price:18,tag:'La especialidad',img:'1613744013720-4f505ce31735',opt:{label:'Presa de gallina',price:13}},
+  {id:'caldopresa',name:'Caldo con presa',desc:'Caldo chico con presa chica y fideo nacional.',price:25,img:'1741796105489-33ea406ac1b7'},
+  {id:'sancochado',name:'Sancochado',desc:'Carne, verduras y papa, en su caldo.',price:45,tag:'Contundente',img:'1627054886476-0cdee47fde3d'}]},
+ {id:'lomos',name:'Lomos',note:'Al wok, bien jugosos',items:[
+  {id:'lomo',name:'Lomo saltado',desc:'Lomo al wok con cebolla, tomate y papas fritas.',price:35,tag:'El más pedido',img:'1713742000609-7dfb86bfc720'},
+  {id:'lomopobre',name:'Lomo saltado a lo pobre',desc:'Con huevo frito y plátano frito.',price:43,img:'1585684276730-a1aeacbf638f'}]},
+ {id:'arroces',name:'Arroces y más',note:'Porciones generosas',items:[
+  {id:'chaufa',name:'Arroz chaufa de pollo',desc:'Arroz al wok con pollo, huevo y cebollita china.',price:26,img:'1603133872878-684f208fb84b'},
+  {id:'aeropuerto',name:'Aeropuerto',desc:'Chaufa, tallarín saltado y tortilla de huevo.',price:31,img:'1672856399675-8c099efbe0e2'},
+  {id:'tallarin',name:'Tallarín saltado de pollo',desc:'Tallarines al wok con pollo y verduras.',price:28,img:'1553621043-f607bfbf6640'},
+  {id:'broaster',name:'Pollo broaster',desc:'Crocante, con papas fritas.',price:33,img:'1639744091981-2f826321fae6'}]}
+];
+var ALL=[];CATS.forEach(function(c){c.items.forEach(function(i){ALL.push(i)})});
+var cart={}, opts={}, active=CATS[0].id;
+function unit(i){return i.price+(i.opt&&opts[i.id]?i.opt.price:0)}
+
+function photo(id,alt){return '<img class="ph" loading="lazy" alt="'+alt+'" src="https://images.unsplash.com/photo-'+id+'?w=240&h=240&fit=crop&q=70&auto=format">'}
+function renderTabs(){
+  var t=document.getElementById('tabs');t.innerHTML='';
+  CATS.forEach(function(c){var b=document.createElement('button');b.className='tab';b.type='button';b.setAttribute('role','tab');b.setAttribute('aria-selected',c.id===active);b.textContent=c.name;
+    b.onclick=function(){active=c.id;renderTabs();var s=document.getElementById('c-'+c.id);if(s)window.scrollTo({top:s.offsetTop-64,behavior:'smooth'});};t.appendChild(b);});
+}
+function renderMenu(){
+  var m=document.getElementById('menu');m.innerHTML='';
+  CATS.forEach(function(c){
+    var s=document.createElement('section');s.className='cat';s.id='c-'+c.id;
+    s.innerHTML='<h2>'+c.name+'<small>'+c.note+'</small></h2><div class="list"></div>';
+    var l=s.querySelector('.list');
+    c.items.forEach(function(i){
+      var q=cart[i.id]||0,d=document.createElement('article');d.className='dish';
+      d.innerHTML=photo(i.img,i.name)+'<div class="info">'+(i.tag?'<span class="tag">'+i.tag+'</span>':'')+'<h3>'+i.name+'</h3><p>'+i.desc+'</p><div class="bot"><span class="price">S/ '+unit(i)+'</span><span class="ctl"></span></div></div>';
+      var ctl=d.querySelector('.ctl');
+      if(!q){var a=document.createElement('button');a.type='button';a.className='add';a.textContent='Agregar';a.onclick=function(){set(i.id,1)};ctl.appendChild(a);}
+      else{var w=document.createElement('div');w.className='qty';
+        var mi=document.createElement('button');mi.type='button';mi.textContent='−';mi.setAttribute('aria-label','Quitar uno');mi.onclick=function(){set(i.id,q-1)};
+        var n=document.createElement('span');n.textContent=q;
+        var pl=document.createElement('button');pl.type='button';pl.textContent='+';pl.setAttribute('aria-label','Agregar uno');pl.onclick=function(){set(i.id,q+1)};
+        w.append(mi,n,pl);ctl.appendChild(w);}
+      if(i.opt){var v=document.createElement('button');v.type='button';v.className='opt';v.setAttribute('aria-pressed',!!opts[i.id]);
+        v.textContent=opts[i.id]?'✓ Con '+i.opt.label.toLowerCase()+' (+ S/ '+i.opt.price+')':'🍗 '+i.opt.label+' + S/ '+i.opt.price;
+        v.onclick=function(){opts[i.id]=!opts[i.id];if(opts[i.id]&&!cart[i.id])cart[i.id]=1;renderMenu();bar();};
+        d.querySelector('.info').appendChild(v);}
+      l.appendChild(d);
+    });
+    m.appendChild(s);
+  });
+}
+function set(id,q){if(q<=0){delete cart[id];delete opts[id];}else cart[id]=q;renderMenu();bar();}
+function bar(){
+  var n=0,t=0,lines=[];
+  ALL.forEach(function(i){var q=cart[i.id];if(q){var u=unit(i);n+=q;t+=q*u;lines.push(q+'x '+i.name+(i.opt&&opts[i.id]?' (con '+i.opt.label.toLowerCase()+')':'')+' — S/ '+(q*u));}});
+  document.getElementById('bar').classList.toggle('empty',!n);
+  document.getElementById('cnt').textContent=n+(n===1?' plato':' platos');
+  document.getElementById('tot').textContent='S/ '+t;
+  document.getElementById('send').href='https://wa.me/51900000000?text='+encodeURIComponent('Hola El Lomito, quiero pedir:\n'+lines.join('\n')+'\nTotal: S/ '+t);
+}
+window.addEventListener('scroll',function(){
+  var cur=CATS[0].id;CATS.forEach(function(c){var s=document.getElementById('c-'+c.id);if(s&&s.getBoundingClientRect().top<120)cur=c.id;});
+  if(cur!==active){active=cur;renderTabs();}
+},{passive:true});
+cart={caldo:1,lomo:1};renderTabs();renderMenu();bar();
+</script>
+</body>
+</html>
