@@ -119,7 +119,7 @@ header h1 q{quotes:"“" "”"}
 <script>
 var CATS=[
  {id:'caldos',name:'Caldos',note:'Nuestra especialidad',items:[
-  {id:'caldo',name:'Caldo de gallina',desc:'Caldo bien concentrado con fideo nacional.',price:18,tag:'La especialidad',img:'1613744013720-4f505ce31735',opt:{label:'Presa de gallina',price:13}},
+  {id:'caldo',name:'Caldo de gallina',desc:'Caldo bien concentrado con fideo nacional.',price:18,tag:'La especialidad',img:'1613744013720-4f505ce31735',opt:{label:'Presa de gallina',short:'presa',price:13}},
   {id:'caldopresa',name:'Caldo con presa',desc:'Caldo chico con presa chica y fideo nacional.',price:25,img:'1741796105489-33ea406ac1b7'},
   {id:'sancochado',name:'Sancochado',desc:'Carne, verduras y papa, en su caldo.',price:45,tag:'Contundente',img:'1627054886476-0cdee47fde3d'}]},
  {id:'lomos',name:'Lomos',note:'Al wok, bien jugosos',items:[
@@ -158,7 +158,7 @@ function renderMenu(){
         var pl=document.createElement('button');pl.type='button';pl.textContent='+';pl.setAttribute('aria-label','Agregar uno');pl.onclick=function(){set(i.id,q+1)};
         w.append(mi,n,pl);ctl.appendChild(w);}
       if(i.opt){var v=document.createElement('button');v.type='button';v.className='opt';v.setAttribute('aria-pressed',!!opts[i.id]);
-        v.textContent=opts[i.id]?'✓ Con '+i.opt.label.toLowerCase()+' (+ S/ '+i.opt.price+')':'🍗 '+i.opt.label+' + S/ '+i.opt.price;
+        v.textContent=opts[i.id]?'✓ Con '+i.opt.short+' + S/ '+i.opt.price:'🍗 '+i.opt.label+' + S/ '+i.opt.price;
         v.onclick=function(){opts[i.id]=!opts[i.id];if(opts[i.id]&&!cart[i.id])cart[i.id]=1;renderMenu();bar();};
         d.querySelector('.info').appendChild(v);}
       l.appendChild(d);
