@@ -147,6 +147,14 @@ section{padding:84px 0;position:relative}
 /* ejemplos */
 .gal{display:flex;gap:22px;overflow-x:auto;scroll-snap-type:x mandatory;padding:20px max(20px,calc((100vw - 1160px)/2 + 20px)) 34px;scrollbar-width:none;perspective:1200px}
 .gal::-webkit-scrollbar{display:none}
+.gal.drag{scroll-snap-type:none;cursor:grabbing}
+.gal{cursor:grab}
+.gal img{-webkit-user-drag:none;user-select:none}
+.gnav{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.gnav button{width:50px;height:50px;border-radius:50%;background:var(--sun);border:3px solid var(--ink);box-shadow:3px 3px 0 var(--ink);font-size:1.3rem;font-weight:900;transition:transform .12s}
+.gnav button:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.gnav span{font-family:var(--display);font-weight:800;font-size:1.1rem;min-width:56px;text-align:center}
+.gnav small{color:var(--muted);font-weight:600}
 .ex{flex:none;width:230px;scroll-snap-align:center;text-decoration:none;transform-style:preserve-3d;transition:transform .25s}
 .ex .ph2{width:230px;height:498px;border-radius:38px;border:9px solid #121212;overflow:hidden;box-shadow:0 0 0 3px var(--ink),10px 14px 0 var(--ink);position:relative;background:#121212}
 .ex .ph2::before{content:"";position:absolute;top:9px;left:50%;transform:translateX(-50%);width:70px;height:20px;border-radius:14px;background:#121212;z-index:2}
@@ -194,24 +202,46 @@ section{padding:84px 0;position:relative}
 
 /* cotizador */
 .quote{background:var(--skysoft);border-top:3px solid var(--ink);border-bottom:3px solid var(--ink)}
-.qgrid{display:grid;gap:20px}
-.opts{display:grid;gap:10px}
-.qo{display:flex;align-items:center;gap:14px;background:var(--paper);border:3px solid var(--ink);border-radius:18px;padding:14px 16px;cursor:pointer;transition:transform .12s,box-shadow .12s;user-select:none}
-.qo:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--ink)}
-.qo input{position:absolute;opacity:0;pointer-events:none}
-.qo .bx{flex:none;width:28px;height:28px;border-radius:9px;border:3px solid var(--ink);display:grid;place-items:center;font-weight:900;color:transparent;transition:background .15s}
-.qo input:checked + .bx{background:var(--pink);color:#fff}
-.qo input:focus-visible + .bx{outline:3px solid var(--pink);outline-offset:3px}
-.qo .tx{flex:1}
-.qo .tx b{display:block;font-size:1rem}
-.qo .tx small{color:var(--muted);font-weight:600}
-.qo .pp{font-family:var(--display);font-weight:800;font-size:1.2rem;white-space:nowrap}
+.qgrid{display:grid;gap:22px}
+.qcat{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:800;font-size:1.25rem;letter-spacing:-.02em;margin:0 0 12px}
+.qcat i{font-style:normal;width:30px;height:30px;border-radius:50%;background:var(--ink);color:var(--sun);display:grid;place-items:center;font-size:.95rem}
+.qcat small{font-family:var(--body);font-weight:600;font-size:.82rem;color:var(--muted);letter-spacing:0}
+.tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:26px}
+.tile{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:10px;text-align:left;background:var(--paper);border:3px solid var(--ink);border-radius:22px;padding:16px;cursor:pointer;user-select:none;transition:transform .18s cubic-bezier(.3,1.6,.5,1),box-shadow .18s,background .2s}
+.tile:hover{transform:translate(-2px,-3px);box-shadow:5px 6px 0 var(--ink)}
+.tile .art{width:62px;height:62px;border-radius:18px;border:2.5px solid var(--ink);display:grid;place-items:center;font-size:2rem;background:var(--c,var(--sunsoft));transition:transform .3s cubic-bezier(.3,1.6,.5,1)}
+.tile b{font-size:1rem;line-height:1.2}
+.tile .pp{margin-top:auto;font-family:var(--display);font-weight:800;font-size:1.35rem;letter-spacing:-.02em}
+.tile .pp small{font-family:var(--body);font-size:.72rem;font-weight:700;color:var(--muted);letter-spacing:0}
+.tile .ck{position:absolute;top:12px;right:12px;width:30px;height:30px;border-radius:50%;border:2.5px solid var(--ink);background:var(--paper);display:grid;place-items:center;font-weight:900;font-size:.9rem;color:transparent;transition:transform .25s cubic-bezier(.3,1.8,.5,1),background .2s}
+.tile[aria-checked="true"]{background:var(--c,var(--sunsoft));box-shadow:5px 5px 0 var(--ink)}
+.tile[aria-checked="true"] .art{transform:rotate(-8deg) scale(1.08);background:var(--paper)}
+.tile[aria-checked="true"] .ck{background:var(--pink);color:#fff;transform:scale(1.15)}
+.tiles.sm{grid-template-columns:repeat(2,1fr)}
+.tiles.sm .tile{flex-direction:row;align-items:center;padding:12px;border-radius:18px;gap:12px}
+.tiles.sm .art{width:46px;height:46px;font-size:1.5rem;border-radius:14px;flex:none}
+.tiles.sm .tile b{font-size:.92rem}
+.tiles.sm .pp{margin:0;font-size:1.05rem}
+.tiles.sm .ck{top:-10px;right:-8px;width:26px;height:26px}
 .total{background:var(--ink);color:#fff;border-radius:26px;padding:24px;box-shadow:7px 7px 0 var(--pink);position:sticky;top:90px;align-self:start}
-.total small{font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--sun);font-size:.78rem}
-.total .n{font-family:var(--display);font-weight:800;font-size:4rem;letter-spacing:-.04em;line-height:1;margin-top:8px}
-.total .sv{display:inline-block;margin-top:8px;font-weight:800;font-size:.86rem;background:var(--green);color:#05361A;padding:4px 10px;border-radius:999px}
-.total ul{list-style:none;padding:0;margin:16px 0;display:grid;gap:6px;color:#D9D1E3;font-size:.92rem}
+.total small.k{font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--sun);font-size:.78rem}
+.prog{background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.18);border-radius:16px;padding:12px 14px;margin-bottom:18px}
+.prog p{font-size:.88rem;font-weight:700;color:#E9E2F2}
+.prog p b{color:var(--sun)}
+.dots{display:flex;gap:6px;margin-top:10px}
+.dots i{flex:1;height:8px;border-radius:8px;background:rgba(255,255,255,.15);transition:background .3s}
+.dots i.on{background:linear-gradient(90deg,var(--sun),var(--pink))}
+.prog.win{background:rgba(20,184,106,.18);border-color:var(--green)}
+.total .n{font-family:var(--display);font-weight:800;font-size:3.6rem;letter-spacing:-.04em;line-height:1;margin-top:8px}
+.total .n small{font-family:var(--body);font-size:1rem;letter-spacing:0;color:#BDB4C8}
+.was{color:#8E849B;text-decoration:line-through;font-weight:700;margin-top:4px;min-height:1.4em}
+.saves{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.saves span{font-weight:800;font-size:.8rem;background:var(--green);color:#05361A;padding:4px 10px;border-radius:999px;animation:pop .35s cubic-bezier(.2,1.4,.4,1)}
+.chosen{display:flex;flex-wrap:wrap;gap:6px;margin:16px 0 18px;min-height:32px}
+.chosen span{display:inline-flex;align-items:center;gap:6px;font-size:.82rem;font-weight:700;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:5px 10px;border-radius:999px;animation:pop .3s cubic-bezier(.2,1.4,.4,1)}
+.chosen .empty{background:none;border:0;color:#A79DB3;padding:5px 0}
 .total .btn{width:100%}
+.total .btn[aria-disabled="true"]{opacity:.45;pointer-events:none}
 .total p.f{font-size:.8rem;color:#A79DB3;margin-top:12px}
 
 /* pasos */
@@ -260,7 +290,9 @@ footer .logo b{color:#fff}
   .plans{grid-template-columns:repeat(4,1fr);align-items:stretch}
   .extras{grid-template-columns:repeat(3,1fr)}
   .shop{grid-template-columns:1.4fr .6fr;align-items:center}
-  .qgrid{grid-template-columns:1.2fr .8fr}
+  .qgrid{grid-template-columns:1.25fr .75fr}
+  .tiles{grid-template-columns:repeat(4,1fr)}
+  .tiles.sm{grid-template-columns:repeat(3,1fr)}
   .steps{grid-template-columns:repeat(4,1fr)}
   .st{flex-direction:column}
 }
@@ -353,6 +385,7 @@ footer .logo b{color:#fff}
   <div class="sh rv"><span class="kick"><i></i>Ejemplos</span><h2>Cada negocio, con su <span class="hl">estilo</span>.</h2><p>Toca cualquiera para abrirlo en vivo. Pasa el cursor para recorrer la página.</p></div>
 </div>
   <div class="gal" id="gal"></div>
+  <div class="wrap gnav"><button type="button" id="gPrev" aria-label="Ejemplo anterior">←</button><span id="gPos">1 / 7</span><button type="button" id="gNext" aria-label="Ejemplo siguiente">→</button><small>o arrastra / desliza</small></div>
   <div class="wrap"><p class="note">Todos los ejemplos son negocios ficticios creados por Cartify para mostrar el estilo de trabajo. Fotos y precios referenciales.</p></div>
 </section>
 
@@ -372,23 +405,31 @@ footer .logo b{color:#fff}
     <div class="sp"><p class="pr">S/ 800+ <small>según cantidad de productos</small></p><a class="btn wa" data-wa="Hola Cartify 👋 Quiero cotizar una tienda virtual (desde S/ 800)." href="#">Cotizar mi tienda</a><small class="nb">¿Cobros con tarjeta? Se cotiza aparte.</small></div>
   </div>
   <div class="extras">
-    <div>Cambios después del primero <b>S/ 10</b></div>
+    <div>Cambios simples (precio, plato, foto) <b>S/ 10–15</b></div>
     <div>Mantenimiento mensual <b>desde S/ 25</b></div>
     <div>Tu propio dominio .com <b>S/ 50/año</b></div>
   </div>
+  <p class="note" style="margin-top:12px">Cambios grandes (nuevas secciones, rediseño o varios cambios a la vez) se cotizan según el trabajo.</p>
 </div></section>
 
 <!-- cotizador -->
 <section class="quote" id="cotiza"><div class="wrap">
-  <div class="sh rv"><span class="kick"><i></i>Cotizador</span><h2>Arma tu <span class="hl">pedido</span>.</h2><p>Marca lo que necesitas y te mando la cotización exacta por WhatsApp.</p></div>
+  <div class="sh rv"><span class="kick"><i></i>Cotizador</span><h2>Arma tu <span class="hl">pedido</span>.</h2><p>Toca lo que necesitas. Mientras más llevas, más ahorras.</p></div>
   <div class="qgrid">
-    <div class="opts" id="opts"></div>
-    <div class="total rv">
-      <small>Tu inversión</small>
+    <div>
+      <p class="qcat"><i>1</i>Lo principal <small>elige uno o más</small></p>
+      <div class="tiles" id="tMain" role="group" aria-label="Servicios principales"></div>
+      <p class="qcat"><i>2</i>Súmale extras <small>opcional</small></p>
+      <div class="tiles sm" id="tExtra" role="group" aria-label="Extras"></div>
+    </div>
+    <div class="total rv" aria-live="polite">
+      <div class="prog" id="prog"><p id="progT">Lleva <b>4 servicios</b> y ahorra un <b>5 %</b> extra</p><div class="dots"><i></i><i></i><i></i><i></i></div></div>
+      <small class="k">Tu inversión</small>
       <p class="n" id="qn">S/ 0</p>
-      <span class="sv" id="qsv" hidden></span>
-      <ul id="ql"><li>Marca al menos una opción</li></ul>
-      <a class="btn wa" id="qbtn" href="#"><svg width="22" height="22"><use href="#wai"/></svg>Enviar por WhatsApp</a>
+      <p class="was" id="qwas"></p>
+      <div class="saves" id="qsv"></div>
+      <div class="chosen" id="qc"></div>
+      <a class="btn wa" id="qbtn" href="#" target="_blank" rel="noopener"><svg width="22" height="22"><use href="#wai"/></svg>Enviar por WhatsApp</a>
       <p class="f">Precios de lanzamiento · pago único · 50 % al inicio · Yape o Plin</p>
     </div>
   </div>
@@ -411,7 +452,7 @@ footer .logo b{color:#fff}
   <div class="faq">
     <details class="rv"><summary>¿Tengo que pagar todos los meses?</summary><p>No. Es un pago único. Solo si quieres que yo actualice tu carta o tus promociones seguido, existe un mantenimiento mensual opcional.</p></details>
     <details class="rv"><summary>¿Necesito comprar un dominio (.com)?</summary><p>No es necesario: tu página viene con su enlace y funciona perfecto. Si quieres tu propio .com, cuesta S/ 50 al año, queda a tu nombre y yo te lo dejo conectado.</p></details>
-    <details class="rv"><summary>¿Qué pasa si cambio un precio?</summary><p>Me escribes y lo actualizo. El primer cambio es gratis y luego cuesta S/ 10. El QR sigue siendo el mismo, no tienes que reimprimir nada.</p></details>
+    <details class="rv"><summary>¿Qué pasa si cambio un precio?</summary><p>Me escribes y lo actualizo. El primer cambio es gratis. Después, un cambio simple (un precio, un plato o una foto) cuesta entre S/ 10 y S/ 15. Los cambios grandes, como agregar secciones o rediseñar la página, se cotizan según el trabajo. El QR siempre es el mismo: no tienes que reimprimir nada.</p></details>
     <details class="rv"><summary>¿Cuánto demora?</summary><p>48 horas desde que me mandas tus datos. Las páginas a medida pueden tomar un poco más.</p></details>
     <details class="rv"><summary>¿Cómo pago?</summary><p>Por Yape o Plin: 50 % al empezar y el otro 50 % cuando apruebes el resultado.</p></details>
     <details class="rv"><summary>¿Los pedidos tienen comisión?</summary><p>No. Los pedidos llegan directo a tu WhatsApp. No hay apps intermedias ni porcentajes por venta.</p></details>
@@ -476,7 +517,19 @@ document.querySelectorAll('.card,.plan').forEach(function(c){
   a.innerHTML='<div class="ph2"><img src="assets/'+e.id+'.jpg" alt="Ejemplo: '+e.n+'" loading="lazy"></div><div class="lb"><div><b>'+e.n+'</b><small>'+e.t+'</small></div><span>↗</span></div>';G.appendChild(a);});
   function cf(){var c=G.getBoundingClientRect(),mid=c.left+c.width/2;G.querySelectorAll('.ex').forEach(function(x){var r=x.getBoundingClientRect(),o=((r.left+r.width/2)-mid)/c.width;var cl=Math.max(-1,Math.min(1,o*1.4));
     x.style.transform=RM?'':'rotateY('+(-cl*18)+'deg) translateZ('+(-Math.abs(cl)*40)+'px)';});}
-  G.addEventListener('scroll',function(){requestAnimationFrame(cf)},{passive:true});addEventListener('resize',cf);cf();})();
+  G.addEventListener('scroll',function(){requestAnimationFrame(cf);pos();},{passive:true});addEventListener('resize',cf);cf();
+  // arrastrar con el mouse
+  var down=false,sx=0,sl=0,moved=0;
+  G.addEventListener('pointerdown',function(e){if(e.pointerType!=='mouse')return;down=true;moved=0;sx=e.clientX;sl=G.scrollLeft;G.classList.add('drag');});
+  addEventListener('pointermove',function(e){if(!down)return;var dx=e.clientX-sx;moved=Math.max(moved,Math.abs(dx));G.scrollLeft=sl-dx;});
+  addEventListener('pointerup',function(){if(!down)return;down=false;G.classList.remove('drag');var it=G.querySelector('.ex'),w=it.offsetWidth+22;G.scrollTo({left:Math.round(G.scrollLeft/w)*w,behavior:'smooth'});});
+  G.addEventListener('click',function(e){if(moved>6){e.preventDefault();e.stopPropagation();}},true);
+  G.addEventListener('dragstart',function(e){e.preventDefault();});
+  // flechas y contador
+  function step(d){var w=G.querySelector('.ex').offsetWidth+22;G.scrollBy({left:d*w,behavior:'smooth'});}
+  document.getElementById('gPrev').onclick=function(){step(-1)};document.getElementById('gNext').onclick=function(){step(1)};
+  function pos(){var w=G.querySelector('.ex').offsetWidth+22,i=Math.min(EX.length,Math.round(G.scrollLeft/w)+1);document.getElementById('gPos').textContent=i+' / '+EX.length;}
+  pos();})();
 
 /* ===== Demo interactiva ===== */
 (function(){var I=[{n:'Lomo saltado',p:35,img:'1713742000609-7dfb86bfc720'},{n:'Ceviche clásico',p:32,img:'1761314036542-6570ef45dbb3'},{n:'Chicha morada',p:15,img:'1745725247846-12a3e3109bbf'}],cart={};
@@ -494,26 +547,43 @@ document.querySelectorAll('.card,.plan').forEach(function(c){
   upd();})();
 
 /* ===== Cotizador ===== */
-(function(){var O=[
-  {k:'carta',n:'Carta o catálogo con QR',d:'Con fotos, pedido por WhatsApp',p:99},
-  {k:'enlace',n:'Un solo enlace',d:'Para tu Instagram y WhatsApp',p:50},
-  {k:'imgs',n:'Imágenes para redes',d:'Para estados e Instagram',p:50},
-  {k:'web',n:'Página web',d:'Una página profesional',p:400},
-  {k:'corp',n:'Web corporativa',d:'Varias secciones, a medida (desde)',p:600},
-  {k:'shop',n:'Tienda virtual',d:'Carrito, Yape y pedidos (desde)',p:800},
-  {k:'maps',n:'Google Maps arreglado',d:'Horario, fotos y enlace',p:60},
-  {k:'dom',n:'Dominio .com propio',d:'Primer año, ya conectado',p:50},
-  {k:'mant',n:'Mantenimiento mensual',d:'Cambios y promos cada mes',p:25,m:1}],S={carta:true};
-  var W=document.getElementById('opts');
-  O.forEach(function(o){var l=document.createElement('label');l.className='qo';l.innerHTML='<input type="checkbox"'+(S[o.k]?' checked':'')+'><span class="bx">✓</span><span class="tx"><b>'+o.n+'</b><small>'+o.d+'</small></span><span class="pp">S/ '+o.p+(o.m?'<small style="font-size:.7rem">/mes</small>':'')+'</span>';
-    l.querySelector('input').onchange=function(e){S[o.k]=e.target.checked;calc();};W.appendChild(l);});
-  function calc(){var once=0,mon=0,l=[],sv=0;O.forEach(function(o){if(S[o.k]){if(o.m)mon+=o.p;else once+=o.p;l.push(o.n+(o.m?' (S/ '+o.p+'/mes)':' — S/ '+o.p));}});
-    if(S.carta&&S.enlace&&S.imgs){sv=30;once-=sv;}
-    document.getElementById('qn').textContent='S/ '+once+(mon?' + '+mon+'/mes':'');
-    var s=document.getElementById('qsv');s.hidden=!sv;s.textContent='Pack completo · ahorras S/ '+sv;
-    document.getElementById('ql').innerHTML=l.length?l.map(function(x){return '<li>• '+x+'</li>'}).join(''):'<li>Marca al menos una opción</li>';
-    var b=document.getElementById('qbtn');b.href=wa('Hola Cartify 👋 Quiero cotizar:\n'+l.map(function(x){return '• '+x}).join('\n')+(sv?'\n(Pack completo, ahorro S/ '+sv+')':'')+'\nTotal estimado: S/ '+once+(mon?' + S/ '+mon+' al mes':''));b.target='_blank';b.rel='noopener';}
-  calc();})();
+(function(){
+  var O=[
+  {k:'carta',g:'main',e:'📱',n:'Carta digital con QR',p:99,c:'var(--sunsoft)'},
+  {k:'web',g:'main',e:'🌐',n:'Página web',p:400,c:'var(--skysoft)'},
+  {k:'corp',g:'main',e:'🏢',n:'Web corporativa',p:600,f:1,c:'var(--pinksoft)'},
+  {k:'shop',g:'main',e:'🛒',n:'Tienda virtual',p:800,f:1,c:'var(--mint)'},
+  {k:'enlace',g:'extra',e:'🔗',n:'Un solo enlace',p:50,c:'var(--pinksoft)'},
+  {k:'imgs',g:'extra',e:'🖼️',n:'Imágenes para redes',p:50,c:'var(--sunsoft)'},
+  {k:'maps',g:'extra',e:'📍',n:'Google Maps',p:60,c:'var(--mint)'},
+  {k:'dom',g:'extra',e:'🌍',n:'Dominio .com',p:50,u:'/año',c:'var(--skysoft)'},
+  {k:'mant',g:'extra',e:'🛠️',n:'Mantenimiento',p:25,m:1,u:'/mes',c:'var(--sunsoft)'}],S={carta:true},NEED=4,PCT=5;
+  O.forEach(function(o){var b=document.createElement('button');b.type='button';b.className='tile';b.setAttribute('role','checkbox');b.style.setProperty('--c',o.c);
+    b.innerHTML='<span class="ck" aria-hidden="true">✓</span><span class="art" aria-hidden="true">'+o.e+'</span><b>'+o.n+'</b><span class="pp">'+(o.f?'<small>desde </small>':'')+'S/ '+o.p+(o.u?'<small>'+o.u+'</small>':'')+'</span>';
+    b.onclick=function(){S[o.k]=!S[o.k];paint();};o.el=b;document.getElementById(o.g==='main'?'tMain':'tExtra').appendChild(b);});
+  var shown=0;
+  function count(to){var el=document.getElementById('qn'),from=shown,t0=performance.now(),d=RM?0:450;shown=to;
+    (function f(t){var k=d?Math.min(1,(t-t0)/d):1,v=Math.round(from+(to-from)*(1-Math.pow(1-k,3)));el.firstChild.nodeValue='S/ '+v;if(k<1)requestAnimationFrame(f);})(t0);}
+  function paint(){
+    var sel=O.filter(function(o){o.el.setAttribute('aria-checked',!!S[o.k]);return S[o.k];});
+    var once=sel.filter(function(o){return !o.m}),mon=sel.filter(function(o){return o.m}).reduce(function(a,o){return a+o.p},0);
+    var base=once.reduce(function(a,o){return a+o.p},0),pack=(S.carta&&S.enlace&&S.imgs)?30:0,sub=base-pack;
+    var n=once.length,vol=n>=NEED?Math.round(sub*PCT/100):0,tot=sub-vol;
+    // progreso hacia el descuento
+    var pr=document.getElementById('prog');pr.classList.toggle('win',n>=NEED);
+    pr.querySelectorAll('.dots i').forEach(function(d,i){d.classList.toggle('on',i<Math.min(n,NEED));});
+    document.getElementById('progT').innerHTML=n>=NEED?'🎉 ¡Ganaste un <b>'+PCT+' % de descuento</b> por llevar '+n+' servicios!':(NEED-n===1?'¡Te falta <b>1 servicio</b> para ahorrar un <b>'+PCT+' %</b>!':'Lleva <b>'+NEED+' servicios</b> y ahorra un <b>'+PCT+' %</b> extra');
+    // total
+    var qn=document.getElementById('qn');if(!qn.firstChild||qn.firstChild.nodeType!==3){qn.innerHTML='S/ 0<small></small>';}
+    qn.lastChild.textContent=mon?'  + S/ '+mon+'/mes':'';count(tot);
+    document.getElementById('qwas').textContent=(pack||vol)?'Antes S/ '+base:'';
+    document.getElementById('qsv').innerHTML=(pack?'<span>Pack completo −S/ '+pack+'</span>':'')+(vol?'<span>'+PCT+' % extra −S/ '+vol+'</span>':'');
+    document.getElementById('qc').innerHTML=sel.length?sel.map(function(o){return '<span>'+o.e+' '+o.n+'</span>'}).join(''):'<span class="empty">Toca un servicio para empezar 👈</span>';
+    var b=document.getElementById('qbtn');b.setAttribute('aria-disabled',sel.length?'false':'true');
+    b.href=wa('Hola Cartify 👋 Quiero cotizar:\n'+sel.map(function(o){return '• '+o.n+' — '+(o.f?'desde ':'')+'S/ '+o.p+(o.u||'')}).join('\n')
+      +(pack?'\n(Pack completo: −S/ '+pack+')':'')+(vol?'\n(Descuento '+PCT+' %: −S/ '+vol+')':'')+'\nTotal estimado: S/ '+tot+(mon?' + S/ '+mon+' al mes':''));
+  }
+  document.getElementById('qn').innerHTML='S/ 0<small></small>';paint();})();
 
 /* ===== Aparición al hacer scroll y botón flotante ===== */
 var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{threshold:.12});
