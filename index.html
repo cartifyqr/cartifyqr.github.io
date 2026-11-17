@@ -85,7 +85,7 @@ nav .btn{padding:10px 14px;font-size:.9rem;box-shadow:3px 3px 0 var(--ink)}
 .ph{position:absolute;width:170px;height:368px;margin:-184px 0 0 -85px;border-radius:30px;border:7px solid #121212;background:#121212;overflow:hidden;box-shadow:0 0 0 3px var(--ink);backface-visibility:hidden;-webkit-backface-visibility:hidden}
 .ph img{width:100%;height:100%;object-fit:cover;object-position:top;border-radius:23px}
 .ph::before{content:"";position:absolute;top:7px;left:50%;transform:translateX(-50%);width:54px;height:15px;border-radius:12px;background:#121212;z-index:2}
-.floor{position:absolute;left:50%;bottom:6px;width:380px;height:46px;margin-left:-190px;border-radius:50%;background:radial-gradient(closest-side,rgba(26,20,35,.32),transparent);filter:blur(2px)}
+.floor{position:absolute;left:50%;bottom:6px;width:min(380px,90%);height:46px;margin-left:0;transform:translateX(-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(26,20,35,.32),transparent);filter:blur(2px)}
 .sticker{position:absolute;z-index:5;font-weight:800;font-size:.86rem;background:var(--paper);border:2.5px solid var(--ink);border-radius:14px;padding:8px 12px;box-shadow:4px 4px 0 var(--ink);animation:bob 4s ease-in-out infinite}
 .sticker b{color:var(--pink)}
 @keyframes bob{50%{transform:translateY(-8px) rotate(-2deg)}}
@@ -218,7 +218,9 @@ section{padding:84px 0;position:relative;overflow-x:clip}
 
 /* cotizador */
 .quote{background:var(--skysoft);border-top:3px solid var(--ink);border-bottom:3px solid var(--ink)}
-.qgrid{display:grid;gap:22px}
+.qgrid{display:grid;gap:22px;grid-template-columns:minmax(0,1fr)}
+.qgrid > *{min-width:0}
+.tiles .tile{min-width:0}
 .qcat{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:800;font-size:1.25rem;letter-spacing:-.02em;margin:0 0 12px}
 .qcat i{font-style:normal;width:30px;height:30px;border-radius:50%;background:var(--ink);color:var(--sun);display:grid;place-items:center;font-size:.95rem}
 .qcat small{font-family:var(--body);font-weight:600;font-size:.82rem;color:var(--muted);letter-spacing:0}
@@ -307,7 +309,7 @@ footer .logo b{color:#fff}
   .plans{grid-template-columns:repeat(4,1fr);align-items:stretch}
   .extras{grid-template-columns:repeat(3,1fr)}
   .shop{grid-template-columns:1.4fr .6fr;align-items:center}
-  .qgrid{grid-template-columns:1.25fr .75fr}
+  .qgrid{grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr)}
   .tiles{grid-template-columns:repeat(4,1fr)}
   .tiles.sm{grid-template-columns:repeat(3,1fr)}
   .steps{grid-template-columns:repeat(4,1fr)}
