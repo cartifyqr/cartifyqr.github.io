@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1A3C34">
+<title>Paralelo · Restaurante Café</title>
+<meta name="description" content="Propuesta de diseño: todo Paralelo en una sola página. Reservas, carta, packs, eventos y bakery.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap">
+<style>
+/* Propuesta Paralelo: verde bosque, crema y caramelo (su marca). Móvil primero; 3D con CSS (medalla, carrusel, inclinación) */
+:root{
+  --green:#1A3C34; --green2:#24504A; --deep:#10261F; --cream:#F6F3EA; --paper:#FFFDF8; --caramel:#A4693B; --caramel2:#D9A877;
+  --ink:#17221E; --muted:#6C736E; --line:#E3DDCD; --wa:#25D366;
+  --serif:"DM Serif Display", Georgia, serif; --sans:"DM Sans", system-ui, sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+:focus-visible{outline:2px solid var(--caramel);outline-offset:3px}
+h1,h2,h3{font-family:var(--serif);font-weight:400;margin:0;line-height:1.05}
+p{margin:0}
+.wrap{max-width:1080px;margin:0 auto;padding:0 max(20px,env(safe-area-inset-left,0px))}
+.kick{font-size:.72rem;font-weight:600;letter-spacing:.26em;text-transform:uppercase;color:var(--caramel)}
+.demo{background:var(--deep);color:#B9C6BF;font-size:.74rem;text-align:center;padding:6px 12px;letter-spacing:.02em}
+.demo b{color:var(--caramel2);font-weight:600}
+
+/* barra superior */
+.top{position:sticky;top:0;z-index:40;background:rgba(26,60,52,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);color:var(--cream)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.mono{width:32px;height:32px}
+.word{font-weight:300;letter-spacing:.32em;font-size:1rem;line-height:1}
+.word small{display:block;font-size:.5rem;letter-spacing:.38em;opacity:.7;margin-top:4px}
+.rbtn{border:1px solid rgba(246,243,234,.6);color:var(--cream);font-weight:600;font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;padding:9px 14px;border-radius:2px}
+
+/* hero */
+.hero{position:relative;min-height:min(92vh,780px);color:var(--cream);display:flex;align-items:flex-end;overflow:hidden;background:var(--deep)}
+.hero .bg{position:absolute;inset:-8% 0 0;background:url('https://images.unsplash.com/photo-1688437309979-f6b96dfa67af?w=1600&q=75&auto=format') center/cover;will-change:transform}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(16,38,31,.25),rgba(16,38,31,.45) 45%,rgba(16,38,31,.95))}
+.lines{position:absolute;left:-10%;right:-10%;top:30%;height:60px;z-index:1;pointer-events:none}
+.lines i{position:absolute;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(217,168,119,.9),transparent);animation:slide 6s ease-in-out infinite}
+.lines i:nth-child(2){top:22px;animation-delay:-3s}
+@keyframes slide{0%,100%{transform:translateX(-12%)}50%{transform:translateX(12%)}}
+.hero .wrap{position:relative;z-index:2;width:100%;padding-top:110px;padding-bottom:40px}
+.hero h1{font-style:italic;font-size:clamp(3rem,13vw,6.2rem);letter-spacing:-.01em}
+.hero h1 span{display:block;font-style:normal;font-size:.42em;letter-spacing:.02em;color:var(--caramel2);margin-bottom:12px}
+.hero p.lead{margin-top:18px;max-width:34ch;font-size:1.05rem;color:#DCE4DF;font-weight:300}
+.status{display:inline-flex;align-items:center;gap:8px;font-size:.8rem;font-weight:500;border:1px solid rgba(246,243,234,.3);padding:6px 12px;border-radius:999px;background:rgba(16,38,31,.35);backdrop-filter:blur(6px)}
+.status i{width:7px;height:7px;border-radius:50%;background:#8BE3A0;box-shadow:0 0 0 0 rgba(139,227,160,.6);animation:ping 2s infinite}
+.status.off i{background:#E8A27C;animation:none}
+@keyframes ping{70%{box-shadow:0 0 0 8px rgba(139,227,160,0)}100%{box-shadow:0 0 0 0 rgba(139,227,160,0)}}
+.cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;font-weight:600;font-size:.82rem;letter-spacing:.16em;text-transform:uppercase;padding:15px 22px;border-radius:2px}
+.btn.solid{background:var(--cream);color:var(--green)}
+.btn.line{border:1px solid rgba(246,243,234,.6);color:var(--cream)}
+.btn.car{background:var(--caramel);color:#fff}
+
+/* medalla 3D */
+.medal{position:absolute;right:max(20px,6vw);top:96px;z-index:3;width:104px;height:104px;perspective:600px}
+.coin{position:relative;width:100%;height:100%;transform-style:preserve-3d;animation:spin 9s linear infinite}
+.coin div{position:absolute;inset:0;border-radius:50%;backface-visibility:hidden;display:grid;place-items:center;text-align:center;border:1px solid rgba(217,168,119,.8);box-shadow:inset 0 0 0 6px rgba(26,60,52,.6),inset 0 0 0 7px rgba(217,168,119,.5)}
+.coin .f{background:radial-gradient(circle at 35% 30%,#2F6358,#1A3C34 70%)}
+.coin .b{background:radial-gradient(circle at 35% 30%,#C48A57,#8E5A31 70%);transform:rotateY(180deg);font-size:.58rem;letter-spacing:.22em;line-height:1.7;color:#FFF3E3;font-weight:600}
+.coin .f svg{width:46px;height:46px}
+@keyframes spin{to{transform:rotateY(360deg)}}
+
+section{padding:64px 0}
+.head{margin-bottom:26px}
+.head h2{font-size:clamp(2.1rem,7vw,3.2rem);margin-top:10px}
+.head h2 em{color:var(--caramel)}
+.head p{color:var(--muted);margin-top:10px;max-width:46ch}
+
+/* accesos rápidos (reemplazo del Linktree) */
+.quick{margin-top:-34px;position:relative;z-index:5}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;perspective:900px}
+.tile{position:relative;display:flex;flex-direction:column;justify-content:space-between;min-height:118px;text-decoration:none;background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:14px;overflow:hidden;transform-style:preserve-3d;transition:transform .25s ease,box-shadow .25s;box-shadow:0 1px 0 rgba(0,0,0,.02)}
+.tile:hover{box-shadow:0 18px 40px rgba(26,60,52,.14)}
+.tile .ic{width:38px;height:38px;border-radius:12px;background:var(--cream);display:grid;place-items:center;font-size:1.15rem;transform:translateZ(24px)}
+.tile b{font-family:var(--serif);font-weight:400;font-size:1.22rem;line-height:1.1;transform:translateZ(18px)}
+.tile small{display:block;font-family:var(--sans);font-size:.74rem;color:var(--muted);margin-top:2px}
+.tile.dark{background:var(--green);color:var(--cream);border-color:var(--green)}
+.tile.dark .ic{background:rgba(246,243,234,.12)}
+.tile.dark small{color:#B9C6BF}
+.tile .new{position:absolute;top:12px;right:12px;font-size:.6rem;font-weight:700;letter-spacing:.14em;background:var(--caramel);color:#fff;padding:3px 7px;border-radius:999px}
+.tile .shine{position:absolute;inset:0;background:radial-gradient(circle at var(--mx,50%) var(--my,0%),rgba(255,255,255,.35),transparent 55%);opacity:0;transition:opacity .25s;pointer-events:none}
+.tile:hover .shine{opacity:1}
+
+/* momentos: carrusel 3D */
+.flow{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:20px max(20px,calc((100vw - 1080px)/2 + 20px)) 30px;scrollbar-width:none;perspective:1000px}
+.flow::-webkit-scrollbar{display:none}
+.mo{flex:none;width:min(72vw,300px);aspect-ratio:3/4;border-radius:22px;overflow:hidden;position:relative;scroll-snap-align:center;color:#fff;text-align:left;transform-style:preserve-3d;transition:transform .15s linear;box-shadow:0 24px 50px rgba(16,38,31,.25)}
+.mo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.mo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(16,38,31,.9))}
+.mo div{position:absolute;left:18px;right:18px;bottom:18px;z-index:2}
+.mo h3{font-size:2.2rem;font-style:italic}
+.mo p{font-size:.86rem;color:#DCE4DF;margin-top:4px}
+.mo span{display:inline-block;margin-top:12px;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;border-bottom:1px solid var(--caramel2);padding-bottom:2px}
+.mo time{position:absolute;top:16px;left:16px;z-index:2;font-size:.7rem;letter-spacing:.14em;background:rgba(16,38,31,.55);backdrop-filter:blur(6px);padding:5px 10px;border-radius:999px}
+
+/* carta */
+.tabs{display:flex;gap:6px;background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:5px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:1;white-space:nowrap;padding:10px 14px;border-radius:999px;font-weight:600;font-size:.86rem;color:var(--muted)}
+.tab[aria-selected="true"]{background:var(--green);color:var(--cream)}
+.menu{display:grid;gap:12px;margin-top:18px}
+.it{display:grid;grid-template-columns:84px 1fr auto;gap:14px;align-items:center;background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:10px 16px 10px 10px;animation:up .4s ease both}
+@keyframes up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.it img{width:84px;height:84px;border-radius:14px;object-fit:cover}
+.it h3{font-family:var(--sans);font-weight:600;font-size:1rem}
+.it p{font-size:.84rem;color:var(--muted);line-height:1.35;margin-top:2px}
+.it .pr{font-family:var(--serif);font-size:1.3rem;color:var(--green);white-space:nowrap}
+.it .sig{display:inline-block;font-size:.62rem;font-weight:700;letter-spacing:.14em;color:var(--caramel);text-transform:uppercase}
+.nopdf{display:flex;gap:10px;align-items:center;margin-top:16px;font-size:.85rem;color:var(--muted)}
+.nopdf b{color:var(--green)}
+
+/* ejecutivo + temporada */
+.duo{display:grid;gap:14px}
+.card{border-radius:22px;overflow:hidden;position:relative}
+.exec{background:var(--paper);border:1px solid var(--line);padding:24px}
+.exec h3{font-size:2rem}
+.exec .row{display:flex;justify-content:space-between;align-items:flex-end;margin-top:18px;gap:16px}
+.exec .price{font-family:var(--serif);font-size:3rem;line-height:1;color:var(--green)}
+.exec .price small{display:block;font-family:var(--sans);font-size:.75rem;color:var(--muted);margin-top:4px}
+.exec ul{list-style:none;padding:0;margin:16px 0 0;display:grid;gap:8px}
+.exec li{display:flex;gap:10px;font-size:.92rem}
+.exec li::before{content:"";width:16px;height:1px;background:var(--caramel);margin-top:12px;flex:none}
+.tea{min-height:360px;color:var(--cream);display:flex;align-items:flex-end;background:var(--deep)}
+.tea img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.75}
+.tea::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(16,38,31,.1),rgba(16,38,31,.92))}
+.tea .in{position:relative;z-index:2;padding:24px}
+.tea h3{font-size:2.3rem;font-style:italic}
+.tea p{color:#DCE4DF;margin-top:8px;max-width:34ch}
+.tea .badge{position:absolute;top:18px;left:18px;z-index:2;font-size:.66rem;font-weight:700;letter-spacing:.2em;background:var(--caramel);padding:6px 10px;border-radius:999px}
+.snow{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.snow i{position:absolute;top:-10px;width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.8);animation:fall linear infinite}
+@keyframes fall{to{transform:translateY(400px)}}
+
+/* packs */
+.packs{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px;scrollbar-width:none}
+.packs::-webkit-scrollbar{display:none}
+.pk{flex:none;width:min(78vw,300px);scroll-snap-align:start;background:var(--paper);border:1px solid var(--line);border-radius:22px;overflow:hidden}
+.pk img{width:100%;height:160px;object-fit:cover}
+.pk div{padding:16px}
+.pk h3{font-size:1.45rem}
+.pk p{font-size:.86rem;color:var(--muted);margin-top:4px}
+.pk .f{display:flex;justify-content:space-between;align-items:center;margin-top:14px}
+.pk .f b{font-family:var(--serif);font-size:1.5rem;font-weight:400;color:var(--green)}
+.pk .f button{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--caramel);border-bottom:1px solid var(--caramel)}
+
+/* eventos */
+.events{background:var(--green);color:var(--cream);border-radius:28px;overflow:hidden;display:grid}
+.events img{width:100%;height:220px;object-fit:cover}
+.events .in{padding:26px}
+.events h2{font-size:2.3rem}
+.events h2 em{color:var(--caramel2)}
+.events p{color:#C9D5CF;margin-top:10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.chips span{font-size:.82rem;border:1px solid rgba(246,243,234,.3);padding:6px 12px;border-radius:999px}
+
+/* bakery */
+.bk{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.bk figure{margin:0}
+.bk img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:16px}
+.bk figcaption{font-size:.8rem;margin-top:8px;font-weight:600}
+.bk figcaption small{display:block;font-weight:400;color:var(--muted)}
+
+/* horario */
+.info{display:grid;gap:14px}
+.box{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:22px}
+.box h3{font-size:1.5rem;margin-bottom:10px}
+.hrs div{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px dashed var(--line);font-size:.93rem}
+.hrs div:last-child{border:0}
+.hrs div.today{color:var(--green);font-weight:700}
+.hrs div.today span:first-child::after{content:" · hoy";color:var(--caramel);font-weight:600}
+.links{display:grid;gap:8px;margin-top:14px}
+.links a{display:flex;justify-content:space-between;align-items:center;text-decoration:none;font-weight:600;padding:13px 16px;border-radius:14px;background:var(--cream)}
+
+footer{background:var(--deep);color:#9FB0A8;text-align:center;padding:40px 20px 130px;font-size:.82rem}
+footer .brand{justify-content:center;color:var(--cream);margin-bottom:12px}
+
+/* barra fija + hoja de reserva */
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;justify-content:center;padding:0 12px calc(12px + env(safe-area-inset-bottom,0px));pointer-events:none;transition:transform .35s}
+.bar.hide{transform:translateY(140%)}
+.bar button{pointer-events:auto;width:100%;max-width:520px;display:flex;justify-content:space-between;align-items:center;background:var(--green);color:var(--cream);border-radius:16px;padding:12px 12px 12px 20px;box-shadow:0 16px 40px rgba(16,38,31,.35);text-align:left}
+.bar small{display:block;font-size:.72rem;color:#B9C6BF}
+.bar b{font-family:var(--serif);font-weight:400;font-size:1.2rem}
+.bar span.go{background:var(--caramel);color:#fff;font-weight:700;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;padding:12px 14px;border-radius:10px}
+.veil{position:fixed;inset:0;z-index:60;background:rgba(16,38,31,.5);opacity:0;pointer-events:none;transition:opacity .3s}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:61;max-width:560px;margin:0 auto;background:var(--paper);border-radius:26px 26px 0 0;padding:10px 20px calc(20px + env(safe-area-inset-bottom,0px));transform:translateY(105%);transition:transform .38s cubic-bezier(.2,.8,.2,1);max-height:92vh;overflow:auto}
+body.open .veil{opacity:1;pointer-events:auto}
+body.open .sheet{transform:none}
+.grab{width:44px;height:4px;border-radius:4px;background:var(--line);margin:4px auto 14px}
+.sheet h3{font-size:1.8rem}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;background:var(--cream);padding:5px;border-radius:14px;margin-top:14px}
+.seg button{padding:10px 6px;border-radius:10px;font-weight:600;font-size:.84rem;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--green);color:var(--cream)}
+.lbl{font-size:.68rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--caramel);margin:18px 0 8px}
+.row{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.row::-webkit-scrollbar{display:none}
+.opt{flex:none;border:1px solid var(--line);border-radius:12px;padding:9px 12px;font-weight:600;font-size:.86rem;text-align:center;background:#fff;min-width:58px}
+.opt small{display:block;font-weight:400;font-size:.68rem;color:var(--muted)}
+.opt[aria-pressed="true"]{background:var(--green);border-color:var(--green);color:var(--cream)}
+.opt[aria-pressed="true"] small{color:#B9C6BF}
+.opt:disabled{opacity:.35;cursor:not-allowed}
+.stepper{display:flex;align-items:center;gap:16px}
+.stepper button{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);font-size:1.3rem;background:#fff}
+.stepper b{font-family:var(--serif);font-size:1.8rem;font-weight:400;min-width:2ch;text-align:center}
+.send{display:flex;width:100%;justify-content:center;gap:10px;margin-top:22px;background:var(--wa);color:#063B1D;font-weight:700;text-decoration:none;padding:15px;border-radius:14px}
+.send[aria-disabled="true"]{background:var(--line);color:var(--muted);pointer-events:none}
+.close{position:absolute;right:16px;top:14px;width:36px;height:36px;border-radius:50%;background:var(--cream);font-size:1.1rem}
+
+.rv{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.rv.in{opacity:1;transform:none}
+
+@media (min-width:860px){
+  .grid{grid-template-columns:repeat(4,1fr)}
+  .duo{grid-template-columns:1fr 1fr}
+  .events{grid-template-columns:1fr 1fr}
+  .events img{height:100%}
+  .info{grid-template-columns:1fr 1fr}
+  .bar{display:none}
+  .medal{width:140px;height:140px;top:130px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<p class="demo">Propuesta de diseño para <b>Paralelo</b> · hecha por Cartify · precios referenciales</p>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="mono" viewBox="0 0 40 40"><circle cx="20" cy="20" r="19" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M15 29V11h6.5a5.5 5.5 0 0 1 0 11H15" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M21.5 14.5l2.2 2.2-2.2 2.2-2.2-2.2z" fill="#D9A877"/></symbol>
+</defs></svg>
+
+<div class="top"><div class="wrap">
+  <a class="brand" href="#inicio" aria-label="Paralelo, inicio"><svg class="mono"><use href="#mono"/></svg><span class="word">PARALELO<small>RESTAURANTE CAFÉ</small></span></a>
+  <button class="rbtn" type="button" data-open="mesa">Reservar</button>
+</div></div>
+
+<header class="hero" id="inicio">
+  <div class="bg" id="bg" aria-hidden="true"></div>
+  <div class="lines" aria-hidden="true"><i></i><i></i></div>
+  <div class="medal" aria-hidden="true"><div class="coin"><div class="f" style="color:#F6F3EA"><svg><use href="#mono"/></svg></div><div class="b">BRUNCH<br>LUNCH<br>DINNER<br>DRINKS</div></div></div>
+  <div class="wrap">
+    <span class="status" id="st"><i></i><span id="stT">Abierto ahora</span></span>
+    <h1 style="margin-top:20px"><span>Paralelo restaurante café</span>Is always a good idea</h1>
+    <p class="lead">Un universo paralelo de sabores, donde el arte y la gastronomía se encuentran. Av. Primavera 923, San Borja.</p>
+    <div class="cta"><button class="btn solid" type="button" data-open="mesa">Reservar mesa</button><a class="btn line" href="#carta">Ver la carta</a></div>
+  </div>
+</header>
+
+<!-- Todo lo del Linktree, en una sola vista -->
+<div class="wrap quick">
+  <div class="grid" id="grid">
+    <button class="tile dark" type="button" data-open="mesa"><span class="ic">🍽️</span><b>Reserva tu mesa<small>En 20 segundos</small></b><span class="shine"></span></button>
+    <a class="tile" href="#carta"><span class="ic">📖</span><b>Carta digital<small>Sin descargar PDF</small></b><span class="shine"></span></a>
+    <a class="tile" href="#ejecutivo"><span class="ic">🕛</span><b>Menú ejecutivo<small>Martes a viernes</small></b><span class="shine"></span></a>
+    <a class="tile" href="#temporada"><span class="new">NUEVO</span><span class="ic">🎄</span><b>Christmas Tea Time<small>Edición de temporada</small></b><span class="shine"></span></a>
+    <a class="tile" href="#packs"><span class="ic">🎁</span><b>Packs y promos<small>Para compartir</small></b><span class="shine"></span></a>
+    <a class="tile" href="#eventos"><span class="ic">🥂</span><b>Eventos y privados<small>Cotiza al toque</small></b><span class="shine"></span></a>
+    <a class="tile" href="#bakery"><span class="ic">🎂</span><b>Paralelo Bakery<small>Tortas y bocaditos</small></b><span class="shine"></span></a>
+    <a class="tile" href="#eventos"><span class="ic">🎨</span><b>Arte y kids<small>Actividades</small></b><span class="shine"></span></a>
+  </div>
+</div>
+
+<section id="momentos" style="padding-bottom:20px">
+  <div class="wrap head rv"><p class="kick">Listos para toda ocasión</p><h2>Cuatro <em>momentos</em>, un lugar</h2></div>
+  <div class="flow" id="flow">
+    <button class="mo" type="button" data-tab="brunch"><time>8:00 – 12:00</time><img src="https://images.unsplash.com/photo-1664192578370-0cd2b291c4cd?w=700&q=72&auto=format" alt="Tostadas francesas con frutos rojos"><div><h3>Brunch</h3><p>Waffles, benedictinos, tostadas francesas.</p><span>Ver carta</span></div></button>
+    <button class="mo" type="button" data-tab="lunch"><time>12:00 – 17:00</time><img src="https://images.unsplash.com/photo-1603073163308-9654c3fb70b5?w=700&q=72&auto=format" alt="Pescado a la plancha"><div><h3>Lunch</h3><p>Una carta variada para todos los gustos.</p><span>Ver carta</span></div></button>
+    <button class="mo" type="button" data-tab="lunch"><time>19:00 – 23:00</time><img src="https://images.unsplash.com/photo-1663530761401-15eefb544889?w=700&q=72&auto=format" alt="Plato de autor"><div><h3>Dinner</h3><p>Cada bocado, un viaje a nuevos horizontes.</p><span>Ver carta</span></div></button>
+    <button class="mo" type="button" data-tab="drinks"><time>Todo el día</time><img src="https://images.unsplash.com/photo-1789009547686-83816d372653?w=700&q=72&auto=format" alt="Espresso martini"><div><h3>Drinks</h3><p>Coctelería de autor y café de especialidad.</p><span>Ver carta</span></div></button>
+  </div>
+</section>
+
+<section id="carta" style="padding-top:30px"><div class="wrap">
+  <div class="head rv"><p class="kick">Carta digital</p><h2>Lo más <em>pedido</em></h2><p>Una selección corta. La versión final incluye toda la carta, siempre actualizada.</p></div>
+  <div class="tabs" role="tablist" id="tabs">
+    <button class="tab" role="tab" data-t="brunch" aria-selected="true">Brunch</button>
+    <button class="tab" role="tab" data-t="lunch" aria-selected="false">Lunch & Dinner</button>
+    <button class="tab" role="tab" data-t="drinks" aria-selected="false">Drinks & café</button>
+  </div>
+  <div class="menu" id="menu"></div>
+  <p class="nopdf">⚡ <span>Se abre al instante en el celular. <b>Sin descargar PDFs.</b></span></p>
+</div></section>
+
+<section style="padding-top:0"><div class="wrap duo">
+  <div class="card exec rv" id="ejecutivo">
+    <p class="kick">De martes a viernes · 12:00 a 16:00</p>
+    <h3 style="margin-top:8px">Menú ejecutivo</h3>
+    <ul><li>Entrada del día</li><li>Fondo a elegir entre tres opciones</li><li>Bebida de la casa y postre</li></ul>
+    <div class="row"><p class="price">S/ 45<small>precio referencial</small></p><button class="btn car" type="button" data-open="mesa" data-occ="Menú ejecutivo">Reservar</button></div>
+  </div>
+  <div class="card tea rv" id="temporada">
+    <img src="https://images.unsplash.com/photo-1532509334149-d2130d74253c?w=900&q=72&auto=format" alt="Torre de tea time con dulces" loading="lazy">
+    <div class="snow" id="snow" aria-hidden="true"></div>
+    <span class="badge">TEMPORADA</span>
+    <div class="in"><h3>Christmas Tea Time</h3><p>Té, dulces de la casa y bocaditos salados en torre. Cupos limitados por día.</p>
+      <div class="cta" style="margin-top:16px"><button class="btn solid" type="button" data-open="mesa" data-occ="Christmas Tea Time">Separar mi cupo</button></div></div>
+  </div>
+</div></section>
+
+<section id="packs" style="padding-top:0"><div class="wrap">
+  <div class="head rv"><p class="kick">Packs y promociones</p><h2>Para <em>compartir</em></h2></div>
+  <div class="packs">
+    <div class="pk"><img src="https://images.unsplash.com/photo-1688437310008-54045dce5167?w=700&q=72&auto=format" alt="" loading="lazy"><div><h3>Brunch para dos</h3><p>2 platos de brunch, 2 cafés y jugo para compartir.</p><div class="f"><b>S/ 119</b><button type="button" data-open="mesa" data-occ="Pack Brunch para dos">Lo quiero</button></div></div></div>
+    <div class="pk"><img src="https://images.unsplash.com/photo-1562023692-b4e4852cae7e?w=700&q=72&auto=format" alt="" loading="lazy"><div><h3>Pack cumpleaños</h3><p>Torta Paralelo Bakery, decoración y brindis.</p><div class="f"><b>S/ 189</b><button type="button" data-open="evento" data-occ="Pack cumpleaños">Lo quiero</button></div></div></div>
+    <div class="pk"><img src="https://images.unsplash.com/photo-1771398388326-816486afc539?w=700&q=72&auto=format" alt="" loading="lazy"><div><h3>After office</h3><p>4 cócteles de autor y piqueos para la mesa.</p><div class="f"><b>S/ 159</b><button type="button" data-open="mesa" data-occ="Pack After office">Lo quiero</button></div></div></div>
+  </div>
+</div></section>
+
+<section id="eventos" style="padding-top:0"><div class="wrap">
+  <div class="events rv">
+    <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=1000&q=72&auto=format" alt="Mesa larga preparada para un evento" loading="lazy">
+    <div class="in">
+      <p class="kick" style="color:var(--caramel2)">Eventos, privados y arte</p>
+      <h2 style="margin-top:10px">Tu evento, <em>a tu medida</em></h2>
+      <p>Cumpleaños, almuerzos corporativos, lanzamientos y reuniones familiares en nuestro espacio privado. También talleres de arte y actividades para niños.</p>
+      <div class="chips"><span>🎂 Cumpleaños</span><span>💼 Corporativos</span><span>👨‍👩‍👧 Familiares</span><span>🎨 Talleres de arte</span><span>🧸 Kids</span></div>
+      <div class="cta"><button class="btn solid" type="button" data-open="evento">Cotizar mi evento</button></div>
+    </div>
+  </div>
+</div></section>
+
+<section id="bakery" style="padding-top:0"><div class="wrap">
+  <div class="head rv"><p class="kick">Paralelo Bakery</p><h2>Dulce y <em>salado</em>, para llevar</h2><p>Catering de bocaditos, tortas a medida, trufas y alfajores artesanales.</p></div>
+  <div class="bk rv">
+    <figure><img src="https://images.unsplash.com/photo-1578144738671-698aa1029e11?w=400&h=400&fit=crop&q=72&auto=format" alt="Tortas" loading="lazy"><figcaption>Tortas a medida<small>Desde 12 porciones</small></figcaption></figure>
+    <figure><img src="https://images.unsplash.com/photo-1583338917451-face2751d8d5?w=400&h=400&fit=crop&q=72&auto=format" alt="Bocaditos" loading="lazy"><figcaption>Bocaditos<small>Dulces y salados</small></figcaption></figure>
+    <figure><img src="https://images.unsplash.com/photo-1547398847-19d7560a6257?w=400&h=400&fit=crop&q=72&auto=format" alt="Trufas" loading="lazy"><figcaption>Trufas y alfajores<small>Artesanales</small></figcaption></figure>
+  </div>
+  <div class="cta"><button class="btn car" type="button" data-open="bakery">Pedir cotización</button></div>
+</div></section>
+
+<section style="padding-top:0"><div class="wrap info">
+  <div class="box rv"><h3>Horario</h3><div class="hrs" id="hrs"></div></div>
+  <div class="box rv"><h3>Encuéntranos</h3><p style="color:var(--muted)">Av. Primavera 923, San Borja – Lima</p>
+    <div class="links">
+      <a href="https://maps.google.com/?cid=17310616053147556792" target="_blank" rel="noopener">📍 Cómo llegar <span>→</span></a>
+      <a href="https://www.instagram.com/paralelorestaurante" target="_blank" rel="noopener">📷 Instagram <span>→</span></a>
+      <a href="#" onclick="return false">🎵 TikTok · Facebook <span>→</span></a>
+    </div></div>
+</div></section>
+
+<footer><a class="brand" href="#inicio"><svg class="mono"><use href="#mono"/></svg><span class="word">PARALELO<small>RESTAURANTE CAFÉ</small></span></a>Propuesta de diseño hecha por Cartify · fotos y precios referenciales</footer>
+
+<div class="bar hide" id="bar"><button type="button" data-open="mesa"><div><small>Martes a domingo</small><b>Reserva tu mesa</b></div><span class="go">Reservar</span></button></div>
+
+<div class="veil" id="veil"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="shT">
+  <div class="grab"></div><button class="close" type="button" id="close" aria-label="Cerrar">✕</button>
+  <p class="kick">Te respondemos por WhatsApp</p>
+  <h3 id="shT" style="margin-top:6px">¿Qué quieres reservar?</h3>
+  <div class="seg" id="mode"><button type="button" data-m="mesa">Mesa</button><button type="button" data-m="evento">Evento</button><button type="button" data-m="bakery">Bakery</button></div>
+  <p class="lbl">Día</p><div class="row" id="days"></div>
+  <div id="hourWrap"><p class="lbl">Hora</p><div class="row" id="hours"></div></div>
+  <p class="lbl" id="pplL">Personas</p><div class="stepper"><button type="button" id="minus" aria-label="Menos">−</button><b id="ppl">2</b><button type="button" id="plus" aria-label="Más">+</button></div>
+  <p class="lbl">Ocasión</p><div class="row" id="occ"></div>
+  <a class="send" id="send" href="#" target="_blank" rel="noopener" aria-disabled="true">💬 Enviar por WhatsApp</a>
+</div>
+
+<script>
+var PHONE='51900000000';
+var U=function(id,w,h){return 'https://images.unsplash.com/photo-'+id+'?w='+w+(h?'&h='+h+'&fit=crop':'')+'&q=72&auto=format'};
+var MENU={
+ brunch:[
+  {n:'Waffles Paralelo',d:'Frutos rojos, crema batida y miel de maple.',p:34,s:1,img:'1688437310008-54045dce5167'},
+  {n:'Huevos benedictinos',d:'Pan brioche, jamón ahumado y salsa holandesa.',p:38,img:'1608039829572-78524f79c4c7'},
+  {n:'Tostadas francesas',d:'Brioche caramelizado, frutas y flores comestibles.',p:36,img:'1676037150606-ce6df635189e'},
+  {n:'Latte de especialidad',d:'Café peruano de altura, leche a elección.',p:14,img:'1503240778100-fd245e17a273'}],
+ lunch:[
+  {n:'Lomo saltado Paralelo',d:'Lomo fino al wok, papas nativas y arroz.',p:62,s:1,img:'1713742000609-7dfb86bfc720'},
+  {n:'Ceviche clásico',d:'Pesca del día, leche de tigre y camote glaseado.',p:52,img:'1761314036542-6570ef45dbb3'},
+  {n:'Pesca a la plancha',d:'Con puré de loche y vegetales asados.',p:58,img:'1603073163308-9654c3fb70b5'},
+  {n:'Plato de autor',d:'La propuesta del chef, cambia cada semana.',p:68,img:'1663530761401-15eefb544889'}],
+ drinks:[
+  {n:'Espresso martini',d:'Vodka, café de especialidad y licor de café.',p:36,s:1,img:'1789009547686-83816d372653'},
+  {n:'Paralelo spritz',d:'Aperitivo, espumante y frutos rojos.',p:34,img:'1770164491218-995e4347e98f'},
+  {n:'Pisco de autor',d:'Pisco quebranta, hierbas y cítricos.',p:32,img:'1771398388326-816486afc539'},
+  {n:'Mimosa',d:'Espumante y jugo de naranja recién exprimido.',p:24,img:'1764607358438-a8ac816f59fa'}]
+};
+var cur='brunch';
+function renderMenu(){
+  document.querySelectorAll('.tab').forEach(function(t){t.setAttribute('aria-selected',t.dataset.t===cur)});
+  var m=document.getElementById('menu');m.innerHTML='';
+  MENU[cur].forEach(function(i,k){var d=document.createElement('article');d.className='it';d.style.animationDelay=(k*60)+'ms';
+    d.innerHTML='<img src="'+U(i.img,200,200)+'" alt="" loading="lazy"><div>'+(i.s?'<span class="sig">Firma de la casa</span>':'')+'<h3>'+i.n+'</h3><p>'+i.d+'</p></div><span class="pr">S/ '+i.p+'</span>';m.appendChild(d);});
+}
+document.querySelectorAll('.tab').forEach(function(t){t.onclick=function(){cur=t.dataset.t;renderMenu();}});
+document.querySelectorAll('.mo').forEach(function(b){b.onclick=function(){cur=b.dataset.tab;renderMenu();document.getElementById('carta').scrollIntoView({behavior:'smooth'});}});
+renderMenu();
+
+// hora de Lima y horario real (lunes cerrado)
+function lima(){try{var p=new Intl.DateTimeFormat('en-US',{timeZone:'America/Lima',year:'numeric',month:'numeric',day:'numeric',hour:'numeric',minute:'numeric',hour12:false}).formatToParts(new Date()),o={};p.forEach(function(x){o[x.type]=x.value});return new Date(+o.year,+o.month-1,+o.day,+o.hour%24,+o.minute);}catch(e){return new Date();}}
+var NOW=lima(),DN=['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+function closeH(d){return d===0?22:23} function isOpenDay(d){return d!==1}
+(function(){var d=NOW.getDay(),h=NOW.getHours(),open=isOpenDay(d)&&h>=8&&h<closeH(d);
+  document.getElementById('st').classList.toggle('off',!open);
+  document.getElementById('stT').textContent=open?'Abierto ahora · hasta las '+(closeH(d)-12)+' p. m.':(d===1?'Hoy lunes descansamos · abrimos el martes 8 a. m.':'Cerrado ahora · abrimos a las 8 a. m.');
+  var H=document.getElementById('hrs'),order=[2,3,4,5,6,0,1];
+  order.forEach(function(k){var r=document.createElement('div');if(k===d)r.className='today';
+    r.innerHTML='<span>'+DN[k]+'</span><span>'+(k===1?'Cerrado':'8:00 – '+closeH(k)+':00')+'</span>';H.appendChild(r);});})();
+
+// parallax del hero
+var bg=document.getElementById('bg');
+// carrusel 3D según su posición
+var flow=document.getElementById('flow');
+function coverflow(){var c=flow.getBoundingClientRect(),mid=c.left+c.width/2;
+  flow.querySelectorAll('.mo').forEach(function(m){var r=m.getBoundingClientRect(),off=((r.left+r.width/2)-mid)/c.width;
+    var cl=Math.max(-1,Math.min(1,off*1.6));m.style.transform='rotateY('+(-cl*28)+'deg) scale('+(1-Math.abs(cl)*.1)+') translateZ('+(-Math.abs(cl)*60)+'px)';});}
+flow.addEventListener('scroll',function(){requestAnimationFrame(coverflow)},{passive:true});
+window.addEventListener('resize',coverflow);coverflow();
+// inclinación 3D de los accesos
+var touch=matchMedia('(hover:none)').matches;
+document.querySelectorAll('.tile').forEach(function(t){
+  t.addEventListener('pointermove',function(e){if(e.pointerType!=='mouse')return;var r=t.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;
+    t.style.transform='rotateX('+((.5-y)*14)+'deg) rotateY('+((x-.5)*16)+'deg) translateZ(6px)';t.style.setProperty('--mx',x*100+'%');t.style.setProperty('--my',y*100+'%');});
+  t.addEventListener('pointerleave',function(){t.style.transform='';});});
+// en celular: leve inclinación con el giroscopio si existe (sin pedir permisos en iOS)
+if(touch&&window.DeviceOrientationEvent&&typeof DeviceOrientationEvent.requestPermission!=='function'){
+  window.addEventListener('deviceorientation',function(e){if(e.gamma==null)return;var g=Math.max(-20,Math.min(20,e.gamma)),b=Math.max(-20,Math.min(20,(e.beta||45)-45));
+    document.getElementById('grid').style.transform='rotateY('+(g*.35)+'deg) rotateX('+(-b*.25)+'deg)';});}
+// aparición al hacer scroll
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{threshold:.15});
+document.querySelectorAll('.rv').forEach(function(el){io.observe(el)});
+// nieve en la tarjeta de temporada
+(function(){var s=document.getElementById('snow');for(var i=0;i<22;i++){var f=document.createElement('i');f.style.left=Math.random()*100+'%';f.style.animationDuration=(5+Math.random()*6)+'s';f.style.animationDelay=(-Math.random()*8)+'s';f.style.opacity=.3+Math.random()*.6;f.style.transform='scale('+(.5+Math.random())+')';s.appendChild(f);}})();
+// barra fija y parallax
+window.addEventListener('scroll',function(){var y=window.scrollY;bg.style.transform='translateY('+(y*.25)+'px) scale(1.05)';
+  document.getElementById('bar').classList.toggle('hide',y<520||document.body.classList.contains('open'));},{passive:true});
+
+// hoja de reserva
+var S={mode:'mesa',day:null,hour:null,ppl:2,occ:null};
+var OCC={mesa:['Brunch','Almuerzo','Cena','Cumpleaños','Aniversario','Menú ejecutivo','Christmas Tea Time'],evento:['Cumpleaños','Corporativo','Familiar','Taller de arte','Kids','Pack cumpleaños'],bakery:['Torta a medida','Bocaditos','Trufas y alfajores']};
+var DAYS=[];for(var i=0;i<14;i++){var d=new Date(NOW.getFullYear(),NOW.getMonth(),NOW.getDate()+i);DAYS.push(d);}
+function el(t,c,h){var e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e;}
+function draw(){
+  document.querySelectorAll('#mode button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.m===S.mode)});
+  document.getElementById('shT').textContent=S.mode==='mesa'?'Reserva tu mesa':S.mode==='evento'?'Cotiza tu evento':'Pide a Paralelo Bakery';
+  document.getElementById('pplL').textContent=S.mode==='bakery'?'Porciones (aprox.)':'Personas';
+  document.getElementById('hourWrap').style.display=S.mode==='bakery'?'none':'';
+  var D=document.getElementById('days');D.innerHTML='';
+  DAYS.forEach(function(d,i){var b=el('button','opt');b.type='button';var closed=d.getDay()===1&&S.mode!=='bakery';b.disabled=closed;
+    b.innerHTML=(i===0?'Hoy':i===1?'Mañana':DN[d.getDay()].slice(0,3))+'<small>'+(closed?'cerrado':d.getDate())+'</small>';b.setAttribute('aria-pressed',S.day===i);
+    b.onclick=function(){S.day=i;S.hour=null;draw();};D.appendChild(b);});
+  var H=document.getElementById('hours');H.innerHTML='';
+  if(S.day!=null){var dd=DAYS[S.day],last=closeH(dd.getDay())-1;
+    for(var h=8;h<=last;h++){(function(h){var t=(h<10?'0':'')+h+':00',b=el('button','opt');b.type='button';b.textContent=t;
+      b.disabled=S.day===0&&h<=NOW.getHours();b.setAttribute('aria-pressed',S.hour===t);b.onclick=function(){S.hour=t;draw();};H.appendChild(b);})(h);}}
+  else H.innerHTML='<span style="font-size:.85rem;color:var(--muted)">Primero elige el día</span>';
+  document.getElementById('ppl').textContent=S.ppl;
+  var O=document.getElementById('occ');O.innerHTML='';
+  OCC[S.mode].forEach(function(o){var b=el('button','opt');b.type='button';b.textContent=o;b.setAttribute('aria-pressed',S.occ===o);b.onclick=function(){S.occ=S.occ===o?null:o;draw();};O.appendChild(b);});
+  var ok=S.day!=null&&(S.mode==='bakery'||S.hour),a=document.getElementById('send');a.setAttribute('aria-disabled',ok?'false':'true');
+  if(ok){var d=DAYS[S.day],dt=DN[d.getDay()].toLowerCase()+' '+d.getDate()+'/'+(d.getMonth()+1);
+    var msg=S.mode==='mesa'?'Hola Paralelo, quiero reservar una mesa:\n• Día: '+dt+'\n• Hora: '+S.hour+'\n• Personas: '+S.ppl+(S.occ?'\n• Ocasión: '+S.occ:'')
+      :S.mode==='evento'?'Hola Paralelo, quiero cotizar un evento:\n• Fecha: '+dt+'\n• Hora: '+S.hour+'\n• Invitados: '+S.ppl+(S.occ?'\n• Tipo: '+S.occ:'')
+      :'Hola Paralelo Bakery, quiero cotizar:\n• Para el: '+dt+'\n• Porciones: '+S.ppl+(S.occ?'\n• Producto: '+S.occ:'');
+    a.href='https://wa.me/'+PHONE+'?text='+encodeURIComponent(msg);}
+}
+function openSheet(mode,occ){S.mode=mode||'mesa';S.occ=occ||null;if(S.mode==='evento'&&S.ppl<8)S.ppl=12;if(S.mode==='mesa'&&S.ppl>8)S.ppl=2;draw();document.body.classList.add('open');document.getElementById('bar').classList.add('hide');setTimeout(function(){document.getElementById('close').focus()},50);}
+function closeSheet(){document.body.classList.remove('open');}
+document.querySelectorAll('[data-open]').forEach(function(b){b.addEventListener('click',function(){openSheet(b.dataset.open,b.dataset.occ)})});
+document.querySelectorAll('#mode button').forEach(function(b){b.onclick=function(){S.mode=b.dataset.m;S.occ=null;draw();}});
+document.getElementById('minus').onclick=function(){S.ppl=Math.max(1,S.ppl-1);draw();};
+document.getElementById('plus').onclick=function(){S.ppl=Math.min(200,S.ppl+1);draw();};
+document.getElementById('veil').onclick=closeSheet;document.getElementById('close').onclick=closeSheet;
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeSheet();});
+</script>
+</body>
+</html>
