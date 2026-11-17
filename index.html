@@ -528,7 +528,7 @@ document.querySelectorAll('.card,.plan').forEach(function(c){
   // flechas y contador
   function step(d){var w=G.querySelector('.ex').offsetWidth+22;G.scrollBy({left:d*w,behavior:'smooth'});}
   document.getElementById('gPrev').onclick=function(){step(-1)};document.getElementById('gNext').onclick=function(){step(1)};
-  function pos(){var w=G.querySelector('.ex').offsetWidth+22,i=Math.min(EX.length,Math.round(G.scrollLeft/w)+1);document.getElementById('gPos').textContent=i+' / '+EX.length;}
+  function pos(){var c=G.getBoundingClientRect(),mid=c.left+c.width/2,best=0,bd=1e9;G.querySelectorAll('.ex').forEach(function(x,i){var r=x.getBoundingClientRect(),d=Math.abs(r.left+r.width/2-mid);if(d<bd){bd=d;best=i;}});document.getElementById('gPos').textContent=(best+1)+' / '+EX.length;}
   pos();})();
 
 /* ===== Demo interactiva ===== */
