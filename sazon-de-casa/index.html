@@ -86,7 +86,7 @@ header h1{font-size:2.5rem;font-weight:800}
 <body>
 
 <div class="app">
-  <p class="demo">Ejemplo de menú del día editable · Cartify</p>
+  <p class="demo">Ejemplo de menú del día editable · Cartify<span id="src"></span></p>
   <header class="pad">
     <h1 id="name">Sazón de Casa</h1>
     <span class="kick">MENÚ DEL DÍA</span>
@@ -134,7 +134,7 @@ header h1{font-size:2.5rem;font-weight:800}
 var CONFIG={
   name:'Sazón de Casa',
   whatsapp:'51900000000',
-  SHEET_CSV:''
+  SHEET_CSV:'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ7G0UyzY4FFgDNDdW6y9FtcKop5b20sDlBtkx64TAvErjMv1ncSvmnNEGymUoL_gGbVuejxoPkhLVM/pub?output=csv'
 };
 var DEMO_CSV=[
  'Sección,Plato,Nota',
@@ -299,7 +299,7 @@ document.getElementById('img').onclick=async function(){
 /* ===== Arranque ===== */
 (async function(){
   var csv=DEMO_CSV;
-  if(CONFIG.SHEET_CSV){try{var r=await fetch(CONFIG.SHEET_CSV+(CONFIG.SHEET_CSV.indexOf('?')>-1?'&':'?')+'t='+Date.now());if(r.ok)csv=await r.text();}catch(e){}}
+  if(CONFIG.SHEET_CSV){try{var r=await fetch(CONFIG.SHEET_CSV+(CONFIG.SHEET_CSV.indexOf('?')>-1?'&':'?')+'t='+Date.now());if(r.ok){var t=await r.text();if(/^\s*secci/i.test(t)){csv=t;document.getElementById('src').textContent=' · se actualiza desde Google Sheets';}}}catch(e){}}
   M=toMenu(csv);render();
 })();
 </script>
