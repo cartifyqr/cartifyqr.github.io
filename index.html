@@ -175,6 +175,19 @@ section{padding:84px 0;position:relative}
 .plan.dark .pr small{color:#BDB4C8}
 .plan.dark li::before{background:var(--pink);color:#fff;border-color:#fff}
 .ribbon{position:absolute;top:-16px;right:20px;background:var(--sun);color:var(--ink);border:3px solid var(--ink);font-weight:800;font-size:.78rem;letter-spacing:.08em;padding:6px 12px;border-radius:999px;transform:rotate(3deg)}
+.launch{display:flex;gap:14px;align-items:center;background:var(--sun);border:3px solid var(--ink);border-radius:20px;padding:14px 18px;margin:-10px 0 28px;box-shadow:5px 5px 0 var(--ink);max-width:760px}
+.launch span{font-size:1.8rem}
+.launch p{font-weight:600;line-height:1.4}
+.shop{margin-top:22px;display:grid;gap:18px;background:var(--mint);border:3px solid var(--ink);border-radius:28px;padding:24px;box-shadow:var(--shadow)}
+.shop .nm{font-weight:800;letter-spacing:.12em;text-transform:uppercase;font-size:.8rem}
+.shop h3{font-size:2rem;margin-top:8px}
+.shop p{margin-top:8px;font-weight:500}
+.shop .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.shop .tags span{background:var(--paper);border:2px solid var(--ink);border-radius:999px;padding:5px 11px;font-weight:700;font-size:.86rem}
+.shop .sp{display:grid;gap:12px;align-content:center}
+.shop .pr{font-family:var(--display);font-weight:800;font-size:3.2rem;letter-spacing:-.04em;line-height:1}
+.shop .pr small{display:block;font-family:var(--body);font-size:.88rem;letter-spacing:0;color:var(--muted);margin-top:6px}
+.shop .nb{font-size:.8rem;color:var(--muted);font-weight:600}
 .extras{display:grid;gap:10px;margin-top:22px}
 .extras div{display:flex;justify-content:space-between;gap:12px;align-items:center;background:var(--paper);border:2.5px solid var(--ink);border-radius:16px;padding:12px 16px;font-weight:700}
 .extras b{font-family:var(--display);font-size:1.15rem;white-space:nowrap}
@@ -246,6 +259,7 @@ footer .logo b{color:#fff}
   .tgrid{grid-template-columns:1fr 1fr}
   .plans{grid-template-columns:repeat(4,1fr);align-items:stretch}
   .extras{grid-template-columns:repeat(3,1fr)}
+  .shop{grid-template-columns:1.4fr .6fr;align-items:center}
   .qgrid{grid-template-columns:1.2fr .8fr}
   .steps{grid-template-columns:repeat(4,1fr)}
   .st{flex-direction:column}
@@ -307,12 +321,12 @@ footer .logo b{color:#fff}
 <section id="servicios" style="padding-top:20px"><div class="wrap">
   <div class="sh rv"><span class="kick"><i></i>Servicios</span><h2>Todo lo que tu negocio <span class="hl">necesita</span>.</h2><p>Para restaurantes, cafeterías, bares, barberías, salones, tiendas y emprendimientos.</p></div>
   <div class="svc" id="svc">
-    <div class="card big rv"><div class="ic">📱</div><h3>Carta o catálogo digital con QR</h3><p>Tus productos o servicios con fotos y precios. El cliente elige, y el pedido te llega por WhatsApp con el total calculado. Ideal para la mesa, el mostrador o tu Instagram.</p><span class="from" style="background:var(--sun);color:var(--ink)">desde S/ 80</span></div>
-    <div class="card rv"><div class="ic" style="background:var(--skysoft)">🌐</div><h3>Página web</h3><p>Quiénes son, servicios, fotos, ubicación y reservas. Rápida y lista para Google.</p><span class="from">desde S/ 250</span></div>
+    <div class="card big rv"><div class="ic">📱</div><h3>Carta o catálogo digital con QR</h3><p>Tus productos o servicios con fotos y precios. El cliente elige, y el pedido te llega por WhatsApp con el total calculado. Ideal para la mesa, el mostrador o tu Instagram.</p><span class="from" style="background:var(--sun);color:var(--ink)">desde S/ 99</span></div>
+    <div class="card rv"><div class="ic" style="background:var(--skysoft)">🌐</div><h3>Página web</h3><p>Quiénes son, servicios, fotos, ubicación y reservas. Rápida y lista para Google.</p><span class="from">desde S/ 400</span></div>
     <div class="card rv"><div class="ic" style="background:var(--mint)">📅</div><h3>Reservas por WhatsApp</h3><p>Día, hora, personas y ocasión en 20 segundos. Te llega el mensaje completo.</p><span class="from">incluido</span></div>
     <div class="card rv"><div class="ic" style="background:var(--pinksoft)">🔗</div><h3>Un solo enlace</h3><p>WhatsApp, ubicación, Yape, horario y redes. El reemplazo bonito de Linktree.</p><span class="from">S/ 50</span></div>
     <div class="card rv"><div class="ic" style="background:var(--sunsoft)">🖼️</div><h3>Imágenes para redes</h3><p>Para tus estados e Instagram: carta, pagos, horario, ¡ya abrimos!</p><span class="from">S/ 50</span></div>
-    <div class="card rv"><div class="ic" style="background:var(--skysoft)">🖨️</div><h3>Kit QR para imprimir</h3><p>QR de tu carta, de Yape y de reseñas en Google. Solo lo imprimes.</p><span class="from">en el pack</span></div>
+    <div class="card rv"><div class="ic" style="background:var(--skysoft)">🛒</div><h3>Tienda virtual</h3><p>Catálogo con carrito, pago con Yape o Plin y pedidos por WhatsApp.</p><span class="from">desde S/ 800</span></div>
     <div class="card rv"><div class="ic" style="background:var(--mint)">📍</div><h3>Google Maps</h3><p>Tu ficha con horario, fotos y enlace correcto para que te encuentren.</p><span class="from">S/ 60</span></div>
     <div class="card rv"><div class="ic" style="background:var(--pinksoft)">✨</div><h3>Efectos 3D y animación</h3><p>Para marcas que quieren destacar: tarjetas que giran, carruseles y más.</p><span class="from">a medida</span></div>
   </div>
@@ -345,11 +359,17 @@ footer .logo b{color:#fff}
 <!-- precios -->
 <section id="precios" style="padding-top:30px"><div class="wrap">
   <div class="sh rv"><span class="kick"><i></i>Precios</span><h2>Claros y en <span class="hl">soles</span>.</h2><p>Pago único. Sin mensualidades obligatorias. 50 % al empezar y el resto cuando lo apruebes.</p></div>
+  <div class="launch rv"><span>🚀</span><p><b>Precios de lanzamiento.</b> Estamos empezando, por eso nuestros precios están muy por debajo del mercado. Aprovéchalos mientras duren.</p></div>
   <div class="plans">
-    <div class="plan rv"><p class="nm">Carta QR</p><p class="pr">S/ 80 <small>pago único</small></p><ul><li>Carta o catálogo con fotos</li><li>Pedido por WhatsApp con total</li><li>QR listo para tus mesas</li><li>1 cambio gratis</li></ul><a class="btn white" data-wa="Hola Cartify 👋 Me interesa la Carta QR (S/ 80)." href="#">La quiero</a></div>
-    <div class="plan star rv"><span class="ribbon">EL MÁS PEDIDO</span><p class="nm">Pack completo</p><p class="pr">S/ 150 <small>ahorras S/ 30</small></p><ul><li>Carta digital con QR</li><li>Un solo enlace para Instagram</li><li>3 imágenes para tus estados</li><li>Kit QR para imprimir</li><li>Reservas por WhatsApp</li></ul><a class="btn ink" data-wa="Hola Cartify 👋 Me interesa el Pack completo (S/ 150)." href="#">Lo quiero</a></div>
-    <div class="plan rv"><p class="nm">Página web</p><p class="pr">S/ 250 <small>pago único</small></p><ul><li>Una página profesional</li><li>Servicios, fotos y ubicación</li><li>Reservas por WhatsApp</li><li>Lista para conectar tu .com</li></ul><a class="btn white" data-wa="Hola Cartify 👋 Me interesa una Página web (S/ 250)." href="#">La quiero</a></div>
-    <div class="plan dark rv"><p class="nm">A medida</p><p class="pr">S/ 450+ <small>cotización</small></p><ul><li>Todo en una sola página</li><li>Reservas, eventos y packs</li><li>Efectos 3D y animaciones</li><li>Actualización mensual opcional</li></ul><a class="btn pink" data-wa="Hola Cartify 👋 Quiero cotizar una página a medida." href="#">Cotizar</a></div>
+    <div class="plan rv"><p class="nm">Carta QR</p><p class="pr">S/ 99 <small>pago único</small></p><ul><li>Carta o catálogo con fotos</li><li>Pedido por WhatsApp con total</li><li>QR listo para tus mesas</li><li>1 cambio gratis</li></ul><a class="btn white" data-wa="Hola Cartify 👋 Me interesa la Carta QR (S/ 99)." href="#">La quiero</a></div>
+    <div class="plan star rv"><span class="ribbon">EL MÁS PEDIDO</span><p class="nm">Pack completo</p><p class="pr">S/ 169 <small>ahorras S/ 30</small></p><ul><li>Carta digital con QR</li><li>Un solo enlace para Instagram</li><li>3 imágenes para tus estados</li><li>Kit QR para imprimir</li><li>Reservas por WhatsApp</li></ul><a class="btn ink" data-wa="Hola Cartify 👋 Me interesa el Pack completo (S/ 169)." href="#">Lo quiero</a></div>
+    <div class="plan rv"><p class="nm">Página web</p><p class="pr">S/ 400 <small>pago único</small></p><ul><li>Página profesional de una sección</li><li>Servicios, fotos y ubicación</li><li>Reservas por WhatsApp</li><li>Lista para conectar tu .com</li></ul><a class="btn white" data-wa="Hola Cartify 👋 Me interesa una Página web (S/ 400)." href="#">La quiero</a></div>
+    <div class="plan dark rv"><p class="nm">Web corporativa</p><p class="pr">S/ 600+ <small>a medida</small></p><ul><li>Varias secciones o páginas</li><li>Reservas, eventos y packs</li><li>Efectos 3D y animaciones</li><li>Actualización mensual opcional</li></ul><a class="btn pink" data-wa="Hola Cartify 👋 Quiero cotizar una web corporativa (desde S/ 600)." href="#">Cotizar</a></div>
+  </div>
+  <div class="shop rv">
+    <div><p class="nm">Tienda virtual</p><h3>Vende tus productos online</h3><p>Catálogo con carrito, fotos, stock y variantes. El cliente arma su pedido, paga con Yape o Plin y te llega todo por WhatsApp. Sin comisiones por venta.</p>
+      <div class="tags"><span>🛒 Carrito</span><span>🔎 Buscador y categorías</span><span>💜 Yape y Plin</span><span>🚚 Delivery o recojo</span></div></div>
+    <div class="sp"><p class="pr">S/ 800+ <small>según cantidad de productos</small></p><a class="btn wa" data-wa="Hola Cartify 👋 Quiero cotizar una tienda virtual (desde S/ 800)." href="#">Cotizar mi tienda</a><small class="nb">¿Cobros con tarjeta? Se cotiza aparte.</small></div>
   </div>
   <div class="extras">
     <div>Cambios después del primero <b>S/ 10</b></div>
@@ -369,7 +389,7 @@ footer .logo b{color:#fff}
       <span class="sv" id="qsv" hidden></span>
       <ul id="ql"><li>Marca al menos una opción</li></ul>
       <a class="btn wa" id="qbtn" href="#"><svg width="22" height="22"><use href="#wai"/></svg>Enviar por WhatsApp</a>
-      <p class="f">Pago único · 50 % al inicio · Yape o Plin</p>
+      <p class="f">Precios de lanzamiento · pago único · 50 % al inicio · Yape o Plin</p>
     </div>
   </div>
 </div></section>
@@ -414,7 +434,7 @@ footer .logo b{color:#fff}
 
 <script>
 /* ===== Configuración: cambia aquí tu número de WhatsApp (código de país + número, sin espacios) ===== */
-var WHATSAPP='51900000000';
+var WHATSAPP='51942251113';
 function wa(t){return 'https://wa.me/'+WHATSAPP+'?text='+encodeURIComponent(t);}
 document.querySelectorAll('[data-wa]').forEach(function(a){a.href=wa(a.dataset.wa);a.target='_blank';a.rel='noopener';});
 document.getElementById('yr').textContent=new Date().getFullYear();
@@ -475,10 +495,12 @@ document.querySelectorAll('.card,.plan').forEach(function(c){
 
 /* ===== Cotizador ===== */
 (function(){var O=[
-  {k:'carta',n:'Carta o catálogo con QR',d:'Con fotos, pedido por WhatsApp',p:80},
+  {k:'carta',n:'Carta o catálogo con QR',d:'Con fotos, pedido por WhatsApp',p:99},
   {k:'enlace',n:'Un solo enlace',d:'Para tu Instagram y WhatsApp',p:50},
   {k:'imgs',n:'Imágenes para redes',d:'Para estados e Instagram',p:50},
-  {k:'web',n:'Página web',d:'Una página profesional',p:250},
+  {k:'web',n:'Página web',d:'Una página profesional',p:400},
+  {k:'corp',n:'Web corporativa',d:'Varias secciones, a medida (desde)',p:600},
+  {k:'shop',n:'Tienda virtual',d:'Carrito, Yape y pedidos (desde)',p:800},
   {k:'maps',n:'Google Maps arreglado',d:'Horario, fotos y enlace',p:60},
   {k:'dom',n:'Dominio .com propio',d:'Primer año, ya conectado',p:50},
   {k:'mant',n:'Mantenimiento mensual',d:'Cambios y promos cada mes',p:25,m:1}],S={carta:true};
