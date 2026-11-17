@@ -121,6 +121,7 @@ section{padding:84px 0;position:relative;overflow-x:clip}
 .card .ic{width:54px;height:54px;border-radius:16px;border:2.5px solid var(--ink);display:grid;place-items:center;font-size:1.6rem}
 .card h3{font-size:1.2rem;margin-top:14px;line-height:1.1}
 .card{min-width:0}
+.svc .card:last-child{grid-column:1/-1}
 .card p{font-size:.9rem}
 
 .card p{font-size:.94rem;color:var(--muted);margin-top:8px;font-weight:500}
@@ -306,6 +307,7 @@ footer .logo b{color:#fff}
   .vs{grid-template-columns:1fr 1fr}
   .svc{grid-template-columns:repeat(3,1fr)}
   .card.big{grid-column:span 2}
+  .svc .card:last-child{grid-column:auto}
   .tgrid{grid-template-columns:1fr 1fr}
   .plans{grid-template-columns:repeat(4,1fr);align-items:stretch}
   .extras{grid-template-columns:repeat(3,1fr)}
