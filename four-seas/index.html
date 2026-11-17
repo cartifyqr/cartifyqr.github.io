@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#13245C">
+<title>Four Seas · 4 Mares · Carta</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Yellowtail&family=Noto+Serif+SC:wght@700&family=Figtree:wght@400;500;600;700;800;900&display=swap">
+<style>
+/* Muestra corta para un chifa: azul real del letrero, dorado y rojo. Una columna, máx. 480px */
+:root{
+  --navy:#13245C; --blue:#1C3B95; --gold:#F2C14E; --gold2:#FFE3A1; --red:#C8102E; --cream:#FBF5EA; --card:#FFFFFF;
+  --ink:#1A1D2B; --muted:#6E6A75; --line:#EADFC9; --soft:#F4EBDA; --wa:#25D366;
+  --script:"Yellowtail", cursive; --body:"Figtree", system-ui, sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:#E9DFCB}
+body{color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5}
+.app{max-width:480px;margin:0 auto;background:var(--cream);min-height:100vh;padding-bottom:calc(120px + env(safe-area-inset-bottom,0px));box-shadow:0 0 40px rgba(19,36,92,.18)}
+.pad{padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px))}
+h1,h2,h3{margin:0;line-height:1.1}
+p{margin:0}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+
+.demo{font-size:.76rem;font-weight:700;text-align:center;background:var(--red);color:#fff;padding:6px 12px}
+
+header{position:relative;color:#fff;text-align:center;overflow:hidden;
+  background:linear-gradient(180deg,rgba(19,36,92,.35) 0%,rgba(19,36,92,.6) 45%,rgba(19,36,92,.97) 100%),url('https://images.unsplash.com/photo-1780375578961-ef93d67592a8?w=960&q=72&auto=format') center/cover;
+  padding:calc(26px + env(safe-area-inset-top,0px)) 18px 66px}
+.emblem{width:74px;height:74px;margin:0 auto;border-radius:50%;background:#fff;display:grid;place-items:center;box-shadow:0 8px 22px rgba(0,0,0,.3);border:3px solid var(--gold)}
+.emblem svg{width:56px;height:56px}
+header h1{font-family:var(--script);font-weight:400;font-size:3.6rem;color:var(--gold);margin-top:6px;text-shadow:0 3px 14px rgba(0,0,0,.4);line-height:1}
+.cn{font-family:"Noto Serif SC",serif;font-size:1rem;letter-spacing:.4em;margin-top:4px;color:var(--gold2)}
+.sub{margin-top:6px;font-weight:700;letter-spacing:.2em;font-size:.78rem;text-transform:uppercase;opacity:.92}
+.chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:16px}
+.chip{font-size:.82rem;font-weight:700;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);padding:5px 12px;border-radius:999px;backdrop-filter:blur(4px)}
+.wave{position:absolute;left:0;right:0;bottom:-1px;height:36px;width:100%}
+.wave path{fill:var(--cream)}
+
+/* selector de carta */
+.switch{position:relative;margin:-30px 18px 0;z-index:3;background:var(--card);border-radius:20px;padding:6px;display:grid;grid-template-columns:1fr 1fr;gap:6px;box-shadow:0 10px 28px rgba(19,36,92,.16)}
+.sw{border-radius:15px;padding:11px 8px;font-weight:800;font-size:.95rem;color:var(--navy);text-align:center;line-height:1.15}
+.sw small{display:block;font-weight:600;font-size:.72rem;color:var(--muted);margin-top:2px}
+.sw[aria-selected="true"]{background:var(--navy);color:#fff}
+.sw[aria-selected="true"] small{color:var(--gold2)}
+
+.intro{margin-top:18px;font-size:.9rem;color:var(--muted);text-align:center}
+.intro b{color:var(--red)}
+.list{display:grid;gap:12px;margin-top:16px}
+.dish{display:grid;grid-template-columns:96px 1fr;gap:14px;background:var(--card);border-radius:18px;padding:10px;box-shadow:0 2px 12px rgba(19,36,92,.07);animation:in .3s ease both}
+@keyframes in{from{opacity:.4;transform:translateY(6px)}to{opacity:1;transform:none}}
+.ph{width:96px;height:96px;border-radius:14px;object-fit:cover;background:var(--soft)}
+.info{display:grid;gap:3px;align-content:start;min-width:0;padding-top:1px}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:.66rem;font-weight:900;letter-spacing:.05em;text-transform:uppercase;padding:2px 8px;border-radius:6px;background:var(--red);color:#fff}
+.tag.two{background:var(--gold);color:var(--navy)}
+.info h3{font-size:1rem;font-weight:800}
+.info h3 span{font-family:"Noto Serif SC",serif;font-weight:700;font-size:.78rem;color:var(--muted);margin-left:4px}
+.info p{font-size:.85rem;color:var(--muted);line-height:1.35}
+.bot{display:flex;justify-content:space-between;align-items:center;margin-top:4px}
+.price{font-weight:900;font-size:1.08rem;color:var(--navy);font-variant-numeric:tabular-nums}
+.add{background:var(--navy);color:#fff;font-weight:800;font-size:.86rem;padding:7px 14px;border-radius:999px}
+.qty{display:flex;align-items:center;gap:10px;background:var(--soft);border-radius:999px;padding:3px}
+.qty button{width:30px;height:30px;border-radius:50%;background:#fff;color:var(--navy);font-weight:900;font-size:1.05rem;line-height:1}
+.qty span{font-weight:900;min-width:1.2ch;text-align:center}
+
+.gift{margin-top:22px;display:flex;gap:12px;align-items:center;background:var(--navy);color:#fff;border-radius:18px;padding:14px 16px}
+.gift i{font-style:normal;font-size:1.8rem}
+.gift b{color:var(--gold)}
+.boxes{display:grid;gap:12px;margin-top:12px}
+.box{background:var(--card);border-radius:18px;padding:16px;box-shadow:0 2px 12px rgba(19,36,92,.07)}
+.box h3{font-size:1rem;color:var(--red);margin-bottom:6px}
+.box p{font-size:.92rem;color:var(--muted)}
+.box p b{color:var(--ink)}
+.acts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.act{display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;font-weight:800;color:var(--navy);background:var(--soft);border-radius:14px;padding:12px}
+.made{text-align:center;color:var(--muted);font-size:.78rem;padding-top:20px}
+
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:10;display:flex;justify-content:center;pointer-events:none;padding:0 12px calc(14px + env(safe-area-inset-bottom,0px))}
+.bar-in{pointer-events:auto;width:100%;max-width:456px;background:var(--navy);color:#fff;border-radius:20px;padding:12px 12px 12px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 12px 30px rgba(19,36,92,.4);transition:transform .25s,opacity .25s}
+.bar.empty .bar-in{transform:translateY(130%);opacity:0}
+.bar small{display:block;opacity:.8;font-size:.8rem}
+.bar .tot{font-weight:900;font-size:1.3rem;color:var(--gold);font-variant-numeric:tabular-nums}
+.send{display:inline-flex;align-items:center;gap:8px;background:var(--wa);color:#063B1D;font-weight:800;text-decoration:none;padding:12px 16px;border-radius:14px;white-space:nowrap}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="app">
+  <p class="demo">Muestra hecha para Four Seas · precios referenciales</p>
+  <header>
+    <div class="emblem" aria-hidden="true"><svg viewBox="0 0 64 64">
+      <defs><linearGradient id="sun" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F2C14E"/><stop offset="1" stop-color="#C8102E"/></linearGradient></defs>
+      <circle cx="32" cy="32" r="28" fill="url(#sun)"/>
+      <path d="M18 26 L32 18 L46 26 Z" fill="#13245C"/><rect x="24" y="26" width="16" height="6" fill="#13245C"/>
+      <path d="M15 36 L32 29 L49 36 Z" fill="#13245C"/><rect x="21" y="36" width="22" height="7" fill="#13245C"/>
+      <path d="M8 49 q6-5 12 0 t12 0 t12 0 t12 0" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg></div>
+    <h1>Four Seas</h1>
+    <p class="cn">四海一家</p>
+    <p class="sub">4 Mares · Chinese Cuisine · San Borja</p>
+    <div class="chips"><span class="chip">★ 4,3 · +2 000 reseñas</span><span class="chip">🍽️ Porciones para compartir</span></div>
+    <svg class="wave" viewBox="0 0 480 36" preserveAspectRatio="none" aria-hidden="true"><path d="M0 18 C 80 0, 160 36, 240 18 S 400 0, 480 18 V36 H0Z"/></svg>
+  </header>
+
+  <div class="switch" role="tablist">
+    <button class="sw" type="button" role="tab" data-c="chifa" aria-selected="true">Chifa clásico<small>Los de siempre</small></button>
+    <button class="sw" type="button" role="tab" data-c="china" aria-selected="false">Carta china<small>Cocina de China</small></button>
+  </div>
+
+  <main class="pad">
+    <p class="intro" id="intro"></p>
+    <div class="list" id="list"></div>
+
+    <div class="gift"><i>🍉</i><p>Al final, <b>sandía de cortesía</b> para toda la mesa.</p></div>
+    <div class="boxes">
+      <div class="box"><h3>Visítanos</h3><p><b>Av. Aviación 3124, San Borja</b><br>A media cuadra de la Estación San Borja Sur. Dos pisos para grupos y celebraciones.</p>
+        <div class="acts"><a class="act" href="https://maps.google.com/?cid=7845997858917045648" target="_blank" rel="noopener">📍 Cómo llegar</a><a class="act" href="tel:+51900000000">📞 Llamar</a></div></div>
+    </div>
+    <p class="made">Carta de muestra · hecha por Cartify</p>
+  </main>
+</div>
+
+<div class="bar empty" id="bar" aria-live="polite">
+  <div class="bar-in">
+    <div><small id="cnt">0 platos</small><span class="tot" id="tot">S/ 0</span></div>
+    <a class="send" id="send" href="#" target="_blank" rel="noopener">Pedir por WhatsApp →</a>
+  </div>
+</div>
+
+<script>
+var C={
+ chifa:{intro:'Los clásicos del chifa limeño. <b>Un plato alcanza para dos.</b>',items:[
+  {id:'chaufa',name:'Arroz chaufa especial',cn:'炒饭',desc:'Al wok con pollo, chancho asado, langostinos y huevo.',price:30,two:1,tag:'El favorito',img:'1680674774705-90b4904b3a7f'},
+  {id:'tallarin',name:'Tallarín saltado especial',cn:'炒面',desc:'Fideos al wok con carnes, verduras y salsa de ostión.',price:34,two:1,img:'1705088295609-3ce7befbe8ee'},
+  {id:'tipakay',name:'Pollo tipakay',cn:'甜酸鸡',desc:'Pollo crocante en salsa dulce de piña y pimiento.',price:36,two:1,img:'1623689048105-a17b1e1936b8'},
+  {id:'wantan',name:'Sopa wantán especial',cn:'云吞汤',desc:'Caldo de la casa con wantanes y verduras.',price:28,img:'1559948271-7d5c98d2e951'}]},
+ china:{intro:'Recetas de distintas regiones de China. <b>Pregúntanos por los del día.</b>',items:[
+  {id:'yongchau',name:'Arroz Yong Chau',cn:'扬州炒饭',desc:'El arroz frito de Yangzhou, suave y bien graneado.',price:34,two:1,tag:'Recomendado',img:'1664717698774-84f62382613b'},
+  {id:'sahofan',name:'Sahofan de carne',cn:'干炒牛河',desc:'Fideo de arroz ancho salteado con lomo, jugoso.',price:38,two:1,img:'1666613710166-91a0cb67fad9'},
+  {id:'costillas',name:'Costillas al ajo',cn:'蒜香排骨',desc:'Costillas de cerdo doradas con ajo crocante.',price:42,img:'1593030668930-8130abedd2b0'},
+  {id:'langostinos',name:'Langostinos crocantes',cn:'脆皮虾',desc:'Rebozados y dorados, con salsa de la casa.',price:48,img:'1579887829114-282b4fa31072'},
+  {id:'jacau',name:'Ja cau (4 unid.)',cn:'虾饺',desc:'Dim sum al vapor relleno de langostino.',price:18,img:'1607857530521-53448b220fe8'},
+  {id:'lojonchai',name:'Lo Jon Chai',cn:'罗汉斋',desc:'Verduras salteadas con tofu. Ideal si no comes carne.',price:32,img:'1687684987020-5373255b5dc3'}]}
+};
+var ALL=[];Object.keys(C).forEach(function(k){C[k].items.forEach(function(i){ALL.push(i)})});
+var cur='chifa',cart={};
+function render(){
+  document.querySelectorAll('.sw').forEach(function(b){b.setAttribute('aria-selected',b.dataset.c===cur)});
+  document.getElementById('intro').innerHTML=C[cur].intro;
+  var L=document.getElementById('list');L.innerHTML='';
+  C[cur].items.forEach(function(i){var q=cart[i.id]||0,d=document.createElement('article');d.className='dish';
+    var tags=(i.tag?'<span class="tag">'+i.tag+'</span>':'')+(i.two?'<span class="tag two">Para 2</span>':'');
+    d.innerHTML='<img class="ph" loading="lazy" alt="'+i.name+'" src="https://images.unsplash.com/photo-'+i.img+'?w=240&h=240&fit=crop&q=70&auto=format"><div class="info">'+(tags?'<div class="tags">'+tags+'</div>':'')+'<h3>'+i.name+'<span>'+i.cn+'</span></h3><p>'+i.desc+'</p><div class="bot"><span class="price">S/ '+i.price+'</span><span class="ctl"></span></div></div>';
+    var ctl=d.querySelector('.ctl');
+    if(!q){var a=document.createElement('button');a.type='button';a.className='add';a.textContent='Agregar';a.onclick=function(){set(i.id,1)};ctl.appendChild(a);}
+    else{var w=document.createElement('div');w.className='qty';
+      var mi=document.createElement('button');mi.type='button';mi.textContent='−';mi.setAttribute('aria-label','Quitar uno');mi.onclick=function(){set(i.id,q-1)};
+      var n=document.createElement('span');n.textContent=q;
+      var pl=document.createElement('button');pl.type='button';pl.textContent='+';pl.setAttribute('aria-label','Agregar uno');pl.onclick=function(){set(i.id,q+1)};
+      w.append(mi,n,pl);ctl.appendChild(w);}
+    L.appendChild(d);});
+}
+function set(id,q){if(q<=0)delete cart[id];else cart[id]=q;render();bar();}
+function bar(){var n=0,t=0,lines=[];
+  ALL.forEach(function(i){var q=cart[i.id];if(q){n+=q;t+=q*i.price;lines.push(q+'x '+i.name+' — S/ '+(q*i.price));}});
+  document.getElementById('bar').classList.toggle('empty',!n);
+  document.getElementById('cnt').textContent=n+(n===1?' plato':' platos');
+  document.getElementById('tot').textContent='S/ '+t;
+  document.getElementById('send').href='https://wa.me/51900000000?text='+encodeURIComponent('Hola Four Seas, quiero pedir:\n'+lines.join('\n')+'\nTotal: S/ '+t);}
+document.querySelectorAll('.sw').forEach(function(b){b.onclick=function(){cur=b.dataset.c;render();}});
+cart={chaufa:1,wantan:1};render();bar();
+</script>
+</body>
+</html>
