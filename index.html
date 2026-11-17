@@ -147,14 +147,15 @@ section{padding:84px 0;position:relative}
 /* ejemplos */
 .gal{display:flex;gap:22px;overflow-x:auto;scroll-snap-type:x mandatory;padding:20px max(20px,calc((100vw - 1160px)/2 + 20px)) 34px;scrollbar-width:none;perspective:1200px}
 .gal::-webkit-scrollbar{display:none}
-.gal.drag{scroll-snap-type:none;cursor:grabbing}
-.gal{cursor:grab}
-.gal img{-webkit-user-drag:none;user-select:none}
-.gnav{display:flex;align-items:center;gap:12px;margin-bottom:10px}
-.gnav button{width:50px;height:50px;border-radius:50%;background:var(--sun);border:3px solid var(--ink);box-shadow:3px 3px 0 var(--ink);font-size:1.3rem;font-weight:900;transition:transform .12s}
-.gnav button:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
-.gnav span{font-family:var(--display);font-weight:800;font-size:1.1rem;min-width:56px;text-align:center}
-.gnav small{color:var(--muted);font-weight:600}
+.gal{scroll-snap-type:none}
+.gnav{display:flex;align-items:center;gap:14px;margin:4px auto 8px;max-width:760px}
+.gnav span{font-size:1.4rem}
+#gRange{--p:0%;flex:1;-webkit-appearance:none;appearance:none;height:18px;border-radius:999px;border:3px solid var(--ink);background:linear-gradient(90deg,var(--pink) 0,var(--pink) var(--p),var(--paper) var(--p));box-shadow:3px 3px 0 var(--ink);cursor:pointer;margin:0}
+#gRange::-webkit-slider-thumb{-webkit-appearance:none;width:40px;height:40px;border-radius:50%;background:var(--sun);border:3px solid var(--ink);box-shadow:2px 2px 0 var(--ink);cursor:grab}
+#gRange::-moz-range-thumb{width:34px;height:34px;border-radius:50%;background:var(--sun);border:3px solid var(--ink);box-shadow:2px 2px 0 var(--ink);cursor:grab}
+#gRange:active::-webkit-slider-thumb{cursor:grabbing;transform:scale(1.1)}
+#gRange:focus-visible{outline:3px solid var(--pink);outline-offset:4px}
+.ghint{text-align:center;font-weight:700;font-size:.85rem;color:var(--muted)}
 .ex{flex:none;width:230px;scroll-snap-align:center;text-decoration:none;transform-style:preserve-3d;transition:transform .25s}
 .ex .ph2{width:230px;height:498px;border-radius:38px;border:9px solid #121212;overflow:hidden;box-shadow:0 0 0 3px var(--ink),10px 14px 0 var(--ink);position:relative;background:#121212}
 .ex .ph2::before{content:"";position:absolute;top:9px;left:50%;transform:translateX(-50%);width:70px;height:20px;border-radius:14px;background:#121212;z-index:2}
@@ -386,7 +387,8 @@ footer .logo b{color:#fff}
   <div class="sh rv"><span class="kick"><i></i>Ejemplos</span><h2>Cada negocio, con su <span class="hl">estilo</span>.</h2><p>Toca cualquiera para abrirlo en vivo. Pasa el cursor para recorrer la página.</p></div>
 </div>
   <div class="gal" id="gal"></div>
-  <div class="wrap gnav"><button type="button" id="gPrev" aria-label="Ejemplo anterior">←</button><span id="gPos">1 / 7</span><button type="button" id="gNext" aria-label="Ejemplo siguiente">→</button><small>o arrastra / desliza</small></div>
+  <div class="wrap gnav"><span aria-hidden="true">👈</span><input type="range" id="gRange" min="0" max="1000" value="0" aria-label="Deslizar para ver todos los ejemplos"><span aria-hidden="true">👉</span></div>
+  <div class="wrap"><p class="ghint">Desliza la barra para ver todos los ejemplos</p></div>
   <div class="wrap"><p class="note">Todos los ejemplos son negocios ficticios creados por Cartify para mostrar el estilo de trabajo. Fotos y precios referenciales.</p></div>
 </section>
 
@@ -518,19 +520,14 @@ document.querySelectorAll('.card,.plan').forEach(function(c){
   a.innerHTML='<div class="ph2"><img src="assets/'+e.id+'.jpg" alt="Ejemplo: '+e.n+'" loading="lazy"></div><div class="lb"><div><b>'+e.n+'</b><small>'+e.t+'</small></div><span>↗</span></div>';G.appendChild(a);});
   function cf(){var c=G.getBoundingClientRect(),mid=c.left+c.width/2;G.querySelectorAll('.ex').forEach(function(x){var r=x.getBoundingClientRect(),o=((r.left+r.width/2)-mid)/c.width;var cl=Math.max(-1,Math.min(1,o*1.4));
     x.style.transform=RM?'':'rotateY('+(-cl*18)+'deg) translateZ('+(-Math.abs(cl)*40)+'px)';});}
-  G.addEventListener('scroll',function(){requestAnimationFrame(cf);pos();},{passive:true});addEventListener('resize',cf);cf();
-  // arrastrar con el mouse
-  var down=false,sx=0,sl=0,moved=0;
-  G.addEventListener('pointerdown',function(e){if(e.pointerType!=='mouse')return;down=true;moved=0;sx=e.clientX;sl=G.scrollLeft;G.classList.add('drag');});
-  addEventListener('pointermove',function(e){if(!down)return;var dx=e.clientX-sx;moved=Math.max(moved,Math.abs(dx));G.scrollLeft=sl-dx;});
-  addEventListener('pointerup',function(){if(!down)return;down=false;G.classList.remove('drag');var it=G.querySelector('.ex'),w=it.offsetWidth+22;G.scrollTo({left:Math.round(G.scrollLeft/w)*w,behavior:'smooth'});});
-  G.addEventListener('click',function(e){if(moved>6){e.preventDefault();e.stopPropagation();}},true);
-  G.addEventListener('dragstart',function(e){e.preventDefault();});
-  // flechas y contador
-  function step(d){var w=G.querySelector('.ex').offsetWidth+22;G.scrollBy({left:d*w,behavior:'smooth'});}
-  document.getElementById('gPrev').onclick=function(){step(-1)};document.getElementById('gNext').onclick=function(){step(1)};
-  function pos(){var c=G.getBoundingClientRect(),mid=c.left+c.width/2,best=0,bd=1e9;G.querySelectorAll('.ex').forEach(function(x,i){var r=x.getBoundingClientRect(),d=Math.abs(r.left+r.width/2-mid);if(d<bd){bd=d;best=i;}});document.getElementById('gPos').textContent=(best+1)+' / '+EX.length;}
-  pos();})();
+  // barra deslizable sincronizada con la galería
+  var R=document.getElementById('gRange'),busy=false;
+  function maxS(){return Math.max(1,G.scrollWidth-G.clientWidth);}
+  function paintR(){var v=+R.value;R.style.setProperty('--p',(v/10)+'%');}
+  R.addEventListener('input',function(){busy=true;G.scrollLeft=(+R.value/1000)*maxS();paintR();requestAnimationFrame(cf);});
+  R.addEventListener('change',function(){busy=false;});R.addEventListener('pointerup',function(){busy=false;});
+  G.addEventListener('scroll',function(){requestAnimationFrame(cf);if(!busy){R.value=Math.round(G.scrollLeft/maxS()*1000);paintR();}},{passive:true});
+  addEventListener('resize',cf);cf();paintR();})();
 
 /* ===== Demo interactiva ===== */
 (function(){var I=[{n:'Lomo saltado',p:35,img:'1713742000609-7dfb86bfc720'},{n:'Ceviche clásico',p:32,img:'1761314036542-6570ef45dbb3'},{n:'Chicha morada',p:15,img:'1745725247846-12a3e3109bbf'}],cart={};
