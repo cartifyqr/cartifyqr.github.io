@@ -145,9 +145,14 @@ section{padding:84px 0;position:relative;overflow-x:clip}
 .di{display:grid;grid-template-columns:56px 1fr auto;gap:10px;align-items:center;background:#fff;border-radius:14px;padding:8px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
 .di img{width:56px;height:56px;border-radius:10px;object-fit:cover}
 .di b{font-size:.9rem;display:block}
-.di span{font-size:.8rem;color:#8A7A70}
-.di button{background:#C8402A;color:#fff;font-weight:800;font-size:.78rem;padding:7px 11px;border-radius:999px}
-.di button.on{background:#14B86A}
+.di span.pr{font-size:.8rem;color:#8A7A70;font-weight:700}
+.di .add{background:#C8402A;color:#fff;font-weight:800;font-size:.78rem;padding:7px 11px;border-radius:999px}
+.di .qty{display:flex;align-items:center;gap:6px;background:#FBEAE4;border-radius:999px;padding:3px}
+.di .qty button{width:26px;height:26px;border-radius:50%;background:#fff;color:#C8402A;font-weight:900;font-size:.95rem;line-height:1}
+.di .qty b{min-width:1.2ch;text-align:center;font-size:.85rem}
+.di .xt{grid-column:2/4;justify-self:start;font-size:.72rem;font-weight:800;color:#C8402A;border:1.5px dashed #E8A493;background:#fff;padding:4px 9px;border-radius:999px;margin-top:-2px;transition:background .2s}
+.di .xt[aria-pressed="true"]{background:#14B86A;border:1.5px solid #14B86A;color:#fff}
+.dnote{margin:2px 12px 0;font-size:.7rem;font-weight:700;color:#8A7A70;text-align:center}
 .dbar{margin:4px 12px 14px;background:var(--ink);color:#fff;border-radius:16px;padding:10px 10px 10px 14px;display:flex;justify-content:space-between;align-items:center}
 .dbar b{display:block;color:var(--sun);font-family:var(--display);font-size:1.2rem}.dbar small{display:block}
 .dbar button{background:var(--wa);color:#05361A;font-weight:800;font-size:.82rem;padding:9px 12px;border-radius:12px}
@@ -388,11 +393,12 @@ footer .logo b{color:#fff}
 
 <!-- pruébalo -->
 <section class="try" id="pruebalo"><div class="wrap">
-  <div class="sh rv"><span class="kick"><i></i>Pruébalo tú</span><h2>Así le llega el pedido a tu <span class="hl">WhatsApp</span>.</h2><p>Toca "Agregar" en el celular y mira cómo se arma el mensaje solo. Sin apps, sin comisiones.</p></div>
+  <div class="sh rv"><span class="kick"><i></i>Pruébalo tú</span><h2>Así le llega el pedido a tu <span class="hl">WhatsApp</span>.</h2><p>Agrega platos, quítalos con − o súmales un extra, y mira cómo se arma el mensaje solo. Sin apps, sin comisiones.</p></div>
   <div class="tgrid">
     <div class="device rv" id="device">
       <div class="dtop"><small>CARTA DIGITAL</small><b>Tu restaurante</b></div>
       <div class="ditems" id="ditems"></div>
+      <p class="dnote">Extras opcionales: a lo pobre, picante, tamaño… ¡lo que tu negocio necesite!</p>
       <div class="dbar"><div><small style="opacity:.7;font-size:.72rem" id="dcnt">0 platos</small><b id="dtot">S/ 0</b></div><button type="button" id="dsend">Pedir 💬</button></div>
     </div>
     <div class="chat rv" id="chat" aria-live="polite">
@@ -550,18 +556,30 @@ document.querySelectorAll('.card,.plan').forEach(function(c){
   addEventListener('resize',cf);cf();paintR();})();
 
 /* ===== Demo interactiva ===== */
-(function(){var I=[{n:'Lomo saltado',p:35,img:'1713742000609-7dfb86bfc720'},{n:'Ceviche clásico',p:32,img:'1761314036542-6570ef45dbb3'},{n:'Chicha morada',p:15,img:'1745725247846-12a3e3109bbf'}],cart={};
+(function(){var I=[
+   {n:'Lomo saltado',p:35,img:'1713742000609-7dfb86bfc720',x:{l:'A lo pobre',e:'🍳',p:8}},
+   {n:'Ceviche clásico',p:32,img:'1761314036542-6570ef45dbb3',x:{l:'Extra picante',e:'🌶️',p:0}},
+   {n:'Chicha morada',p:15,img:'1745725247846-12a3e3109bbf',x:{l:'Jarra de 1 L',e:'🫗',p:10}}],cart={},ext={};
   var D=document.getElementById('ditems');
-  I.forEach(function(x,k){var d=document.createElement('div');d.className='di';d.innerHTML='<img src="https://images.unsplash.com/photo-'+x.img+'?w=120&h=120&fit=crop&q=70&auto=format" alt=""><div><b>'+x.n+'</b><span>S/ '+x.p+'</span></div><button type="button">Agregar</button>';
-    var b=d.querySelector('button');b.onclick=function(){cart[k]=(cart[k]||0)+1;b.classList.add('on');b.textContent='+1 ('+cart[k]+')';upd();};D.appendChild(d);});
-  function lines(){var t=0,l=[];I.forEach(function(x,k){if(cart[k]){t+=cart[k]*x.p;l.push(cart[k]+'x '+x.n+' — S/ '+cart[k]*x.p);}});return {t:t,l:l};}
+  function unit(k){return I[k].p+(ext[k]?I[k].x.p:0);}
+  function draw(){D.innerHTML='';I.forEach(function(x,k){var q=cart[k]||0,d=document.createElement('div');d.className='di';
+    d.innerHTML='<img src="https://images.unsplash.com/photo-'+x.img+'?w=120&h=120&fit=crop&q=70&auto=format" alt=""><div><b>'+x.n+'</b><span class="pr">S/ '+unit(k)+'</span></div><span class="c"></span>';
+    var c=d.querySelector('.c');
+    if(!q){var a=document.createElement('button');a.type='button';a.className='add';a.textContent='Agregar';a.onclick=function(){cart[k]=1;draw();upd();};c.appendChild(a);}
+    else{var w=document.createElement('div');w.className='qty';w.innerHTML='<button type="button" aria-label="Quitar uno">−</button><b>'+q+'</b><button type="button" aria-label="Agregar uno">+</button>';
+      w.firstChild.onclick=function(){cart[k]=q-1;if(!cart[k]){delete cart[k];delete ext[k];}draw();upd();};w.lastChild.onclick=function(){cart[k]=q+1;draw();upd();};c.appendChild(w);}
+    var o=document.createElement('button');o.type='button';o.className='xt';o.setAttribute('aria-pressed',!!ext[k]);
+    o.textContent=ext[k]?'✓ '+x.x.l+(x.x.p?' +S/ '+x.x.p:''):x.x.e+' '+x.x.l+(x.x.p?' +S/ '+x.x.p:' · gratis');
+    o.onclick=function(){ext[k]=!ext[k];if(ext[k]&&!cart[k])cart[k]=1;draw();upd();};d.appendChild(o);D.appendChild(d);});}
+  function lines(){var t=0,l=[];I.forEach(function(x,k){if(cart[k]){var u=unit(k);t+=cart[k]*u;l.push(cart[k]+'x '+x.n+(ext[k]?' ('+x.x.l.toLowerCase()+')':'')+' — S/ '+cart[k]*u);}});return {t:t,l:l};}
   function upd(){var r=lines(),n=Object.keys(cart).reduce(function(a,k){return a+cart[k]},0);document.getElementById('dcnt').textContent=n+(n===1?' plato':' platos');document.getElementById('dtot').textContent='S/ '+r.t;}
+  draw();
   document.getElementById('dsend').onclick=function(){var r=lines();if(!r.l.length){document.getElementById('hint').textContent='Primero agrega un plato 👆';return;}
     var C=document.getElementById('chat'),h=document.getElementById('hint');if(h)h.remove();
     var now=new Date(),tm=now.getHours()+':'+('0'+now.getMinutes()).slice(-2);
     var b=document.createElement('div');b.className='bub';b.innerHTML=('Hola, quiero pedir:\n'+r.l.join('\n')+'\nTotal: S/ '+r.t).replace(/</g,'&lt;')+'<time>'+tm+' ✓✓</time>';C.appendChild(b);
     setTimeout(function(){var a=document.createElement('div');a.className='bub in';a.innerHTML='¡Recibido! 🙌 Tu pedido estará listo en 25 min. ¿Yape o Plin?<time>'+tm+'</time>';C.appendChild(a);},1100);
-    cart={};D.querySelectorAll('button').forEach(function(x){x.classList.remove('on');x.textContent='Agregar';});upd();};
+    cart={};ext={};draw();upd();};
   upd();})();
 
 /* ===== Cotizador ===== */
