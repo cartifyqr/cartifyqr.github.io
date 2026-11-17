@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1B1310">
+<title>Brasas de Doña Rosa · Anticuchería</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Figtree:wght@400;500;600;700;800;900&display=swap">
+<style>
+/* Muestra anticuchería: brasas de noche, ají amarillo y banderines criollos. Móvil primero */
+:root{
+  --coal:#1B1310; --panel:#2A1D18; --panel2:#352520; --ember:#F05A28; --aji:#FDB515; --cream:#FFF1DE; --red:#C8102E;
+  --muted:#C2A894; --line:rgba(255,241,222,.12); --wa:#25D366;
+  --slab:"Alfa Slab One", Georgia, serif; --sans:"Figtree", system-ui, sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--coal);color:var(--cream);font-family:var(--sans);font-size:16px;line-height:1.5;overflow-x:hidden}
+img{display:block;max-width:100%}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--aji);outline-offset:3px}
+h1,h2,h3{margin:0;line-height:1;font-weight:400}
+p{margin:0}
+.wrap{max-width:900px;margin:0 auto;padding:0 max(18px,env(safe-area-inset-left,0px))}
+.demo{background:var(--aji);color:var(--coal);font-weight:800;font-size:.76rem;text-align:center;padding:6px 12px}
+
+/* banderines + luces */
+.flags{position:absolute;left:0;right:0;top:0;height:70px;z-index:3;pointer-events:none}
+.bulbs{position:absolute;left:0;right:0;top:58px;height:40px;z-index:3;pointer-events:none}
+.bulbs i{position:absolute;width:9px;height:9px;border-radius:50%;background:#FFE7A8;box-shadow:0 0 10px 3px rgba(255,200,90,.65);animation:tw 3s ease-in-out infinite}
+@keyframes tw{50%{opacity:.55}}
+
+/* hero */
+.hero{position:relative;min-height:min(88vh,720px);display:flex;align-items:flex-end;overflow:hidden;
+  background:linear-gradient(180deg,rgba(27,19,16,.35),rgba(27,19,16,.55) 45%,var(--coal) 96%),url('https://images.unsplash.com/photo-1763480005787-67c0fe4ee8f2?w=1400&q=75&auto=format') center/cover}
+.embers{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.embers i{position:absolute;bottom:-10px;width:5px;height:5px;border-radius:50%;background:#FFB347;box-shadow:0 0 8px 2px rgba(255,120,40,.8);animation:rise linear infinite}
+@keyframes rise{0%{transform:translate(0,0);opacity:0}10%{opacity:1}100%{transform:translate(var(--dx,20px),-110vh);opacity:0}}
+.hero .wrap{position:relative;z-index:2;padding-top:130px;padding-bottom:30px;width:100%}
+.kick{font-weight:800;letter-spacing:.24em;font-size:.76rem;text-transform:uppercase;color:var(--aji)}
+.hero h1{font-family:var(--slab);font-size:clamp(3rem,14vw,5.6rem);margin-top:10px;text-shadow:0 4px 0 rgba(0,0,0,.35);line-height:.95}
+.hero h1 span{color:var(--aji)}
+.hero p.lead{margin-top:14px;max-width:32ch;font-size:1.06rem;color:#F2DCC7}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.chip{font-size:.8rem;font-weight:700;padding:6px 11px;border-radius:999px;background:rgba(255,241,222,.1);border:1px solid var(--line)}
+.cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.btn{display:inline-flex;align-items:center;gap:8px;font-weight:800;text-decoration:none;padding:14px 20px;border-radius:14px;font-size:.98rem}
+.btn.fire{background:var(--ember);color:#fff;box-shadow:0 10px 26px rgba(240,90,40,.45)}
+.btn.line{border:2px solid var(--aji);color:var(--aji)}
+
+section{padding:52px 0}
+.h{margin-bottom:18px}
+.h h2{font-family:var(--slab);font-size:clamp(2rem,8vw,2.8rem);margin-top:8px}
+.h h2 span{color:var(--ember)}
+.h p.s{color:var(--muted);margin-top:8px}
+
+/* carta */
+.tabs{position:sticky;top:0;z-index:10;display:flex;gap:8px;overflow-x:auto;padding:12px 0;background:var(--coal);scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:none;padding:10px 16px;border-radius:999px;font-weight:800;font-size:.9rem;background:var(--panel);color:var(--muted);border:1px solid var(--line)}
+.tab[aria-selected="true"]{background:var(--aji);color:var(--coal);border-color:var(--aji)}
+.list{display:grid;gap:12px;margin-top:8px}
+.d{display:grid;grid-template-columns:98px 1fr;gap:14px;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:10px;animation:up .35s ease both}
+@keyframes up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.d img{width:98px;height:98px;border-radius:14px;object-fit:cover}
+.d .i{display:grid;gap:3px;align-content:start;min-width:0}
+.d .t{justify-self:start;font-size:.66rem;font-weight:900;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:6px;background:var(--ember);color:#fff}
+.d h3{font-weight:800;font-size:1.02rem}
+.d p{font-size:.85rem;color:var(--muted);line-height:1.35}
+.d .b{display:flex;justify-content:space-between;align-items:center;margin-top:4px}
+.pr{font-family:var(--slab);font-size:1.15rem;color:var(--aji)}
+.add{background:var(--ember);color:#fff;font-weight:800;font-size:.86rem;padding:7px 14px;border-radius:999px}
+.q{display:flex;align-items:center;gap:10px;background:var(--panel2);border-radius:999px;padding:3px}
+.q button{width:30px;height:30px;border-radius:50%;background:var(--cream);color:var(--coal);font-weight:900}
+.q span{font-weight:900;min-width:1.2ch;text-align:center}
+.opt{justify-self:start;font-size:.8rem;font-weight:800;color:var(--aji);border:1.5px dashed rgba(253,181,21,.6);padding:5px 10px;border-radius:999px;margin-top:2px}
+.opt[aria-pressed="true"]{background:var(--aji);color:var(--coal);border-style:solid}
+
+/* terraza */
+.terr{position:relative;border-radius:26px;overflow:hidden;min-height:320px;display:flex;align-items:flex-end;background:url('https://images.unsplash.com/photo-1790090930508-8ac513c6a1c6?w=1100&q=72&auto=format') center/cover}
+.terr::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(27,19,16,.1),rgba(27,19,16,.92))}
+.terr .in{position:relative;z-index:2;padding:22px}
+.terr h3{font-family:var(--slab);font-size:2rem}
+.terr p{color:#F2DCC7;margin-top:6px;max-width:34ch}
+
+.why{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px}
+.why div{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px}
+.why b{display:block;font-size:.98rem;margin-top:6px}
+.why small{color:var(--muted)}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:18px;margin-top:12px}
+.box h3{font-family:var(--slab);font-size:1.3rem;color:var(--aji)}
+.box p{color:var(--muted);margin-top:6px}
+.links{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.links a{display:flex;justify-content:center;gap:6px;text-decoration:none;font-weight:800;padding:12px;border-radius:14px;background:var(--panel2)}
+footer{text-align:center;color:var(--muted);font-size:.8rem;padding:30px 20px 130px}
+
+/* barra */
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:30;display:flex;justify-content:center;padding:0 12px calc(12px + env(safe-area-inset-bottom,0px));pointer-events:none}
+.bar-in{pointer-events:auto;width:100%;max-width:480px;background:rgba(42,29,24,.94);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:20px;padding:10px 10px 10px 16px;display:flex;justify-content:space-between;align-items:center;gap:10px;box-shadow:0 14px 34px rgba(0,0,0,.5)}
+.bar small{display:block;color:var(--muted);font-size:.76rem}
+.bar b{font-family:var(--slab);font-weight:400;font-size:1.2rem;color:var(--aji)}
+.bar .a{display:flex;gap:8px}
+.bar .a button,.bar .a a{font-weight:800;border-radius:14px;padding:11px 13px;font-size:.88rem;text-decoration:none;white-space:nowrap}
+.bar .r{background:rgba(255,241,222,.1)}
+.bar .s{background:var(--wa);color:#063B1D}
+.bar .s[aria-disabled="true"]{opacity:.45;pointer-events:none}
+
+/* hoja de reserva */
+.veil{position:fixed;inset:0;z-index:40;background:rgba(0,0,0,.6);opacity:0;pointer-events:none;transition:opacity .3s}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:41;max-width:520px;margin:0 auto;background:var(--panel);border:1px solid var(--line);border-radius:26px 26px 0 0;padding:12px 18px calc(18px + env(safe-area-inset-bottom,0px));transform:translateY(105%);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+body.open .veil{opacity:1;pointer-events:auto}body.open .sheet{transform:none}
+.grab{width:44px;height:4px;border-radius:4px;background:rgba(255,255,255,.25);margin:0 auto 12px}
+.sheet h3{font-family:var(--slab);font-size:1.6rem}
+.lbl{font-size:.7rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--aji);margin:16px 0 8px}
+.opts{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+.opts::-webkit-scrollbar{display:none}
+.o{flex:none;border:1px solid var(--line);border-radius:12px;padding:9px 12px;font-weight:700;font-size:.86rem;text-align:center;min-width:56px;background:var(--panel2)}
+.o small{display:block;font-weight:500;font-size:.68rem;color:var(--muted)}
+.o[aria-pressed="true"]{background:var(--aji);border-color:var(--aji);color:var(--coal)}
+.o[aria-pressed="true"] small{color:#5A3E00}
+.o:disabled{opacity:.3}
+.step{display:flex;align-items:center;gap:16px}
+.step button{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);font-size:1.3rem}
+.step b{font-family:var(--slab);font-weight:400;font-size:1.7rem;min-width:2ch;text-align:center}
+.go{display:block;text-align:center;margin-top:20px;background:var(--wa);color:#063B1D;font-weight:800;text-decoration:none;padding:15px;border-radius:14px}
+.go[aria-disabled="true"]{opacity:.4;pointer-events:none}
+.x{position:absolute;right:14px;top:12px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.1)}
+@media (min-width:760px){.why{grid-template-columns:repeat(4,1fr)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<p class="demo">Ejemplo de diseño · negocio ficticio · hecho por Cartify</p>
+
+<header class="hero">
+  <svg class="flags" viewBox="0 0 400 70" preserveAspectRatio="none" aria-hidden="true" id="flags"></svg>
+  <div class="bulbs" id="bulbs" aria-hidden="true"></div>
+  <div class="embers" id="embers" aria-hidden="true"></div>
+  <div class="wrap">
+    <p class="kick">Anticuchería y parrilla · Surco</p>
+    <h1>Doña <span>Rosa</span></h1>
+    <p class="lead">Los anticuchos de siempre, al carbón y con su ají de la casa. Y una terraza para disfrutarlos con luces y banderines.</p>
+    <div class="chips"><span class="chip">🔥 Al carbón</span><span class="chip">🔥 Hasta las 12 a. m.</span><span class="chip">🛵 Delivery y recojo</span><span class="chip">🎉 Para grupos</span></div>
+    <div class="cta"><a class="btn fire" href="#carta">Ver la carta</a><button class="btn line" type="button" data-open>Reservar mesa</button></div>
+  </div>
+</header>
+
+<section id="carta" style="padding-top:24px"><div class="wrap">
+  <div class="h"><p class="kick">La carta</p><h2>Al <span>carbón</span>, como siempre</h2></div>
+  <div class="tabs" role="tablist" id="tabs"></div>
+  <div class="list" id="list"></div>
+</div></section>
+
+<section style="padding-top:8px"><div class="wrap">
+  <div class="terr"><div class="in"><p class="kick">Nuestra terraza</p><h3>Una noche con luces y brasas</h3><p>Mesas al aire libre con luces y banderines. Ideal para cumpleaños, reuniones y la jarana del fin de semana.</p>
+    <div class="cta"><button class="btn fire" type="button" data-open data-zone="Terraza">Reservar en la terraza</button></div></div></div>
+  <div class="why">
+    <div>🔥<b>Al carbón</b><small>Parrilla a la vista</small></div>
+    <div>🌶️<b>Ají de la casa</b><small>Receta de siempre</small></div>
+    <div>🎉<b>Festivales</b><small>Fechas especiales</small></div>
+    <div>🛵<b>Para llevar</b><small>Delivery y recojo</small></div>
+  </div>
+  <div class="box"><h3>Visítanos</h3><p>Av. Ejemplo 789, Surco · Abierto hasta las 12 a. m.</p>
+    <div class="links"><a href="https://www.google.com/maps" target="_blank" rel="noopener">📍 Cómo llegar</a><a href="tel:+51900000000">📞 Llamar</a></div></div>
+</div></section>
+<footer>Ejemplo hecho por Cartify · negocio ficticio</footer>
+
+<div class="bar"><div class="bar-in">
+  <div><small id="cnt">Tu pedido</small><b id="tot">S/ 0</b></div>
+  <div class="a"><button class="r" type="button" data-open>Reservar</button><a class="s" id="send" href="#" target="_blank" rel="noopener" aria-disabled="true">Pedir 💬</a></div>
+</div></div>
+
+<div class="veil" id="veil"></div>
+<div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sh">
+  <div class="grab"></div><button class="x" type="button" id="x" aria-label="Cerrar">✕</button>
+  <h3 id="sh">Reserva tu mesa</h3>
+  <p class="lbl">Dónde</p><div class="opts" id="zone"></div>
+  <p class="lbl">Día</p><div class="opts" id="days"></div>
+  <p class="lbl">Hora</p><div class="opts" id="hours"></div>
+  <p class="lbl">Personas</p><div class="step"><button type="button" id="m">−</button><b id="ppl">4</b><button type="button" id="p">+</button></div>
+  <a class="go" id="go" href="#" target="_blank" rel="noopener" aria-disabled="true">💬 Reservar por WhatsApp</a>
+</div>
+
+<script>
+var PHONE='51900000000';
+var U=function(id,w,h){return 'https://images.unsplash.com/photo-'+id+'?w='+w+(h?'&h='+h+'&fit=crop':'')+'&q=72&auto=format'};
+var C=[
+ {k:'anti',n:'Anticuchos',items:[
+  {id:'corazon',n:'Anticucho de corazón',d:'2 palitos al carbón con papa dorada y choclo.',p:28,t:'El de siempre',img:'1761315414620-7f0f3ebdd866',o:{l:'Palito extra',p:9}},
+  {id:'mixto',n:'Anticucho mixto',d:'Corazón y pollo, con papa y choclo.',p:30,img:'1779474989201-fe2d22ff3f79'},
+  {id:'pollo',n:'Brochetas de pollo',d:'Pollo marinado en ají panca, al carbón.',p:26,img:'1599487488170-d11ec9c172f0'}]},
+ {k:'parri',n:'Parrillas',items:[
+  {id:'parrilla',n:'Parrilla Doña Rosa',d:'Para 2: carne, pollo, chorizo, anticucho, papas y ensalada.',p:89,t:'Para compartir',img:'1702827487553-50f7c1a43931'},
+  {id:'pollobrasa',n:'Pollo a la parrilla',d:'Pierna y encuentro con papas fritas y cremas.',p:32,img:'1588767768269-22800153b449'}]},
+ {k:'acomp',n:'Para acompañar',items:[
+  {id:'choclo',n:'Choclo con queso',d:'Choclo serrano con queso fresco.',p:12,img:'1630748663209-c4a490505198'},
+  {id:'chocloasado',n:'Choclo a la brasa',d:'Con mantequilla y sal de maras.',p:10,img:'1653886764100-60e01f57bd1d'}]},
+ {k:'beb',n:'Bebidas',items:[
+  {id:'chicha',n:'Chicha morada (jarra)',d:'Hecha en casa, bien helada.',p:18,img:'1745725247846-12a3e3109bbf'},
+  {id:'pisco',n:'Pisco sour',d:'Clásico, con pisco quebranta.',p:22,img:'1696594935685-1ad6ba69e83e'}]}
+];
+var ALL=[];C.forEach(function(c){c.items.forEach(function(i){ALL.push(i)})});
+var cur='anti',cart={},opts={};
+function unit(i){return i.p+(i.o&&opts[i.id]?i.o.p:0)}
+function tabs(){var T=document.getElementById('tabs');T.innerHTML='';C.forEach(function(c){var b=document.createElement('button');b.type='button';b.className='tab';b.setAttribute('role','tab');b.setAttribute('aria-selected',c.k===cur);b.textContent=c.n;b.onclick=function(){cur=c.k;render();};T.appendChild(b);});}
+function render(){tabs();var L=document.getElementById('list');L.innerHTML='';
+  C.filter(function(c){return c.k===cur})[0].items.forEach(function(i){var q=cart[i.id]||0,d=document.createElement('article');d.className='d';
+    d.innerHTML='<img src="'+U(i.img,220,220)+'" alt="'+i.n+'" loading="lazy"><div class="i">'+(i.t?'<span class="t">'+i.t+'</span>':'')+'<h3>'+i.n+'</h3><p>'+i.d+'</p><div class="b"><span class="pr">S/ '+unit(i)+'</span><span class="c"></span></div></div>';
+    var c=d.querySelector('.c');
+    if(!q){var a=document.createElement('button');a.type='button';a.className='add';a.textContent='Agregar';a.onclick=function(){set(i.id,1)};c.appendChild(a);}
+    else{var w=document.createElement('div');w.className='q';var mi=document.createElement('button');mi.type='button';mi.textContent='−';mi.setAttribute('aria-label','Quitar uno');mi.onclick=function(){set(i.id,q-1)};
+      var n=document.createElement('span');n.textContent=q;var pl=document.createElement('button');pl.type='button';pl.textContent='+';pl.setAttribute('aria-label','Agregar uno');pl.onclick=function(){set(i.id,q+1)};w.append(mi,n,pl);c.appendChild(w);}
+    if(i.o){var o=document.createElement('button');o.type='button';o.className='opt';o.setAttribute('aria-pressed',!!opts[i.id]);o.textContent=opts[i.id]?'✓ Con '+i.o.l.toLowerCase()+' + S/ '+i.o.p:'+ '+i.o.l+' · S/ '+i.o.p;
+      o.onclick=function(){opts[i.id]=!opts[i.id];if(opts[i.id]&&!cart[i.id])cart[i.id]=1;render();bar();};d.querySelector('.i').appendChild(o);}
+    L.appendChild(d);});}
+function set(id,q){if(q<=0){delete cart[id];delete opts[id];}else cart[id]=q;render();bar();}
+function bar(){var n=0,t=0,l=[];ALL.forEach(function(i){var q=cart[i.id];if(q){var u=unit(i);n+=q;t+=q*u;l.push(q+'x '+i.n+(i.o&&opts[i.id]?' (con '+i.o.l.toLowerCase()+')':'')+' — S/ '+q*u);}});
+  document.getElementById('cnt').textContent=n?n+(n>1?' platos':' plato'):'Tu pedido';document.getElementById('tot').textContent='S/ '+t;
+  var s=document.getElementById('send');s.setAttribute('aria-disabled',n?'false':'true');
+  s.href='https://wa.me/'+PHONE+'?text='+encodeURIComponent('Hola Doña Rosa, quiero pedir:\n'+l.join('\n')+'\nTotal: S/ '+t);}
+cart={corazon:1};render();bar();
+
+// banderines, luces y brasas
+(function(){var f=document.getElementById('flags'),cols=['#C8102E','#FFF1DE','#FDB515','#F05A28'],s='<path d="M0 8 Q 200 40 400 8" stroke="#3a2a22" stroke-width="1.5" fill="none"/>';
+  for(var i=0;i<16;i++){var x=i*25+4,y=8+Math.sin(Math.PI*(x/400))*32*0.98;s+='<path d="M'+x+' '+(y-1)+' l18 0 l-9 20z" fill="'+cols[i%4]+'" opacity=".95"/>';}f.innerHTML=s;
+  var b=document.getElementById('bulbs');for(var j=0;j<11;j++){var e=document.createElement('i');e.style.left=(4+j*9.2)+'%';e.style.top=(Math.sin(Math.PI*j/10)*18)+'px';e.style.animationDelay=(-Math.random()*3)+'s';b.appendChild(e);}
+  var em=document.getElementById('embers');for(var k=0;k<26;k++){var p=document.createElement('i');p.style.left=Math.random()*100+'%';p.style.animationDuration=(5+Math.random()*7)+'s';p.style.animationDelay=(-Math.random()*10)+'s';p.style.setProperty('--dx',(Math.random()*80-40)+'px');p.style.transform='scale('+(.5+Math.random())+')';em.appendChild(p);}})();
+
+// reserva
+function lima(){try{var p=new Intl.DateTimeFormat('en-US',{timeZone:'America/Lima',year:'numeric',month:'numeric',day:'numeric',hour:'numeric',hour12:false}).formatToParts(new Date()),o={};p.forEach(function(x){o[x.type]=x.value});return new Date(+o.year,+o.month-1,+o.day,+o.hour%24);}catch(e){return new Date();}}
+var NOW=lima(),DN=['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'],S={z:'Terraza',d:null,h:null,ppl:4},HRS=['13:00','14:00','18:00','19:00','20:00','21:00','22:00'],Z=['Terraza','Salón'];
+function ob(h){var b=document.createElement('button');b.type='button';b.className='o';b.innerHTML=h;return b;}
+function draw(){var ZN=document.getElementById('zone');ZN.innerHTML='';Z.forEach(function(z){var b=ob(z==='Terraza'?'🌙 Terraza':'🏠 Salón');b.setAttribute('aria-pressed',S.z===z);b.onclick=function(){S.z=z;draw();};ZN.appendChild(b);});
+  var D=document.getElementById('days');D.innerHTML='';
+  for(var i=0;i<10;i++){(function(i){var d=new Date(NOW.getFullYear(),NOW.getMonth(),NOW.getDate()+i),b=ob((i===0?'Hoy':i===1?'Mañana':DN[d.getDay()])+'<small>'+d.getDate()+'</small>');b.setAttribute('aria-pressed',S.d===i);b.onclick=function(){S.d=i;S.h=null;draw();};D.appendChild(b);})(i);}
+  var H=document.getElementById('hours');H.innerHTML='';HRS.forEach(function(h){var b=ob(h);b.disabled=S.d===0&&+h.slice(0,2)<=NOW.getHours();b.setAttribute('aria-pressed',S.h===h);b.onclick=function(){S.h=h;draw();};H.appendChild(b);});
+  document.getElementById('ppl').textContent=S.ppl;
+  var g=document.getElementById('go'),ok=S.d!=null&&S.h;g.setAttribute('aria-disabled',ok?'false':'true');
+  if(ok){var d=new Date(NOW.getFullYear(),NOW.getMonth(),NOW.getDate()+S.d);g.href='https://wa.me/'+PHONE+'?text='+encodeURIComponent('Hola Doña Rosa, quiero reservar:\n• Zona: '+S.z+'\n• Día: '+DN[d.getDay()]+' '+d.getDate()+'/'+(d.getMonth()+1)+'\n• Hora: '+S.h+'\n• Personas: '+S.ppl);}}
+document.querySelectorAll('[data-open]').forEach(function(b){b.addEventListener('click',function(){if(b.dataset.zone)S.z=b.dataset.zone;draw();document.body.classList.add('open');})});
+document.getElementById('veil').onclick=document.getElementById('x').onclick=function(){document.body.classList.remove('open')};
+document.getElementById('m').onclick=function(){S.ppl=Math.max(1,S.ppl-1);draw();};document.getElementById('p').onclick=function(){S.ppl=Math.min(40,S.ppl+1);draw();};
+document.addEventListener('keydown',function(e){if(e.key==='Escape')document.body.classList.remove('open')});
+</script>
+</body>
+</html>

@@ -8,7 +8,7 @@
 <meta name="description" content="Cartas digitales con QR, páginas web y reservas por WhatsApp para restaurantes, cafeterías y negocios. Listo en 48 horas, pago único.">
 <meta property="og:title" content="Cartify · Tu negocio, listo para vender en internet">
 <meta property="og:description" content="Cartas digitales con QR, páginas web y reservas por WhatsApp. Listo en 48 horas, pago único.">
-<meta property="og:image" content="https://cartifyqr.github.io/assets/paralelo.jpg">
+<meta property="og:image" content="https://cartifyqr.github.io/assets/lumen.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700;800&display=swap">
 <style>
@@ -339,7 +339,7 @@ footer .logo b{color:#fff}
   <div class="sh rv"><span class="kick"><i></i>Ejemplos</span><h2>Cada negocio, con su <span class="hl">estilo</span>.</h2><p>Toca cualquiera para abrirlo en vivo. Pasa el cursor para recorrer la página.</p></div>
 </div>
   <div class="gal" id="gal"></div>
-  <div class="wrap"><p class="note">Diseños de muestra preparados por Cartify para negocios de Lima. Fotos y precios referenciales; no implican relación comercial con los negocios mostrados.</p></div>
+  <div class="wrap"><p class="note">Todos los ejemplos son negocios ficticios creados por Cartify para mostrar el estilo de trabajo. Fotos y precios referenciales.</p></div>
 </section>
 
 <!-- precios -->
@@ -354,7 +354,7 @@ footer .logo b{color:#fff}
   <div class="extras">
     <div>Cambios después del primero <b>S/ 10</b></div>
     <div>Mantenimiento mensual <b>desde S/ 25</b></div>
-    <div>Conexión de dominio .com <b>S/ 40</b></div>
+    <div>Tu propio dominio .com <b>S/ 50/año</b></div>
   </div>
 </div></section>
 
@@ -390,7 +390,7 @@ footer .logo b{color:#fff}
   <div class="sh rv"><span class="kick"><i></i>Preguntas</span><h2>Lo que más me <span class="hl">preguntan</span>.</h2></div>
   <div class="faq">
     <details class="rv"><summary>¿Tengo que pagar todos los meses?</summary><p>No. Es un pago único. Solo si quieres que yo actualice tu carta o tus promociones seguido, existe un mantenimiento mensual opcional.</p></details>
-    <details class="rv"><summary>¿Necesito comprar un dominio (.com)?</summary><p>No es necesario: tu página viene con su enlace y funciona perfecto. Si quieres tu propio .com, lo compras a tu nombre (unos S/ 50 al año) y yo lo conecto.</p></details>
+    <details class="rv"><summary>¿Necesito comprar un dominio (.com)?</summary><p>No es necesario: tu página viene con su enlace y funciona perfecto. Si quieres tu propio .com, cuesta S/ 50 al año, queda a tu nombre y yo te lo dejo conectado.</p></details>
     <details class="rv"><summary>¿Qué pasa si cambio un precio?</summary><p>Me escribes y lo actualizo. El primer cambio es gratis y luego cuesta S/ 10. El QR sigue siendo el mismo, no tienes que reimprimir nada.</p></details>
     <details class="rv"><summary>¿Cuánto demora?</summary><p>48 horas desde que me mandas tus datos. Las páginas a medida pueden tomar un poco más.</p></details>
     <details class="rv"><summary>¿Cómo pago?</summary><p>Por Yape o Plin: 50 % al empezar y el otro 50 % cuando apruebes el resultado.</p></details>
@@ -422,14 +422,13 @@ var RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* ===== Anillo 3D de celulares ===== */
 var EX=[
- {id:'paralelo',n:'Paralelo',t:'Web a medida',url:'paralelo/'},
+ {id:'lumen',n:'Lumen',t:'Web a medida',url:'lumen/'},
  {id:'navaja-norte',n:'Navaja Norte',t:'Página web',url:'navaja-norte/'},
- {id:'curayacu',n:'Curayacu',t:'Carta interactiva',url:'curayacu/'},
- {id:'four-seas',n:'Four Seas',t:'Carta digital',url:'four-seas/'},
- {id:'la-colibri-links',n:'La Colibrí',t:'Un solo enlace',url:'la-colibri/links/'},
- {id:'don-guillermo',n:'Don Guillermo',t:'Carta y reservas',url:'don-guillermo/'},
- {id:'el-lomito',n:'El Lomito',t:'Carta con QR',url:'el-lomito/'},
- {id:'la-colibri',n:'La Colibrí',t:'Carta digital',url:'la-colibri/'}
+ {id:'isla-coco',n:'Isla Coco',t:'Carta interactiva',url:'isla-coco/'},
+ {id:'jade-dorado',n:'Jade Dorado',t:'Carta digital',url:'jade-dorado/'},
+ {id:'brasas-dona-rosa',n:'Brasas de Doña Rosa',t:'Carta y reservas',url:'brasas-dona-rosa/'},
+ {id:'la-ola',n:'La Ola',t:'Carta con QR',url:'la-ola/'},
+ {id:'sazon-de-casa',n:'Sazón de Casa',t:'Menú del día',url:'sazon-de-casa/'}
 ];
 var ring=document.getElementById('ring'),stage=document.getElementById('stage'),RN=EX.slice(0,6);
 function radius(){return innerWidth<900?230:300;}
@@ -481,7 +480,7 @@ document.querySelectorAll('.card,.plan').forEach(function(c){
   {k:'imgs',n:'Imágenes para redes',d:'Para estados e Instagram',p:50},
   {k:'web',n:'Página web',d:'Una página profesional',p:250},
   {k:'maps',n:'Google Maps arreglado',d:'Horario, fotos y enlace',p:60},
-  {k:'dom',n:'Conexión de dominio .com',d:'El dominio lo compras tú',p:40},
+  {k:'dom',n:'Dominio .com propio',d:'Primer año, ya conectado',p:50},
   {k:'mant',n:'Mantenimiento mensual',d:'Cambios y promos cada mes',p:25,m:1}],S={carta:true};
   var W=document.getElementById('opts');
   O.forEach(function(o){var l=document.createElement('label');l.className='qo';l.innerHTML='<input type="checkbox"'+(S[o.k]?' checked':'')+'><span class="bx">✓</span><span class="tx"><b>'+o.n+'</b><small>'+o.d+'</small></span><span class="pp">S/ '+o.p+(o.m?'<small style="font-size:.7rem">/mes</small>':'')+'</span>';
