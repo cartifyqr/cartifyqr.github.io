@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0B231C">
+<title>Curayacu Tiki Bar · San Borja</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Outfit:wght@400;500;600;700;800&display=swap">
+<style>
+/* Muestra tiki: selva de noche, neón rosado, mango y turquesa. Tarjetas que giran en 3D. Móvil primero */
+:root{
+  --night:#0B231C; --jungle:#123A2E; --leaf:#1E5A45; --pink:#FF3D8B; --mango:#FFB224; --teal:#19C2B4; --bamboo:#F1E2BC;
+  --ink:#0B231C; --text:#EAF4EE; --muted:#9FC0B2; --wa:#25D366;
+  --fun:"Luckiest Guy", "Arial Black", sans-serif; --sans:"Outfit", system-ui, sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--night);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.5;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--mango);outline-offset:3px}
+h1,h2,h3{margin:0;line-height:1;font-weight:400}
+p{margin:0}
+.wrap{max-width:980px;margin:0 auto;padding:0 max(18px,env(safe-area-inset-left,0px))}
+.demo{background:var(--pink);color:#fff;font-weight:700;font-size:.76rem;text-align:center;padding:6px 12px}
+
+/* hero */
+.hero{position:relative;min-height:min(90vh,760px);display:flex;align-items:flex-end;overflow:hidden;
+  background:linear-gradient(180deg,rgba(11,35,28,.25),rgba(11,35,28,.55) 50%,var(--night)),url('https://images.unsplash.com/photo-1526487995276-56ce643ba8a9?w=1400&q=75&auto=format') center 30%/cover}
+.leaf{position:absolute;width:56vw;max-width:340px;opacity:.9;pointer-events:none;filter:drop-shadow(0 10px 20px rgba(0,0,0,.4))}
+.leaf.l{left:-14vw;top:-30px;transform-origin:10% 10%;animation:sway 6s ease-in-out infinite}
+.leaf.r{right:-16vw;top:40px;transform:scaleX(-1);transform-origin:90% 10%;animation:sway2 7s ease-in-out infinite}
+@keyframes sway{50%{transform:rotate(7deg)}}
+@keyframes sway2{0%,100%{transform:scaleX(-1) rotate(0)}50%{transform:scaleX(-1) rotate(8deg)}}
+.hero .wrap{position:relative;z-index:2;padding-top:140px;padding-bottom:34px;width:100%;text-align:center}
+.neon{font-family:var(--fun);font-size:clamp(3.2rem,15vw,6.4rem);letter-spacing:.02em;color:#FFE3EE;
+  text-shadow:0 0 6px #fff,0 0 14px var(--pink),0 0 30px var(--pink),0 0 60px var(--pink);animation:flick 5s infinite}
+@keyframes flick{0%,18%,22%,62%,64%,100%{opacity:1}20%,63%{opacity:.55}}
+.tag{font-family:var(--fun);font-size:1.15rem;letter-spacing:.12em;color:var(--mango);text-shadow:0 0 12px rgba(255,178,36,.6);margin-top:6px}
+.lead{margin:16px auto 0;max-width:30ch;font-size:1.05rem;color:#D3E6DC}
+.chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+.chip{font-size:.82rem;font-weight:600;padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(6px)}
+.cta{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:24px}
+.btn{display:inline-flex;align-items:center;gap:8px;font-weight:800;text-decoration:none;padding:14px 22px;border-radius:999px;font-size:.98rem}
+.btn.pink{background:var(--pink);color:#fff;box-shadow:0 0 24px rgba(255,61,139,.55)}
+.btn.ghost{border:2px solid var(--mango);color:var(--mango)}
+
+section{padding:56px 0}
+.h{text-align:center;margin-bottom:22px}
+.h p.k{font-weight:700;font-size:.78rem;letter-spacing:.24em;text-transform:uppercase;color:var(--teal)}
+.h h2{font-family:var(--fun);font-size:clamp(2.2rem,9vw,3.2rem);margin-top:8px;color:var(--bamboo)}
+.h h2 span{color:var(--pink);text-shadow:0 0 18px rgba(255,61,139,.6)}
+.h p.s{color:var(--muted);margin-top:8px}
+
+/* cócteles: tarjetas que giran */
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.flip{perspective:1000px;aspect-ratio:3/4.3}
+.inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.3,.7,.2,1)}
+.flip.on .inner{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;border-radius:20px;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.front img{width:100%;height:100%;object-fit:cover}
+.front::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(11,35,28,.95))}
+.front .t{position:absolute;left:12px;right:12px;bottom:12px;z-index:2}
+.front h3{font-family:var(--fun);font-size:1.3rem;letter-spacing:.02em;color:#fff}
+.front .row{display:flex;justify-content:space-between;align-items:center;margin-top:6px}
+.price{font-weight:800;color:var(--mango);font-size:1.05rem}
+.turn{font-size:.72rem;font-weight:700;background:rgba(255,255,255,.14);padding:4px 9px;border-radius:999px}
+.badge{position:absolute;top:10px;left:10px;z-index:2;font-size:.66rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;background:var(--pink);color:#fff;padding:4px 8px;border-radius:8px}
+.back{transform:rotateY(180deg);background:linear-gradient(160deg,var(--leaf),var(--jungle));border:1px solid rgba(255,255,255,.12);padding:16px 14px;display:flex;flex-direction:column;gap:10px}
+.back h3{font-family:var(--fun);font-size:1.25rem;color:var(--bamboo)}
+.back p{font-size:.84rem;color:#CFE3D8;line-height:1.35}
+.meter{display:flex;gap:4px;align-items:center;font-size:.76rem;color:var(--muted)}
+.meter i{font-style:normal;filter:grayscale(1);opacity:.35}
+.meter i.on{filter:none;opacity:1}
+.flav{display:flex;flex-wrap:wrap;gap:5px}
+.flav span{font-size:.7rem;font-weight:700;padding:3px 8px;border-radius:999px;background:rgba(25,194,180,.18);color:#8FF1E6}
+.add{margin-top:auto;background:var(--mango);color:var(--ink);font-weight:800;border-radius:12px;padding:10px;font-size:.88rem}
+.add.in{background:var(--teal)}
+
+/* para compartir */
+.share{position:relative;border-radius:26px;overflow:hidden;min-height:340px;display:flex;align-items:flex-end;background:url('https://images.unsplash.com/photo-1778449342864-60469d70412f?w=1100&q=72&auto=format') center/cover}
+.share::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,35,28,.05),rgba(11,35,28,.92))}
+.share .in{position:relative;z-index:2;padding:22px}
+.share h3{font-family:var(--fun);font-size:2.2rem;color:#fff;text-shadow:0 0 18px rgba(255,120,40,.7)}
+.share p{color:#D7E8DF;margin-top:6px;max-width:34ch}
+.share .row{display:flex;align-items:center;gap:14px;margin-top:14px;flex-wrap:wrap}
+.share .price{font-size:1.6rem}
+
+/* piqueos */
+.food{display:grid;gap:12px}
+.fd{display:grid;grid-template-columns:86px 1fr auto;gap:14px;align-items:center;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:10px 14px 10px 10px}
+.fd img{width:86px;height:86px;border-radius:14px;object-fit:cover}
+.fd h3{font-weight:700;font-size:1rem}
+.fd p{font-size:.84rem;color:var(--muted);margin-top:2px}
+.fd button{background:rgba(255,178,36,.15);color:var(--mango);font-weight:800;border-radius:999px;padding:8px 12px;font-size:.84rem;white-space:nowrap}
+.fd button.in{background:var(--teal);color:var(--ink)}
+
+/* vibes */
+.vibes{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.vb{border-radius:18px;padding:16px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1)}
+.vb i{font-style:normal;font-size:1.6rem}
+.vb b{display:block;margin-top:8px;font-size:1rem}
+.vb small{color:var(--muted);font-size:.82rem}
+.party{margin-top:14px;border-radius:22px;padding:20px;background:linear-gradient(135deg,var(--pink),#FF7A3D);color:#fff;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.party h3{font-family:var(--fun);font-size:1.6rem}
+.party p{font-size:.9rem;opacity:.95;margin-top:4px;max-width:30ch}
+.party button{background:#fff;color:var(--pink);font-weight:800;border-radius:999px;padding:12px 18px}
+
+.visit{display:grid;gap:12px}
+.box{border-radius:20px;padding:18px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1)}
+.box h3{font-family:var(--fun);font-size:1.3rem;color:var(--bamboo);margin-bottom:6px}
+.box p{color:var(--muted)}
+.box a{display:flex;justify-content:space-between;text-decoration:none;font-weight:700;margin-top:10px;padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.07)}
+footer{text-align:center;color:var(--muted);font-size:.8rem;padding:30px 20px 130px}
+
+/* barra de pedido */
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:30;display:flex;justify-content:center;padding:0 12px calc(12px + env(safe-area-inset-bottom,0px));pointer-events:none}
+.bar-in{pointer-events:auto;width:100%;max-width:480px;background:rgba(18,58,46,.92);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.14);border-radius:20px;padding:10px 10px 10px 16px;display:flex;justify-content:space-between;align-items:center;gap:10px;box-shadow:0 14px 34px rgba(0,0,0,.45)}
+.bar small{display:block;color:var(--muted);font-size:.76rem}
+.bar b{font-size:1.15rem;color:var(--mango)}
+.bar .acts{display:flex;gap:8px}
+.bar a,.bar button{font-weight:800;border-radius:14px;padding:11px 13px;font-size:.88rem;text-decoration:none;white-space:nowrap}
+.bar .res{background:rgba(255,255,255,.1);color:#fff}
+.bar .send{background:var(--wa);color:#063B1D}
+.bar .send[aria-disabled="true"]{opacity:.45;pointer-events:none}
+
+/* hoja de reserva */
+.veil{position:fixed;inset:0;z-index:40;background:rgba(0,0,0,.55);opacity:0;pointer-events:none;transition:opacity .3s}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:41;max-width:520px;margin:0 auto;background:var(--jungle);border-radius:26px 26px 0 0;border:1px solid rgba(255,255,255,.12);padding:12px 18px calc(18px + env(safe-area-inset-bottom,0px));transform:translateY(105%);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+body.open .veil{opacity:1;pointer-events:auto}body.open .sheet{transform:none}
+.grab{width:44px;height:4px;border-radius:4px;background:rgba(255,255,255,.25);margin:0 auto 12px}
+.sheet h3{font-family:var(--fun);font-size:1.7rem;color:var(--bamboo)}
+.lbl{font-size:.7rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);margin:16px 0 8px}
+.opts{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+.opts::-webkit-scrollbar{display:none}
+.o{flex:none;border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:9px 12px;font-weight:700;font-size:.86rem;text-align:center;min-width:56px}
+.o small{display:block;font-weight:500;font-size:.68rem;color:var(--muted)}
+.o[aria-pressed="true"]{background:var(--mango);border-color:var(--mango);color:var(--ink)}
+.o[aria-pressed="true"] small{color:#5C4310}
+.o:disabled{opacity:.3}
+.step{display:flex;align-items:center;gap:16px}
+.step button{width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.2);font-size:1.3rem}
+.step b{font-family:var(--fun);font-size:1.8rem;min-width:2ch;text-align:center}
+.go{display:block;text-align:center;margin-top:20px;background:var(--wa);color:#063B1D;font-weight:800;text-decoration:none;padding:15px;border-radius:14px}
+.go[aria-disabled="true"]{opacity:.4;pointer-events:none}
+.x{position:absolute;right:14px;top:12px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.1)}
+
+@media (min-width:760px){.cards{grid-template-columns:repeat(3,1fr)}.vibes{grid-template-columns:repeat(4,1fr)}.visit{grid-template-columns:1fr 1fr}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<p class="demo">Muestra hecha para Curayacu · precios referenciales</p>
+
+<header class="hero">
+  <svg class="leaf l" viewBox="0 0 200 200" aria-hidden="true"><path d="M10 10 C 80 20, 150 60, 190 150 C 140 120, 90 100, 10 10Z" fill="#1E5A45"/><path d="M10 10 C 70 60, 120 100, 190 150" stroke="#2F8A68" stroke-width="3" fill="none"/><path d="M40 30 l10 -18 M70 48 l14 -18 M100 70 l16 -16 M130 96 l18 -12 M60 40 l-6 18 M90 60 l-4 20 M120 84 l-2 20" stroke="#0B231C" stroke-width="5" stroke-linecap="round"/></svg>
+  <svg class="leaf r" viewBox="0 0 200 200" aria-hidden="true"><path d="M10 10 C 80 20, 150 60, 190 150 C 140 120, 90 100, 10 10Z" fill="#17493A"/><path d="M10 10 C 70 60, 120 100, 190 150" stroke="#2F8A68" stroke-width="3" fill="none"/><path d="M40 30 l10 -18 M70 48 l14 -18 M100 70 l16 -16 M130 96 l18 -12" stroke="#0B231C" stroke-width="5" stroke-linecap="round"/></svg>
+  <div class="wrap">
+    <h1 class="neon">CURAYACU</h1>
+    <p class="tag">TIKI BAR · SAN BORJA</p>
+    <p class="lead">Tiki cocktails, piqueos y buena música. Bienvenido a la tribu 🌺</p>
+    <div class="chips"><span class="chip">★ 4,5 en Google</span><span class="chip" id="st">🔥 Abierto hasta las 12 a. m.</span></div>
+    <div class="cta"><button class="btn pink" type="button" data-open>Reservar mesa</button><a class="btn ghost" href="#cocteles">Ver cócteles</a></div>
+  </div>
+</header>
+
+<section id="cocteles"><div class="wrap">
+  <div class="h"><p class="k">Tiki cocktails</p><h2>Toca y <span>descubre</span></h2><p class="s">Cada tarjeta gira: mira qué lleva y qué tan fuerte es.</p></div>
+  <div class="cards" id="cards"></div>
+</div></section>
+
+<section style="padding-top:0"><div class="wrap">
+  <div class="share">
+    <div class="in"><p style="font-weight:800;letter-spacing:.2em;font-size:.74rem;color:var(--mango)">PARA LA TRIBU · 3 A 4 PERSONAS</p>
+      <h3>Volcán Curayacu 🌋</h3><p>Un bowl gigante de ron, frutas tropicales y fuego en el centro. Se comparte con pajitas largas.</p>
+      <div class="row"><span class="price">S/ 99</span><button class="btn pink" type="button" id="volcan">Agregar al pedido</button></div></div>
+  </div>
+</div></section>
+
+<section id="piqueos" style="padding-top:0"><div class="wrap">
+  <div class="h"><p class="k">Para picar</p><h2>Piqueos <span>tropicales</span></h2></div>
+  <div class="food" id="food"></div>
+</div></section>
+
+<section style="padding-top:0"><div class="wrap">
+  <div class="h"><p class="k">La experiencia</p><h2>Más que un <span>bar</span></h2></div>
+  <div class="vibes">
+    <div class="vb"><i>🎶</i><b>Noches de música</b><small>Reggae y tropical</small></div>
+    <div class="vb"><i>🎲</i><b>Juegos de mesa</b><small>Jenga, 4 en línea y más</small></div>
+    <div class="vb"><i>🌴</i><b>Ambiente tiki</b><small>Para conversar sin apuro</small></div>
+    <div class="vb"><i>🏳️‍🌈</i><b>Todos bienvenidos</b><small>Espacio seguro</small></div>
+  </div>
+  <div class="party"><div><h3>¿Celebras algo? 🎉</h3><p>Cumpleaños, aniversarios o after office: te armamos una sorpresa tiki.</p></div><button type="button" data-open data-occ="Celebración">Avisar que celebro</button></div>
+</div></section>
+
+<section style="padding-top:0"><div class="wrap visit">
+  <div class="box"><h3>Encuéntranos</h3><p>Av. Aviación 2712, San Borja</p><a href="https://maps.google.com/?cid=10293257264025793377" target="_blank" rel="noopener">📍 Cómo llegar <span>→</span></a></div>
+  <div class="box"><h3>Síguenos</h3><p>Promos, noches temáticas y novedades.</p><a href="https://www.instagram.com/" target="_blank" rel="noopener">📷 Instagram <span>→</span></a></div>
+</div></section>
+<footer>Muestra hecha por Cartify · fotos y precios referenciales</footer>
+
+<div class="bar"><div class="bar-in">
+  <div><small id="cnt">Tu pedido</small><b id="tot">S/ 0</b></div>
+  <div class="acts"><button class="res" type="button" data-open>Reservar</button><a class="send" id="send" href="#" target="_blank" rel="noopener" aria-disabled="true">Pedir 💬</a></div>
+</div></div>
+
+<div class="veil" id="veil"></div>
+<div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sh">
+  <div class="grab"></div><button class="x" type="button" id="x" aria-label="Cerrar">✕</button>
+  <h3 id="sh">Reserva tu mesa 🌺</h3>
+  <p class="lbl">Día</p><div class="opts" id="days"></div>
+  <p class="lbl">Hora</p><div class="opts" id="hours"></div>
+  <p class="lbl">Personas</p><div class="step"><button type="button" id="m">−</button><b id="ppl">2</b><button type="button" id="p">+</button></div>
+  <p class="lbl">¿Celebras algo?</p><div class="opts" id="occ"></div>
+  <a class="go" id="go" href="#" target="_blank" rel="noopener" aria-disabled="true">💬 Reservar por WhatsApp</a>
+</div>
+
+<script>
+var PHONE='51900000000';
+var U=function(id,w,h){return 'https://images.unsplash.com/photo-'+id+'?w='+w+(h?'&h='+h+'&fit=crop':'')+'&q=72&auto=format'};
+var DRINKS=[
+ {id:'maitai',n:'Mai Tai Curayacu',p:36,img:'1648757997020-94e698e36e55',b:'Firma',d:'Ron añejo, ron oscuro, lima, orgeat de almendra y curaçao.',f:3,fl:['Cítrico','Almendra']},
+ {id:'zombie',n:'Zombie',p:42,img:'1655973577713-5acd43022732',b:'Fuerte',d:'Tres rones, maracuyá, canela y un toque de absenta.',f:5,fl:['Intenso','Especiado']},
+ {id:'pina',n:'Piña colada',p:32,img:'1596392301391-e8622b210bd4',d:'Ron blanco, crema de coco y piña natural.',f:2,fl:['Cremoso','Dulce']},
+ {id:'hurricane',n:'Hurricane',p:34,img:'1625321643320-5321f48312b2',d:'Ron, maracuyá, granadina y naranja.',f:3,fl:['Frutal','Tropical']},
+ {id:'blue',n:'Blue Lagoon',p:34,img:'1571950006119-9f047f9d27b9',d:'Vodka, curaçao azul, limonada y espuma.',f:2,fl:['Refrescante']},
+ {id:'painkiller',n:'Painkiller',p:36,img:'1607446045710-d5a8fd9bc1db',d:'Ron, piña, naranja, coco y nuez moscada.',f:3,fl:['Cremoso','Especiado']}
+];
+var FOOD=[
+ {id:'alitas',n:'Alitas mango-ají',p:32,img:'1567620832903-9fc6debc209f',d:'Glaseadas con mango y ají amarillo.'},
+ {id:'tacos',n:'Tacos de pesca',p:34,img:'1627564803215-ad55bad5c5ea',d:'Pescado crocante, salsa de piña y palta.'},
+ {id:'bocados',n:'Bocaditos crocantes',p:28,img:'1761314015019-158b483dfdf9',d:'Para compartir, con salsas de la casa.'}
+];
+var ALL=DRINKS.concat(FOOD,[{id:'volcan',n:'Volcán Curayacu',p:99}]),cart={};
+function fire(n){var s='';for(var i=1;i<=5;i++)s+='<i class="'+(i<=n?'on':'')+'">🔥</i>';return s;}
+DRINKS.forEach(function(x){var c=document.createElement('div');c.className='flip';
+  c.innerHTML='<div class="inner"><div class="face front">'+(x.b?'<span class="badge">'+x.b+'</span>':'')+'<img src="'+U(x.img,400,560)+'" alt="'+x.n+'" loading="lazy"><div class="t"><h3>'+x.n+'</h3><div class="row"><span class="price">S/ '+x.p+'</span><span class="turn">Girar ↻</span></div></div></div>'
+   +'<div class="face back"><h3>'+x.n+'</h3><p>'+x.d+'</p><div class="meter">Fuerza '+fire(x.f)+'</div><div class="flav">'+x.fl.map(function(f){return '<span>'+f+'</span>'}).join('')+'</div><button class="add" type="button" data-id="'+x.id+'">+ Agregar · S/ '+x.p+'</button></div></div>';
+  c.addEventListener('click',function(e){if(e.target.closest('.add'))return;c.classList.toggle('on');});
+  document.getElementById('cards').appendChild(c);});
+FOOD.forEach(function(x){var d=document.createElement('div');d.className='fd';
+  d.innerHTML='<img src="'+U(x.img,200,200)+'" alt="" loading="lazy"><div><h3>'+x.n+'</h3><p>'+x.d+'</p></div><button type="button" data-id="'+x.id+'">S/ '+x.p+' +</button>';
+  document.getElementById('food').appendChild(d);});
+document.addEventListener('click',function(e){var b=e.target.closest('[data-id]');if(!b)return;var id=b.dataset.id;cart[id]=(cart[id]||0)+1;b.classList.add('in');
+  var t=b.textContent;b.textContent='✓ Agregado ('+cart[id]+')';setTimeout(function(){b.textContent=t},1200);upd();});
+document.getElementById('volcan').onclick=function(){cart.volcan=(cart.volcan||0)+1;this.textContent='✓ Agregado ('+cart.volcan+')';upd();};
+function upd(){var n=0,t=0,l=[];ALL.forEach(function(i){var q=cart[i.id];if(q){n+=q;t+=q*i.p;l.push(q+'x '+i.n+' — S/ '+q*i.p);}});
+  document.getElementById('cnt').textContent=n?n+(n>1?' productos':' producto'):'Tu pedido';document.getElementById('tot').textContent='S/ '+t;
+  var s=document.getElementById('send');s.setAttribute('aria-disabled',n?'false':'true');
+  s.href='https://wa.me/'+PHONE+'?text='+encodeURIComponent('Aloha Curayacu 🌺 quiero pedir:\n'+l.join('\n')+'\nTotal: S/ '+t);}
+upd();
+
+// reserva
+function lima(){try{var p=new Intl.DateTimeFormat('en-US',{timeZone:'America/Lima',year:'numeric',month:'numeric',day:'numeric',hour:'numeric',hour12:false}).formatToParts(new Date()),o={};p.forEach(function(x){o[x.type]=x.value});return new Date(+o.year,+o.month-1,+o.day,+o.hour%24);}catch(e){return new Date();}}
+var NOW=lima(),DN=['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'],S={d:null,h:null,ppl:2,occ:null},HRS=['18:00','19:00','20:00','21:00','22:00','23:00'],OCC=['Cumpleaños','Aniversario','After office','Solo chill'];
+function el(c,h){var b=document.createElement('button');b.type='button';b.className='o';b.innerHTML=h;return b;}
+function draw(){var D=document.getElementById('days');D.innerHTML='';
+  for(var i=0;i<10;i++){(function(i){var d=new Date(NOW.getFullYear(),NOW.getMonth(),NOW.getDate()+i),b=el('o',(i===0?'Hoy':i===1?'Mañana':DN[d.getDay()])+'<small>'+d.getDate()+'</small>');
+    b.setAttribute('aria-pressed',S.d===i);b.onclick=function(){S.d=i;S.h=null;draw();};D.appendChild(b);})(i);}
+  var H=document.getElementById('hours');H.innerHTML='';
+  HRS.forEach(function(h){var b=el('o',h);b.disabled=S.d===0&&+h.slice(0,2)<=NOW.getHours();b.setAttribute('aria-pressed',S.h===h);b.onclick=function(){S.h=h;draw();};H.appendChild(b);});
+  document.getElementById('ppl').textContent=S.ppl;
+  var O=document.getElementById('occ');O.innerHTML='';
+  OCC.forEach(function(o){var b=el('o',o);b.setAttribute('aria-pressed',S.occ===o);b.onclick=function(){S.occ=S.occ===o?null:o;draw();};O.appendChild(b);});
+  var g=document.getElementById('go'),ok=S.d!=null&&S.h;g.setAttribute('aria-disabled',ok?'false':'true');
+  if(ok){var d=new Date(NOW.getFullYear(),NOW.getMonth(),NOW.getDate()+S.d);
+    g.href='https://wa.me/'+PHONE+'?text='+encodeURIComponent('Aloha Curayacu 🌺 quiero reservar:\n• Día: '+DN[d.getDay()]+' '+d.getDate()+'/'+(d.getMonth()+1)+'\n• Hora: '+S.h+'\n• Personas: '+S.ppl+(S.occ?'\n• Celebramos: '+S.occ:''));}}
+function open(o){if(o==='Celebración')S.occ='Cumpleaños';draw();document.body.classList.add('open');}
+document.querySelectorAll('[data-open]').forEach(function(b){b.addEventListener('click',function(){open(b.dataset.occ)})});
+document.getElementById('veil').onclick=document.getElementById('x').onclick=function(){document.body.classList.remove('open')};
+document.getElementById('m').onclick=function(){S.ppl=Math.max(1,S.ppl-1);draw();};document.getElementById('p').onclick=function(){S.ppl=Math.min(30,S.ppl+1);draw();};
+document.addEventListener('keydown',function(e){if(e.key==='Escape')document.body.classList.remove('open')});
+</script>
+</body>
+</html>
