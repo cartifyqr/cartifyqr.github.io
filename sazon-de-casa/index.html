@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#C8402A">
+<title>Sazón de Casa · Menú del día</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Figtree:wght@400;500;600;700;800&display=swap">
+<style>
+/* Menú del día autoadministrable: los platos vienen de una hoja de Google. Móvil, una columna, máx. 480px */
+:root{
+  --red:#C8402A; --red2:#E0583A; --cream:#FFF6E9; --card:#FFFFFF; --ink:#2A1E17; --muted:#7D6A5E; --line:#F0E0CC;
+  --yellow:#F5B92E; --soft:#FCEBD6; --green:#3F8F4E; --wa:#25D366;
+  --display:"Baloo 2", system-ui, sans-serif; --body:"Figtree", system-ui, sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{background:#F2DEC6}
+body{margin:0;background:#F2DEC6;color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5}
+.app{max-width:480px;margin:0 auto;background:var(--cream);min-height:100vh;padding-bottom:calc(120px + env(safe-area-inset-bottom,0px));box-shadow:0 0 40px rgba(200,64,42,.15)}
+.pad{padding-left:max(18px, env(safe-area-inset-left, 0px));padding-right:max(18px, env(safe-area-inset-right, 0px))}
+h1,h2,h3{font-family:var(--display);margin:0;line-height:1.05}
+p{margin:0}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
+
+.demo{font-size:.78rem;font-weight:700;text-align:center;background:var(--ink);color:var(--yellow);padding:6px 12px}
+
+header{position:relative;background:linear-gradient(165deg,var(--red2),var(--red));color:#fff;text-align:center;padding-top:calc(24px + env(safe-area-inset-top,0px));padding-bottom:78px}
+header h1{font-size:2.5rem;font-weight:800}
+.kick{display:inline-block;margin-top:6px;background:var(--yellow);color:var(--ink);font-weight:800;letter-spacing:.14em;font-size:.82rem;padding:4px 12px;border-radius:999px}
+.date{margin-top:10px;font-weight:600;opacity:.95}
+.price{position:absolute;left:50%;bottom:-46px;transform:translateX(-50%);width:104px;height:104px;border-radius:50%;background:var(--yellow);color:var(--ink);display:grid;place-content:center;text-align:center;box-shadow:0 10px 24px rgba(0,0,0,.18);border:5px solid var(--cream)}
+.price b{font-family:var(--display);font-size:1.9rem;line-height:1}
+.price small{font-size:.72rem;font-weight:700}
+.msg{margin:62px 0 0;text-align:center;font-family:var(--display);font-weight:700;font-size:1.15rem;color:var(--red)}
+.solo{text-align:center;font-size:.86rem;color:var(--muted);margin-top:4px}
+
+.sec{margin-top:22px}
+.sec h2{font-size:1.35rem;font-weight:800;color:var(--red);display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.sec h2::after{content:"";flex:1;height:2px;background:var(--line)}
+.step{font-family:var(--body);font-size:.72rem;font-weight:800;background:var(--red);color:#fff;border-radius:999px;padding:2px 8px;letter-spacing:.04em}
+.hint{font-size:.85rem;color:var(--muted);margin:-4px 0 10px}
+
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.ent{padding:9px 14px;border-radius:999px;background:var(--card);border:2px solid var(--line);font-weight:700;font-size:.92rem}
+.ent[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.ent:disabled,.seg.off{opacity:.5;text-decoration:line-through;cursor:not-allowed}
+
+.list{display:grid;gap:10px}
+.seg{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--card);border-radius:16px;padding:12px 12px 12px 16px;box-shadow:0 2px 10px rgba(90,40,10,.07)}
+.seg h3{font-family:var(--body);font-size:1rem;font-weight:800}
+.seg .note{display:inline-block;font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--green)}
+.seg.off .note{color:var(--red)}
+.add{flex:none;background:var(--red);color:#fff;font-weight:800;font-size:.88rem;padding:8px 14px;border-radius:999px}
+.add:disabled{background:#C9B8A8}
+
+.small{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mini{background:var(--card);border-radius:16px;padding:12px 14px;box-shadow:0 2px 10px rgba(90,40,10,.07)}
+.mini span{display:block;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.mini b{font-size:.98rem}
+
+.order{margin-top:22px;background:var(--card);border-radius:18px;padding:14px 16px;box-shadow:0 2px 10px rgba(90,40,10,.07)}
+.order h3{font-size:1.15rem;color:var(--red);margin-bottom:6px}
+.line{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 0;border-top:1px dashed var(--line);font-size:.92rem}
+.line:first-of-type{border-top:0}
+.line button{color:var(--red);font-weight:800;font-size:.82rem;padding:4px 8px}
+.empty{font-size:.9rem;color:var(--muted)}
+
+.img-btn{display:flex;width:100%;align-items:center;justify-content:center;gap:8px;margin-top:22px;background:var(--yellow);color:var(--ink);font-weight:800;padding:14px;border-radius:16px;font-size:1rem}
+.owner{margin-top:8px;text-align:center;font-size:.8rem;color:var(--muted)}
+.made{text-align:center;color:var(--muted);font-size:.8rem;padding-top:22px}
+
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:10;display:flex;justify-content:center;pointer-events:none;
+  padding:0 max(12px, env(safe-area-inset-right, 0px)) calc(14px + env(safe-area-inset-bottom,0px)) max(12px, env(safe-area-inset-left, 0px))}
+.bar-in{pointer-events:auto;width:100%;max-width:456px;background:var(--ink);color:#fff;border-radius:20px;padding:12px 12px 12px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 12px 30px rgba(42,30,23,.35);transition:transform .25s ease,opacity .25s}
+.bar.empty .bar-in{transform:translateY(130%);opacity:0}
+.bar small{display:block;opacity:.8;font-size:.8rem}
+.bar .tot{font-family:var(--display);font-weight:800;font-size:1.35rem;color:var(--yellow);font-variant-numeric:tabular-nums}
+.send{display:inline-flex;align-items:center;gap:8px;background:var(--wa);color:#063B1D;font-weight:800;text-decoration:none;padding:12px 16px;border-radius:14px;white-space:nowrap}
+.toast{position:fixed;left:50%;top:16px;transform:translate(-50%,-150%);background:var(--ink);color:#fff;font-weight:700;font-size:.9rem;padding:10px 16px;border-radius:12px;z-index:20;transition:transform .25s}
+.toast.on{transform:translate(-50%,0)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <p class="demo">Ejemplo de menú del día editable · Cartify</p>
+  <header class="pad">
+    <h1 id="name">Sazón de Casa</h1>
+    <span class="kick">MENÚ DEL DÍA</span>
+    <p class="date" id="date"></p>
+    <div class="price"><b id="price">S/ 15</b><small>entrada + segundo</small></div>
+  </header>
+
+  <div class="pad">
+    <p class="msg" id="msg" hidden></p>
+    <p class="solo" id="solo" hidden></p>
+
+    <section class="sec">
+      <h2><span class="step">1</span>Elige tu entrada</h2>
+      <div class="chips" id="entradas"></div>
+    </section>
+
+    <section class="sec">
+      <h2><span class="step">2</span>Elige tu segundo</h2>
+      <p class="hint">Se agrega con la entrada que elegiste.</p>
+      <div class="list" id="segundos"></div>
+    </section>
+
+    <section class="sec small" id="extras"></section>
+
+    <div class="order" id="order"><h3>Tu pedido</h3><div id="lines"></div></div>
+
+    <button class="img-btn" id="img" type="button">📲 Descargar imagen para estados</button>
+    <p class="owner">Para el dueño: compártela en tu estado de WhatsApp o en Instagram.</p>
+    <p class="made">Menú de ejemplo · hecho por Cartify</p>
+  </div>
+</div>
+
+<div class="bar empty" id="bar" aria-live="polite">
+  <div class="bar-in">
+    <div><small id="cnt">0 menús</small><span class="tot" id="tot">S/ 0</span></div>
+    <a class="send" id="send" href="#" target="_blank" rel="noopener">Pedir por WhatsApp →</a>
+  </div>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+/* ===== Configuración del local =====
+   SHEET_CSV: enlace de la hoja de Google publicada como CSV (Archivo → Compartir → Publicar en la web → CSV).
+   Si está vacío o falla, se usa el menú de ejemplo de abajo. */
+var CONFIG={
+  name:'Sazón de Casa',
+  whatsapp:'51900000000',
+  SHEET_CSV:''
+};
+var DEMO_CSV=[
+ 'Sección,Plato,Nota',
+ 'Precio,15,',
+ 'Precio solo segundo,12,',
+ 'Mensaje,¡Hoy pachamanca a la olla!,',
+ 'Entrada,Papa a la huancaína,',
+ 'Entrada,Sopa de casa,',
+ 'Entrada,Ensalada fresca,',
+ 'Entrada,Causa de pollo,Agotado',
+ 'Segundo,Pachamanca a la olla,Especial del día',
+ 'Segundo,Ají de gallina,',
+ 'Segundo,Arroz con pollo,Agotado',
+ 'Segundo,Tallarines rojos con pollo,',
+ 'Refresco,Chicha morada,',
+ 'Postre,Mazamorra morada,'
+].join('\n');
+
+/* ===== Leer CSV ===== */
+function parseCSV(t){
+  var rows=[],row=[],f='',q=false;
+  for(var i=0;i<t.length;i++){var c=t[i];
+    if(q){if(c==='"'){if(t[i+1]==='"'){f+='"';i++;}else q=false;}else f+=c;}
+    else if(c==='"')q=true;
+    else if(c===','){row.push(f);f='';}
+    else if(c==='\n'||c==='\r'){if(c==='\r'&&t[i+1]==='\n')i++;row.push(f);rows.push(row);row=[];f='';}
+    else f+=c;}
+  if(f||row.length){row.push(f);rows.push(row);}
+  return rows;
+}
+function norm(s){return (s||'').toString().trim().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');}
+function toMenu(csv){
+  var m={price:0,solo:0,msg:'',ent:[],seg:[],ref:[],pos:[]};
+  parseCSV(csv).slice(1).forEach(function(r){
+    var k=norm(r[0]),v=(r[1]||'').trim(),n=(r[2]||'').trim();if(!k||!v)return;
+    var item={name:v,note:n,off:/agotad/i.test(n)};
+    if(k==='precio')m.price=parseFloat(v.replace(/[^\d.]/g,''))||0;
+    else if(k.indexOf('solo')>-1)m.solo=parseFloat(v.replace(/[^\d.]/g,''))||0;
+    else if(k==='mensaje')m.msg=v;
+    else if(k.indexOf('entrada')===0)m.ent.push(item);
+    else if(k.indexOf('segundo')===0)m.seg.push(item);
+    else if(k.indexOf('refresco')===0||k.indexOf('bebida')===0)m.ref.push(item);
+    else if(k.indexOf('postre')===0)m.pos.push(item);
+  });
+  return m;
+}
+
+/* ===== Estado y pintado ===== */
+var M, entSel=null, order=[];
+function money(n){return 'S/ '+(n%1?n.toFixed(2):n);}
+function todayText(){
+  try{var s=new Intl.DateTimeFormat('es-PE',{timeZone:'America/Lima',weekday:'long',day:'numeric',month:'long'}).format(new Date());}
+  catch(e){s=new Date().toLocaleDateString('es-PE',{weekday:'long',day:'numeric',month:'long'});}
+  return s.charAt(0).toUpperCase()+s.slice(1);
+}
+function render(){
+  document.getElementById('name').textContent=CONFIG.name;
+  document.getElementById('date').textContent=todayText();
+  document.getElementById('price').textContent=money(M.price);
+  var msg=document.getElementById('msg');msg.hidden=!M.msg;msg.textContent=M.msg;
+  var solo=document.getElementById('solo');solo.hidden=!M.solo;solo.textContent='Solo segundo: '+money(M.solo);
+
+  var E=document.getElementById('entradas');E.innerHTML='';
+  var opts=M.ent.slice();if(M.solo)opts.push({name:'Sin entrada',none:true});
+  opts.forEach(function(e){var b=document.createElement('button');b.type='button';b.className='ent';
+    b.textContent=e.name+(e.off?' · agotado':'');b.disabled=!!e.off;b.setAttribute('aria-pressed',entSel===e.name);
+    b.onclick=function(){entSel=e.name;render();};E.appendChild(b);});
+
+  var S=document.getElementById('segundos');S.innerHTML='';
+  M.seg.forEach(function(s){var d=document.createElement('div');d.className='seg'+(s.off?' off':'');
+    d.innerHTML='<div>'+(s.note?'<span class="note">'+esc(s.note)+'</span>':'')+'<h3>'+esc(s.name)+'</h3></div>';
+    var b=document.createElement('button');b.type='button';b.className='add';b.textContent=s.off?'Agotado':'Agregar';b.disabled=s.off;
+    b.onclick=function(){addMenu(s.name);};d.appendChild(b);S.appendChild(d);});
+
+  var X=document.getElementById('extras');X.innerHTML='';
+  if(M.ref.length)X.innerHTML+='<div class="mini"><span>Refresco</span><b>'+esc(M.ref.map(function(i){return i.name}).join(', '))+'</b></div>';
+  if(M.pos.length)X.innerHTML+='<div class="mini"><span>Postre</span><b>'+esc(M.pos.map(function(i){return i.name}).join(', '))+'</b></div>';
+  renderOrder();
+}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]});}
+function toast(t){var el=document.getElementById('toast');el.textContent=t;el.classList.add('on');clearTimeout(el._t);el._t=setTimeout(function(){el.classList.remove('on')},1800);}
+function addMenu(seg){
+  if(!entSel){toast('Primero elige tu entrada 👆');document.getElementById('entradas').scrollIntoView({behavior:'smooth',block:'center'});return;}
+  var none=entSel==='Sin entrada';
+  order.push({ent:none?'':entSel,seg:seg,price:none?M.solo:M.price});
+  toast('Agregado: '+seg);renderOrder();
+}
+function renderOrder(){
+  var L=document.getElementById('lines');L.innerHTML='';
+  if(!order.length)L.innerHTML='<p class="empty">Elige una entrada y luego toca “Agregar” en tu segundo.</p>';
+  order.forEach(function(o,i){var d=document.createElement('div');d.className='line';
+    d.innerHTML='<span>'+(o.ent?esc(o.ent)+' + ':'Solo ')+esc(o.seg)+' · <b>'+money(o.price)+'</b></span>';
+    var x=document.createElement('button');x.type='button';x.textContent='Quitar';x.onclick=function(){order.splice(i,1);renderOrder();};d.appendChild(x);L.appendChild(d);});
+  var t=order.reduce(function(a,o){return a+o.price},0);
+  document.getElementById('bar').classList.toggle('empty',!order.length);
+  document.getElementById('cnt').textContent=order.length+(order.length===1?' menú':' menús');
+  document.getElementById('tot').textContent=money(t);
+  var txt='Hola '+CONFIG.name+', quiero pedir el menú de hoy:\n'+order.map(function(o){return '• '+(o.ent?o.ent+' + ':'Solo ')+o.seg+' — '+money(o.price)}).join('\n')+'\nTotal: '+money(t);
+  document.getElementById('send').href='https://wa.me/'+CONFIG.whatsapp+'?text='+encodeURIComponent(txt);
+}
+
+/* ===== Imagen para estados (1080×1920) ===== */
+function wrap(ctx,text,maxW){var w=text.split(' '),lines=[],l='';
+  w.forEach(function(x){var t=l?l+' '+x:x;if(ctx.measureText(t).width>maxW&&l){lines.push(l);l=x;}else l=t;});if(l)lines.push(l);return lines;}
+function drawStory(){
+  var W=1080,H=1920,c=document.createElement('canvas');c.width=W;c.height=H;var x=c.getContext('2d');
+  var D='"Baloo 2", sans-serif',B='Figtree, sans-serif';
+  x.fillStyle='#FFF6E9';x.fillRect(0,0,W,H);
+  // banda roja
+  var g=x.createLinearGradient(0,0,W,620);g.addColorStop(0,'#E0583A');g.addColorStop(1,'#C8402A');
+  x.fillStyle=g;x.beginPath();x.moveTo(0,0);x.lineTo(W,0);x.lineTo(W,540);x.quadraticCurveTo(W/2,640,0,540);x.closePath();x.fill();
+  x.textAlign='center';x.fillStyle='#fff';x.font='800 110px '+D;x.fillText(CONFIG.name,W/2,190);
+  x.fillStyle='#F5B92E';roundRect(x,W/2-210,235,420,74,37);x.fill();
+  x.fillStyle='#2A1E17';x.font='800 44px '+B;x.fillText('MENÚ DEL DÍA',W/2,287);
+  x.fillStyle='#fff';x.font='600 46px '+B;x.fillText(todayText(),W/2,385);
+  // precio
+  x.fillStyle='#FFF6E9';x.beginPath();x.arc(W/2,560,138,0,Math.PI*2);x.fill();
+  x.fillStyle='#F5B92E';x.beginPath();x.arc(W/2,560,124,0,Math.PI*2);x.fill();
+  x.fillStyle='#2A1E17';x.font='800 92px '+D;x.fillText(money(M.price),W/2,585);
+  x.font='700 28px '+B;x.fillText('entrada + segundo',W/2,630);
+  // contenido con tamaño que entra
+  var top=M.msg?800:750,bottom=1690,secs=[['Entradas',M.ent],['Segundos',M.seg]];
+  var extras=[];if(M.ref.length)extras.push('Refresco: '+M.ref.map(function(i){return i.name}).join(', '));
+  if(M.pos.length)extras.push('Postre: '+M.pos.map(function(i){return i.name}).join(', '));
+  if(M.solo)extras.push('Solo segundo: '+money(M.solo));
+  function layout(f,draw){var y=top;
+    secs.forEach(function(s){if(!s[1].length)return;
+      if(draw){x.textAlign='left';x.fillStyle='#C8402A';x.font='800 '+Math.round(f*1.3)+'px '+D;x.fillText(s[0],110,y);}
+      y+=f*1.25;
+      s[1].forEach(function(it){x.font='700 '+f+'px '+B;var ls=wrap(x,it.name+(it.off?' (agotado)':''),780);
+        ls.forEach(function(l,k){if(draw){x.fillStyle=it.off?'#B4A396':'#2A1E17';x.textAlign='left';
+            if(k===0){x.beginPath();x.arc(128,y-f*.32,f*.16,0,Math.PI*2);x.fillStyle=it.off?'#B4A396':'#F5B92E';x.fill();x.fillStyle=it.off?'#B4A396':'#2A1E17';}
+            x.fillText(l,165,y);
+            if(it.off){var w=x.measureText(l).width;x.fillRect(165,y-f*.33,w,4);}}
+          y+=f*1.22;});
+        if(draw&&it.note&&!it.off){x.fillStyle='#3F8F4E';x.font='800 '+Math.round(f*.62)+'px '+B;x.fillText(it.note.toUpperCase(),165,y-f*.35);}
+        if(it.note&&!it.off)y+=f*.55;});
+      y+=f*.7;});
+    extras.forEach(function(e){x.font='600 '+Math.round(f*.8)+'px '+B;var ls=wrap(x,e,860);
+      ls.forEach(function(l){if(draw){x.fillStyle='#7D6A5E';x.textAlign='left';x.fillText(l,110,y);}y+=f*1.05;});});
+    return y;}
+  var f=54;while(f>30&&layout(f,false)>bottom)f-=2;
+  if(M.msg){x.textAlign='center';x.fillStyle='#C8402A';x.font='700 50px '+D;x.fillText(M.msg,W/2,740);}
+  layout(f,true);
+  // pie
+  x.fillStyle='#2A1E17';x.fillRect(0,1760,W,160);x.textAlign='center';x.fillStyle='#fff';x.font='800 50px '+B;x.fillText('💬 Pide por WhatsApp',W/2,1855);
+  return c;
+}
+function roundRect(x,a,b,w,h,r){x.beginPath();x.moveTo(a+r,b);x.arcTo(a+w,b,a+w,b+h,r);x.arcTo(a+w,b+h,a,b+h,r);x.arcTo(a,b+h,a,b,r);x.arcTo(a,b,a+w,b,r);x.closePath();}
+document.getElementById('img').onclick=async function(){
+  try{await Promise.all([document.fonts.load('800 110px "Baloo 2"'),document.fonts.load('700 50px Figtree'),document.fonts.load('800 50px Figtree')]);}catch(e){}
+  var c=drawStory();
+  c.toBlob(async function(blob){
+    var file=new File([blob],'menu-del-dia.png',{type:'image/png'});
+    if(navigator.canShare&&navigator.canShare({files:[file]})){try{await navigator.share({files:[file],title:'Menú del día'});return;}catch(e){if(e.name==='AbortError')return;}}
+    var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='menu-del-dia.png';document.body.appendChild(a);a.click();a.remove();
+    toast('Imagen descargada ✅');
+  },'image/png');
+};
+
+/* ===== Arranque ===== */
+(async function(){
+  var csv=DEMO_CSV;
+  if(CONFIG.SHEET_CSV){try{var r=await fetch(CONFIG.SHEET_CSV+(CONFIG.SHEET_CSV.indexOf('?')>-1?'&':'?')+'t='+Date.now());if(r.ok)csv=await r.text();}catch(e){}}
+  M=toMenu(csv);render();
+})();
+</script>
+</body>
+</html>
