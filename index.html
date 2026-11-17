@@ -1,17 +1,503 @@
 <!doctype html>
-<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Cartify · Cartas digitales</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@800&family=Figtree:wght@500;700&display=swap">
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FFC81F">
+<title>Cartify · Cartas digitales y páginas web para tu negocio</title>
+<meta name="description" content="Cartas digitales con QR, páginas web y reservas por WhatsApp para restaurantes, cafeterías y negocios. Listo en 48 horas, pago único.">
+<meta property="og:title" content="Cartify · Tu negocio, listo para vender en internet">
+<meta property="og:description" content="Cartas digitales con QR, páginas web y reservas por WhatsApp. Listo en 48 horas, pago único.">
+<meta property="og:image" content="https://cartifyqr.github.io/assets/paralelo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700;800&display=swap">
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{min-height:100vh;display:grid;place-items:center;background:#FFE14D;font-family:"Figtree",sans-serif;color:#1B1B1F;padding:24px;text-align:center}
-h1{font-family:"Sora",sans-serif;font-size:56px;letter-spacing:-.03em}
-h1 span{color:#FF3D7F}
-p{margin:10px 0 28px;font-size:18px}
-a{display:inline-block;background:#1B1B1F;color:#fff;text-decoration:none;font-weight:700;padding:14px 26px;border-radius:999px}
-</style></head>
-<body><main>
-<h1>Cart<span>ify</span></h1>
-<p>Cartas digitales para restaurantes</p>
-<a href="la-ola/">Ver carta de ejemplo</a>
-</main></body></html>
+/* Cartify: amarillo sol, rosado y tinta. Neo-brutalista pulido, 3D con CSS (anillo de celulares, inclinación, giro). Móvil primero */
+:root{
+  --sun:#FFC81F; --sun2:#FFE07A; --sunsoft:#FFF4CC; --pink:#F0157C; --pinksoft:#FFD9EA; --ink:#1A1423; --ink2:#2A2333;
+  --paper:#FFFDF7; --cream:#FFF8E6; --muted:#6B6475; --line:#1A1423; --green:#14B86A; --sky:#2A7BF6; --skysoft:#DCEBFF; --mint:#D7F5E5; --wa:#25D366;
+  --display:"Bricolage Grotesque", system-ui, sans-serif; --body:"Figtree", system-ui, sans-serif;
+  --r:24px; --shadow:7px 7px 0 var(--ink);
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:inherit}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+:focus-visible{outline:3px solid var(--pink);outline-offset:3px}
+h1,h2,h3{font-family:var(--display);font-weight:800;letter-spacing:-.035em;line-height:.98;margin:0;font-variant-ligatures:none}
+p{margin:0}
+.wrap{max-width:1160px;margin:0 auto;padding:0 max(20px,env(safe-area-inset-left,0px))}
+.hl{color:var(--pink);text-shadow:4px 4px 0 var(--ink)}
+.kick{display:inline-flex;align-items:center;gap:8px;font-weight:800;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;background:var(--paper);border:2.5px solid var(--ink);padding:6px 12px;border-radius:999px}
+.kick i{width:8px;height:8px;border-radius:50%;background:var(--pink);font-style:normal}
+
+/* botones */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-weight:800;text-decoration:none;font-size:1rem;padding:15px 22px;border-radius:16px;border:3px solid var(--ink);box-shadow:5px 5px 0 var(--ink);transition:transform .15s,box-shadow .15s;white-space:nowrap}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink)}
+.btn:active{transform:translate(3px,3px);box-shadow:2px 2px 0 var(--ink)}
+.btn.wa{background:var(--wa);color:#05361A}
+.btn.ink{background:var(--ink);color:#fff}
+.btn.white{background:var(--paper)}
+.btn.pink{background:var(--pink);color:#fff}
+
+/* nav */
+nav{position:sticky;top:0;z-index:50;background:rgba(255,200,31,.86);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:3px solid var(--ink)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:66px;gap:16px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo svg{width:40px;height:40px}
+.logo b{font-family:var(--display);font-weight:800;font-size:1.55rem;letter-spacing:-.04em;font-variant-ligatures:none}
+.logo b span{color:var(--pink)}
+.navl{display:none;gap:22px;font-weight:700;font-size:.95rem}
+.navl a{text-decoration:none;position:relative}
+.navl a::after{content:"";position:absolute;left:0;right:100%;bottom:-4px;height:3px;background:var(--pink);transition:right .2s}
+.navl a:hover::after{right:0}
+nav .btn{padding:10px 14px;font-size:.9rem;box-shadow:3px 3px 0 var(--ink)}
+
+/* hero */
+.hero{position:relative;background:var(--sun);border-bottom:3px solid var(--ink);overflow:hidden}
+.hero .wrap{display:grid;gap:10px;padding-top:44px;padding-bottom:30px;position:relative;z-index:2}
+.hero h1{font-size:clamp(3rem,11.5vw,6.4rem);margin-top:18px}
+.hero h1 .u{position:relative;white-space:nowrap}
+.hero h1 .u svg{position:absolute;left:-2%;bottom:-.18em;width:104%;height:.3em}
+.hero p.lead{margin-top:18px;font-size:1.15rem;font-weight:600;max-width:34ch;line-height:1.45}
+.hero .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.trust{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.trust span{display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:.86rem;background:var(--paper);border:2px solid var(--ink);padding:6px 11px;border-radius:999px}
+.blob{position:absolute;border-radius:50%;z-index:0}
+/* anillo 3D */
+.stage{position:relative;height:440px;perspective:1300px;margin-top:10px}
+.ring{position:absolute;left:50%;top:44%;width:0;height:0;transform-style:preserve-3d;will-change:transform}
+.ph{position:absolute;width:170px;height:368px;margin:-184px 0 0 -85px;border-radius:30px;border:7px solid #121212;background:#121212;overflow:hidden;box-shadow:0 0 0 3px var(--ink);backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.ph img{width:100%;height:100%;object-fit:cover;object-position:top;border-radius:23px}
+.ph::before{content:"";position:absolute;top:7px;left:50%;transform:translateX(-50%);width:54px;height:15px;border-radius:12px;background:#121212;z-index:2}
+.floor{position:absolute;left:50%;bottom:6px;width:380px;height:46px;margin-left:-190px;border-radius:50%;background:radial-gradient(closest-side,rgba(26,20,35,.32),transparent);filter:blur(2px)}
+.sticker{position:absolute;z-index:5;font-weight:800;font-size:.86rem;background:var(--paper);border:2.5px solid var(--ink);border-radius:14px;padding:8px 12px;box-shadow:4px 4px 0 var(--ink);animation:bob 4s ease-in-out infinite}
+.sticker b{color:var(--pink)}
+@keyframes bob{50%{transform:translateY(-8px) rotate(-2deg)}}
+.drag{position:absolute;left:50%;bottom:-2px;transform:translateX(-50%);font-size:.78rem;font-weight:700;opacity:.7;z-index:5}
+
+/* marquesina */
+.marq{background:var(--ink);color:var(--paper);overflow:hidden;border-bottom:3px solid var(--ink);transform:rotate(-1.2deg);margin:-8px -10px 0;position:relative;z-index:3}
+.marq div{display:flex;gap:34px;width:max-content;padding:14px 0;animation:mq 26s linear infinite;font-family:var(--display);font-weight:800;font-size:1.4rem;letter-spacing:-.02em}
+.marq span{display:inline-flex;align-items:center;gap:34px}
+.marq span::after{content:"✦";color:var(--sun)}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+section{padding:84px 0;position:relative}
+.sh{display:grid;gap:14px;margin-bottom:34px;max-width:760px}
+.sh h2{font-size:clamp(2.4rem,8vw,4.2rem)}
+.sh p{font-size:1.1rem;color:var(--muted);font-weight:500;max-width:52ch}
+
+/* antes/ahora */
+.vs{display:grid;gap:16px}
+.pair{display:grid;grid-template-columns:1fr auto 1fr;align-items:stretch;gap:10px}
+.pair div{border:3px solid var(--ink);border-radius:18px;padding:16px;font-weight:700;line-height:1.3}
+.pair .no{background:var(--paper);color:var(--muted);text-decoration:line-through;text-decoration-color:var(--pink);text-decoration-thickness:2px}
+.pair .no small,.pair .yes small{display:block;text-decoration:none;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;font-weight:800;margin-bottom:6px}
+.pair .no small{color:var(--pink);text-decoration:none;display:inline-block}
+.pair .yes{background:var(--mint);box-shadow:5px 5px 0 var(--ink)}
+.pair .yes small{color:var(--green)}
+.pair .arr{border:0;padding:0;display:grid;place-items:center;font-size:1.6rem;font-weight:900}
+
+/* servicios */
+.svc{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;perspective:1000px}
+.card{position:relative;background:var(--paper);border:3px solid var(--ink);border-radius:var(--r);padding:20px;box-shadow:var(--shadow);transform-style:preserve-3d;transition:transform .2s ease,box-shadow .2s}
+.card .ic{width:54px;height:54px;border-radius:16px;border:2.5px solid var(--ink);display:grid;place-items:center;font-size:1.6rem;transform:translateZ(30px)}
+.card h3{font-size:1.35rem;margin-top:14px;transform:translateZ(22px)}
+.card p{font-size:.94rem;color:var(--muted);margin-top:8px;font-weight:500}
+.card .from{display:inline-block;margin-top:12px;font-weight:800;font-size:.82rem;background:var(--ink);color:var(--sun);padding:4px 10px;border-radius:999px}
+.card.big{grid-column:1/-1;background:var(--pink);color:#fff}
+.card.big p{color:#FFE3EF}
+.card.big .ic{background:var(--sun)}
+
+/* pruébalo */
+.try{background:var(--ink);color:var(--paper);border-top:3px solid var(--ink);border-bottom:3px solid var(--ink);overflow:hidden}
+.try .sh p{color:#BDB4C8}
+.try .kick{background:transparent;border-color:var(--sun);color:var(--sun)}
+.try .hl{color:var(--sun);text-shadow:4px 4px 0 var(--pink)}
+.tgrid{display:grid;gap:30px;align-items:center}
+.device{width:min(330px,88vw);margin:0 auto;border:10px solid #0D0D0D;border-radius:46px;background:#FFF6EE;overflow:hidden;box-shadow:0 0 0 3px var(--sun),0 30px 70px rgba(0,0,0,.5);color:var(--ink);position:relative;transform:rotateY(-12deg) rotateX(4deg);transition:transform .5s}
+.device:hover{transform:none}
+.dtop{background:linear-gradient(160deg,#E0583A,#C8402A);color:#fff;padding:34px 18px 18px}
+.dtop small{font-weight:700;opacity:.85;font-size:.72rem;letter-spacing:.14em}
+.dtop b{display:block;font-family:var(--display);font-size:1.7rem;letter-spacing:-.03em}
+.ditems{padding:12px;display:grid;gap:10px}
+.di{display:grid;grid-template-columns:56px 1fr auto;gap:10px;align-items:center;background:#fff;border-radius:14px;padding:8px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.di img{width:56px;height:56px;border-radius:10px;object-fit:cover}
+.di b{font-size:.9rem;display:block}
+.di span{font-size:.8rem;color:#8A7A70}
+.di button{background:#C8402A;color:#fff;font-weight:800;font-size:.78rem;padding:7px 11px;border-radius:999px}
+.di button.on{background:#14B86A}
+.dbar{margin:4px 12px 14px;background:var(--ink);color:#fff;border-radius:16px;padding:10px 10px 10px 14px;display:flex;justify-content:space-between;align-items:center}
+.dbar b{color:var(--sun);font-family:var(--display);font-size:1.2rem}
+.dbar button{background:var(--wa);color:#05361A;font-weight:800;font-size:.82rem;padding:9px 12px;border-radius:12px}
+.chat{max-width:400px;margin:0 auto;width:100%;background:#0B141A;border:3px solid var(--sun);border-radius:26px;padding:16px;min-height:300px;display:flex;flex-direction:column;gap:10px;background-image:radial-gradient(rgba(255,255,255,.04) 1px,transparent 1px);background-size:14px 14px}
+.chat .hd{display:flex;align-items:center;gap:10px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,.1)}
+.chat .av{width:36px;height:36px;border-radius:50%;background:#C8402A;display:grid;place-items:center;font-weight:800}
+.chat .hd small{display:block;color:#8FA3AD;font-size:.74rem}
+.bub{align-self:flex-end;max-width:88%;background:#005C4B;color:#E9F3EF;border-radius:14px 14px 4px 14px;padding:10px 12px;font-size:.9rem;white-space:pre-line;animation:pop .35s cubic-bezier(.2,1.4,.4,1)}
+.bub.in{align-self:flex-start;background:#202C33;border-radius:14px 14px 14px 4px}
+.bub time{display:block;text-align:right;font-size:.66rem;color:#9FC3B8;margin-top:4px}
+@keyframes pop{from{transform:scale(.6);opacity:0}}
+.hint{color:#8FA3AD;font-size:.86rem;text-align:center;margin-top:auto}
+
+/* ejemplos */
+.gal{display:flex;gap:22px;overflow-x:auto;scroll-snap-type:x mandatory;padding:20px max(20px,calc((100vw - 1160px)/2 + 20px)) 34px;scrollbar-width:none;perspective:1200px}
+.gal::-webkit-scrollbar{display:none}
+.ex{flex:none;width:230px;scroll-snap-align:center;text-decoration:none;transform-style:preserve-3d;transition:transform .25s}
+.ex .ph2{width:230px;height:498px;border-radius:38px;border:9px solid #121212;overflow:hidden;box-shadow:0 0 0 3px var(--ink),10px 14px 0 var(--ink);position:relative;background:#121212}
+.ex .ph2::before{content:"";position:absolute;top:9px;left:50%;transform:translateX(-50%);width:70px;height:20px;border-radius:14px;background:#121212;z-index:2}
+.ex img{width:100%;height:100%;object-fit:cover;object-position:top;border-radius:29px;transition:object-position 3.5s ease}
+.ex:hover img{object-position:bottom}
+.ex .lb{margin-top:20px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.ex .lb b{font-family:var(--display);font-size:1.2rem;letter-spacing:-.02em;display:block}
+.ex .lb small{font-weight:700;color:var(--muted);font-size:.82rem}
+.ex .lb span{flex:none;width:40px;height:40px;border-radius:50%;background:var(--sun);border:2.5px solid var(--ink);display:grid;place-items:center;font-weight:900}
+.note{font-size:.82rem;color:var(--muted);margin-top:4px}
+
+/* precios */
+.plans{display:grid;gap:18px}
+.plan{position:relative;background:var(--paper);border:3px solid var(--ink);border-radius:28px;padding:24px;box-shadow:var(--shadow);display:flex;flex-direction:column}
+.plan .nm{font-weight:800;letter-spacing:.12em;text-transform:uppercase;font-size:.8rem}
+.plan .pr{font-family:var(--display);font-weight:800;font-size:3.4rem;letter-spacing:-.04em;line-height:1;margin-top:10px}
+.plan .pr small{font-family:var(--body);font-size:.9rem;font-weight:700;letter-spacing:0;color:var(--muted)}
+.plan ul{list-style:none;padding:0;margin:18px 0 22px;display:grid;gap:10px}
+.plan li{display:flex;gap:10px;font-weight:600;font-size:.95rem;line-height:1.35}
+.plan li::before{content:"✓";flex:none;width:22px;height:22px;border-radius:50%;background:var(--mint);border:2px solid var(--ink);display:grid;place-items:center;font-size:.72rem;font-weight:900}
+.plan .btn{margin-top:auto}
+.plan.star{background:var(--pink);color:#fff;transform:rotate(-1deg)}
+.plan.star .pr small{color:#FFE3EF}
+.plan.star li::before{background:var(--sun);color:var(--ink)}
+.plan.dark{background:var(--ink);color:#fff}
+.plan.dark .pr small{color:#BDB4C8}
+.plan.dark li::before{background:var(--pink);color:#fff;border-color:#fff}
+.ribbon{position:absolute;top:-16px;right:20px;background:var(--sun);color:var(--ink);border:3px solid var(--ink);font-weight:800;font-size:.78rem;letter-spacing:.08em;padding:6px 12px;border-radius:999px;transform:rotate(3deg)}
+.extras{display:grid;gap:10px;margin-top:22px}
+.extras div{display:flex;justify-content:space-between;gap:12px;align-items:center;background:var(--paper);border:2.5px solid var(--ink);border-radius:16px;padding:12px 16px;font-weight:700}
+.extras b{font-family:var(--display);font-size:1.15rem;white-space:nowrap}
+
+/* cotizador */
+.quote{background:var(--skysoft);border-top:3px solid var(--ink);border-bottom:3px solid var(--ink)}
+.qgrid{display:grid;gap:20px}
+.opts{display:grid;gap:10px}
+.qo{display:flex;align-items:center;gap:14px;background:var(--paper);border:3px solid var(--ink);border-radius:18px;padding:14px 16px;cursor:pointer;transition:transform .12s,box-shadow .12s;user-select:none}
+.qo:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--ink)}
+.qo input{position:absolute;opacity:0;pointer-events:none}
+.qo .bx{flex:none;width:28px;height:28px;border-radius:9px;border:3px solid var(--ink);display:grid;place-items:center;font-weight:900;color:transparent;transition:background .15s}
+.qo input:checked + .bx{background:var(--pink);color:#fff}
+.qo input:focus-visible + .bx{outline:3px solid var(--pink);outline-offset:3px}
+.qo .tx{flex:1}
+.qo .tx b{display:block;font-size:1rem}
+.qo .tx small{color:var(--muted);font-weight:600}
+.qo .pp{font-family:var(--display);font-weight:800;font-size:1.2rem;white-space:nowrap}
+.total{background:var(--ink);color:#fff;border-radius:26px;padding:24px;box-shadow:7px 7px 0 var(--pink);position:sticky;top:90px;align-self:start}
+.total small{font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--sun);font-size:.78rem}
+.total .n{font-family:var(--display);font-weight:800;font-size:4rem;letter-spacing:-.04em;line-height:1;margin-top:8px}
+.total .sv{display:inline-block;margin-top:8px;font-weight:800;font-size:.86rem;background:var(--green);color:#05361A;padding:4px 10px;border-radius:999px}
+.total ul{list-style:none;padding:0;margin:16px 0;display:grid;gap:6px;color:#D9D1E3;font-size:.92rem}
+.total .btn{width:100%}
+.total p.f{font-size:.8rem;color:#A79DB3;margin-top:12px}
+
+/* pasos */
+.steps{display:grid;gap:16px;counter-reset:s}
+.st{display:flex;gap:18px;align-items:flex-start;background:var(--paper);border:3px solid var(--ink);border-radius:22px;padding:20px;box-shadow:var(--shadow)}
+.st b{flex:none;width:58px;height:58px;border-radius:50%;background:var(--sun);border:3px solid var(--ink);display:grid;place-items:center;font-family:var(--display);font-size:1.6rem}
+.st h3{font-size:1.35rem}
+.st p{color:var(--muted);margin-top:6px;font-weight:500}
+
+/* faq */
+.faq{display:grid;gap:12px;max-width:820px}
+details{background:var(--paper);border:3px solid var(--ink);border-radius:18px;padding:0 18px}
+details[open]{box-shadow:5px 5px 0 var(--ink)}
+summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:14px;align-items:center;padding:18px 0;font-weight:800;font-size:1.05rem}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";flex:none;width:32px;height:32px;border-radius:50%;background:var(--sun);border:2.5px solid var(--ink);display:grid;place-items:center;font-size:1.2rem;transition:transform .2s}
+details[open] summary::after{transform:rotate(45deg);background:var(--pink);color:#fff}
+details p{padding:0 0 18px;color:var(--muted);font-weight:500}
+
+/* cierre */
+.final{background:var(--pink);color:#fff;border-top:3px solid var(--ink);text-align:center;overflow:hidden}
+.final h2{font-size:clamp(2.6rem,10vw,5rem);max-width:14ch;margin:0 auto}
+.final h2 span{color:var(--sun);text-shadow:4px 4px 0 var(--ink)}
+.final p{margin:18px auto 0;font-size:1.15rem;max-width:38ch;font-weight:600}
+.final .cta{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:28px}
+footer{background:var(--ink);color:#BDB4C8;padding:34px 0 110px;font-size:.88rem}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;align-items:center}
+footer .logo b{color:#fff}
+
+.fab{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:60;display:flex;align-items:center;gap:10px;background:var(--wa);color:#05361A;text-decoration:none;font-weight:800;border:3px solid var(--ink);border-radius:999px;padding:12px 18px 12px 14px;box-shadow:4px 4px 0 var(--ink);transition:transform .3s}
+.fab svg{width:26px;height:26px}
+.fab.hide{transform:translateY(150%)}
+
+.rv{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+.rv.in{opacity:1;transform:none}
+
+@media (min-width:900px){
+  .navl{display:flex}
+  .hero .wrap{grid-template-columns:1.05fr .95fr;align-items:center;padding-top:60px;padding-bottom:60px;min-height:640px}
+  .stage{height:560px;margin-top:0}
+  .ph{width:200px;height:433px;margin:-216px 0 0 -100px}
+  .vs{grid-template-columns:1fr 1fr}
+  .svc{grid-template-columns:repeat(3,1fr)}
+  .card.big{grid-column:span 2}
+  .tgrid{grid-template-columns:1fr 1fr}
+  .plans{grid-template-columns:repeat(4,1fr);align-items:stretch}
+  .extras{grid-template-columns:repeat(3,1fr)}
+  .qgrid{grid-template-columns:1.2fr .8fr}
+  .steps{grid-template-columns:repeat(4,1fr)}
+  .st{flex-direction:column}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="ic" viewBox="0 0 100 100"><path d="M18 18 L50 26 L82 18 L82 82 L50 90 L18 82Z" fill="#fff" stroke="#1A1423" stroke-width="6" stroke-linejoin="round"/><path d="M50 26 V90" stroke="#1A1423" stroke-width="6"/><path d="M27 40 h14 M27 52 h14 M27 64 h10 M59 40 h14 M59 52 h14 M59 64 h10" stroke="#F0157C" stroke-width="6" stroke-linecap="round"/><path d="M80 4 l3.5 8 8 3.5 -8 3.5 -3.5 8 -3.5 -8 -8 -3.5 8 -3.5z" fill="#1A1423"/></symbol>
+<symbol id="wai" viewBox="0 0 32 32"><path fill="currentColor" d="M16 3C9 3 3.3 8.6 3.3 15.6c0 2.4.7 4.7 1.9 6.6L3 29l7-2.2c1.8 1 3.9 1.6 6 1.6 7 0 12.7-5.6 12.7-12.6S23 3 16 3zm0 23c-1.9 0-3.8-.5-5.4-1.5l-.4-.2-4.1 1.3 1.3-4-.3-.4c-1.1-1.7-1.7-3.6-1.7-5.6C5.4 9.9 10.1 5.3 16 5.3s10.6 4.6 10.6 10.3S21.9 26 16 26zm5.8-7.7c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.4-.5-2.6-1.6-1-.9-1.6-1.9-1.8-2.2-.2-.3 0-.5.1-.7l.5-.6c.2-.2.2-.4.3-.6.1-.2 0-.4 0-.6l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.7s1.2 3.2 1.4 3.4c.2.2 2.4 3.6 5.8 5 .8.4 1.4.6 1.9.7.8.3 1.5.2 2.1.1.6-.1 1.9-.8 2.2-1.5.3-.7.3-1.4.2-1.5-.1-.1-.3-.2-.6-.4z"/></symbol>
+</defs></svg>
+
+<nav><div class="wrap">
+  <a class="logo" href="#inicio" aria-label="Cartify, inicio"><svg><use href="#ic"/></svg><b>Cart<span>ify</span></b></a>
+  <div class="navl"><a href="#servicios">Servicios</a><a href="#ejemplos">Ejemplos</a><a href="#precios">Precios</a><a href="#cotiza">Cotiza</a><a href="#faq">Preguntas</a></div>
+  <a class="btn wa" data-wa="Hola Cartify 👋 Quiero una muestra gratis para mi negocio." href="#">Escríbeme</a>
+</div></nav>
+
+<header class="hero" id="inicio">
+  <span class="blob" style="width:520px;height:520px;right:-180px;top:-120px;background:#FFDA5C"></span>
+  <span class="blob" style="width:260px;height:260px;left:-120px;bottom:-110px;background:#FFE58C"></span>
+  <div class="wrap">
+    <div>
+      <span class="kick"><i></i>Páginas · Cartas · QR</span>
+      <h1>Tu negocio, <span class="u"><span class="hl">listo</span><svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path d="M3 14 C 50 4, 120 4, 197 12" fill="none" stroke="#1A1423" stroke-width="6" stroke-linecap="round"/></svg></span> para vender en internet.</h1>
+      <p class="lead">Cartas digitales con QR, páginas web y reservas por WhatsApp. Diseñadas a tu medida, en 48 horas y con pago único.</p>
+      <div class="cta">
+        <a class="btn wa" data-wa="Hola Cartify 👋 Quiero una muestra gratis para mi negocio." href="#"><svg width="22" height="22"><use href="#wai"/></svg>Pide tu muestra gratis</a>
+        <a class="btn white" href="#ejemplos">Ver ejemplos →</a>
+      </div>
+      <div class="trust"><span>⚡ Listo en 48 h</span><span>💸 Sin mensualidades</span><span>📲 Todo por WhatsApp</span></div>
+    </div>
+    <div class="stage" id="stage" aria-label="Ejemplos de páginas en celulares girando">
+      <div class="ring" id="ring"></div>
+      <div class="floor"></div>
+      <span class="sticker" style="left:2%;top:8%">Pedido con <b>total</b> ✓</span>
+      <span class="sticker" style="right:2%;top:52%;animation-delay:-2s">QR que <b>no cambia</b> 🔁</span>
+      <span class="drag">↔ arrastra para girar</span>
+    </div>
+  </div>
+</header>
+
+<div class="marq" aria-hidden="true"><div id="mq"></div></div>
+
+<!-- antes / ahora -->
+<section id="por-que"><div class="wrap">
+  <div class="sh rv"><span class="kick"><i></i>El problema</span><h2>Tus clientes quieren <span class="hl">rapidez</span>.</h2><p>Lo que hoy les hace perder tiempo (y a ti, ventas), lo resolvemos con una sola página bonita y fácil.</p></div>
+  <div class="vs">
+    <div class="pair rv"><div class="no"><small>Antes</small>Una carta en PDF que se descarga y no se lee en el celular</div><div class="arr">→</div><div class="yes"><small>Con Cartify</small>Carta con fotos que se abre al instante, sin descargar nada</div></div>
+    <div class="pair rv"><div class="no"><small>Antes</small>Un Linktree con 14 botones sueltos</div><div class="arr">→</div><div class="yes"><small>Con Cartify</small>Todo tu negocio en una sola página, con tu marca</div></div>
+    <div class="pair rv"><div class="no"><small>Antes</small>"¿Cuánto está?", "¿Tienen delivery?" mil veces al día</div><div class="arr">→</div><div class="yes"><small>Con Cartify</small>Precios a la vista y el pedido llega ordenado con el total</div></div>
+    <div class="pair rv"><div class="no"><small>Antes</small>Reimprimir la carta cada vez que sube un precio</div><div class="arr">→</div><div class="yes"><small>Con Cartify</small>Cambias el precio y el mismo QR se actualiza</div></div>
+  </div>
+</div></section>
+
+<!-- servicios -->
+<section id="servicios" style="padding-top:20px"><div class="wrap">
+  <div class="sh rv"><span class="kick"><i></i>Servicios</span><h2>Todo lo que tu negocio <span class="hl">necesita</span>.</h2><p>Para restaurantes, cafeterías, bares, barberías, salones, tiendas y emprendimientos.</p></div>
+  <div class="svc" id="svc">
+    <div class="card big rv"><div class="ic">📱</div><h3>Carta o catálogo digital con QR</h3><p>Tus productos o servicios con fotos y precios. El cliente elige, y el pedido te llega por WhatsApp con el total calculado. Ideal para la mesa, el mostrador o tu Instagram.</p><span class="from" style="background:var(--sun);color:var(--ink)">desde S/ 80</span></div>
+    <div class="card rv"><div class="ic" style="background:var(--skysoft)">🌐</div><h3>Página web</h3><p>Quiénes son, servicios, fotos, ubicación y reservas. Rápida y lista para Google.</p><span class="from">desde S/ 250</span></div>
+    <div class="card rv"><div class="ic" style="background:var(--mint)">📅</div><h3>Reservas por WhatsApp</h3><p>Día, hora, personas y ocasión en 20 segundos. Te llega el mensaje completo.</p><span class="from">incluido</span></div>
+    <div class="card rv"><div class="ic" style="background:var(--pinksoft)">🔗</div><h3>Un solo enlace</h3><p>WhatsApp, ubicación, Yape, horario y redes. El reemplazo bonito de Linktree.</p><span class="from">S/ 50</span></div>
+    <div class="card rv"><div class="ic" style="background:var(--sunsoft)">🖼️</div><h3>Imágenes para redes</h3><p>Para tus estados e Instagram: carta, pagos, horario, ¡ya abrimos!</p><span class="from">S/ 50</span></div>
+    <div class="card rv"><div class="ic" style="background:var(--skysoft)">🖨️</div><h3>Kit QR para imprimir</h3><p>QR de tu carta, de Yape y de reseñas en Google. Solo lo imprimes.</p><span class="from">en el pack</span></div>
+    <div class="card rv"><div class="ic" style="background:var(--mint)">📍</div><h3>Google Maps</h3><p>Tu ficha con horario, fotos y enlace correcto para que te encuentren.</p><span class="from">S/ 60</span></div>
+    <div class="card rv"><div class="ic" style="background:var(--pinksoft)">✨</div><h3>Efectos 3D y animación</h3><p>Para marcas que quieren destacar: tarjetas que giran, carruseles y más.</p><span class="from">a medida</span></div>
+  </div>
+</div></section>
+
+<!-- pruébalo -->
+<section class="try" id="pruebalo"><div class="wrap">
+  <div class="sh rv"><span class="kick"><i></i>Pruébalo tú</span><h2>Así le llega el pedido a tu <span class="hl">WhatsApp</span>.</h2><p>Toca "Agregar" en el celular y mira cómo se arma el mensaje solo. Sin apps, sin comisiones.</p></div>
+  <div class="tgrid">
+    <div class="device rv" id="device">
+      <div class="dtop"><small>CARTA DIGITAL</small><b>Tu restaurante</b></div>
+      <div class="ditems" id="ditems"></div>
+      <div class="dbar"><div><small style="opacity:.7;font-size:.72rem" id="dcnt">0 platos</small><b id="dtot">S/ 0</b></div><button type="button" id="dsend">Pedir 💬</button></div>
+    </div>
+    <div class="chat rv" id="chat" aria-live="polite">
+      <div class="hd"><span class="av">🍽️</span><div><b>Tu restaurante</b><small>WhatsApp Business</small></div></div>
+      <p class="hint" id="hint">Agrega platos y toca "Pedir 💬"</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- ejemplos -->
+<section id="ejemplos"><div class="wrap">
+  <div class="sh rv"><span class="kick"><i></i>Ejemplos</span><h2>Cada negocio, con su <span class="hl">estilo</span>.</h2><p>Toca cualquiera para abrirlo en vivo. Pasa el cursor para recorrer la página.</p></div>
+</div>
+  <div class="gal" id="gal"></div>
+  <div class="wrap"><p class="note">Diseños de muestra preparados por Cartify para negocios de Lima. Fotos y precios referenciales; no implican relación comercial con los negocios mostrados.</p></div>
+</section>
+
+<!-- precios -->
+<section id="precios" style="padding-top:30px"><div class="wrap">
+  <div class="sh rv"><span class="kick"><i></i>Precios</span><h2>Claros y en <span class="hl">soles</span>.</h2><p>Pago único. Sin mensualidades obligatorias. 50 % al empezar y el resto cuando lo apruebes.</p></div>
+  <div class="plans">
+    <div class="plan rv"><p class="nm">Carta QR</p><p class="pr">S/ 80 <small>pago único</small></p><ul><li>Carta o catálogo con fotos</li><li>Pedido por WhatsApp con total</li><li>QR listo para tus mesas</li><li>1 cambio gratis</li></ul><a class="btn white" data-wa="Hola Cartify 👋 Me interesa la Carta QR (S/ 80)." href="#">La quiero</a></div>
+    <div class="plan star rv"><span class="ribbon">EL MÁS PEDIDO</span><p class="nm">Pack completo</p><p class="pr">S/ 150 <small>ahorras S/ 30</small></p><ul><li>Carta digital con QR</li><li>Un solo enlace para Instagram</li><li>3 imágenes para tus estados</li><li>Kit QR para imprimir</li><li>Reservas por WhatsApp</li></ul><a class="btn ink" data-wa="Hola Cartify 👋 Me interesa el Pack completo (S/ 150)." href="#">Lo quiero</a></div>
+    <div class="plan rv"><p class="nm">Página web</p><p class="pr">S/ 250 <small>pago único</small></p><ul><li>Una página profesional</li><li>Servicios, fotos y ubicación</li><li>Reservas por WhatsApp</li><li>Lista para conectar tu .com</li></ul><a class="btn white" data-wa="Hola Cartify 👋 Me interesa una Página web (S/ 250)." href="#">La quiero</a></div>
+    <div class="plan dark rv"><p class="nm">A medida</p><p class="pr">S/ 450+ <small>cotización</small></p><ul><li>Todo en una sola página</li><li>Reservas, eventos y packs</li><li>Efectos 3D y animaciones</li><li>Actualización mensual opcional</li></ul><a class="btn pink" data-wa="Hola Cartify 👋 Quiero cotizar una página a medida." href="#">Cotizar</a></div>
+  </div>
+  <div class="extras">
+    <div>Cambios después del primero <b>S/ 10</b></div>
+    <div>Mantenimiento mensual <b>desde S/ 25</b></div>
+    <div>Conexión de dominio .com <b>S/ 40</b></div>
+  </div>
+</div></section>
+
+<!-- cotizador -->
+<section class="quote" id="cotiza"><div class="wrap">
+  <div class="sh rv"><span class="kick"><i></i>Cotizador</span><h2>Arma tu <span class="hl">pedido</span>.</h2><p>Marca lo que necesitas y te mando la cotización exacta por WhatsApp.</p></div>
+  <div class="qgrid">
+    <div class="opts" id="opts"></div>
+    <div class="total rv">
+      <small>Tu inversión</small>
+      <p class="n" id="qn">S/ 0</p>
+      <span class="sv" id="qsv" hidden></span>
+      <ul id="ql"><li>Marca al menos una opción</li></ul>
+      <a class="btn wa" id="qbtn" href="#"><svg width="22" height="22"><use href="#wai"/></svg>Enviar por WhatsApp</a>
+      <p class="f">Pago único · 50 % al inicio · Yape o Plin</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- pasos -->
+<section id="como"><div class="wrap">
+  <div class="sh rv"><span class="kick"><i></i>Cómo funciona</span><h2>Así de <span class="hl">fácil</span>.</h2><p>Todo a distancia, por WhatsApp. Sin reuniones y sin instalar nada.</p></div>
+  <div class="steps">
+    <div class="st rv"><b>1</b><div><h3>Me escribes</h3><p>Cuéntame qué negocio tienes. Te hago una muestra gratis.</p></div></div>
+    <div class="st rv"><b>2</b><div><h3>Me mandas tus datos</h3><p>Fotos, logo, carta o servicios y tu número.</p></div></div>
+    <div class="st rv"><b>3</b><div><h3>En 48 h está listo</h3><p>Te paso el enlace, el QR y las imágenes. Lo revisas.</p></div></div>
+    <div class="st rv"><b>4</b><div><h3>Compartes y vendes</h3><p>En tus mesas, tu Instagram, tus estados y Google.</p></div></div>
+  </div>
+</div></section>
+
+<!-- faq -->
+<section id="faq" style="padding-top:20px"><div class="wrap">
+  <div class="sh rv"><span class="kick"><i></i>Preguntas</span><h2>Lo que más me <span class="hl">preguntan</span>.</h2></div>
+  <div class="faq">
+    <details class="rv"><summary>¿Tengo que pagar todos los meses?</summary><p>No. Es un pago único. Solo si quieres que yo actualice tu carta o tus promociones seguido, existe un mantenimiento mensual opcional.</p></details>
+    <details class="rv"><summary>¿Necesito comprar un dominio (.com)?</summary><p>No es necesario: tu página viene con su enlace y funciona perfecto. Si quieres tu propio .com, lo compras a tu nombre (unos S/ 50 al año) y yo lo conecto.</p></details>
+    <details class="rv"><summary>¿Qué pasa si cambio un precio?</summary><p>Me escribes y lo actualizo. El primer cambio es gratis y luego cuesta S/ 10. El QR sigue siendo el mismo, no tienes que reimprimir nada.</p></details>
+    <details class="rv"><summary>¿Cuánto demora?</summary><p>48 horas desde que me mandas tus datos. Las páginas a medida pueden tomar un poco más.</p></details>
+    <details class="rv"><summary>¿Cómo pago?</summary><p>Por Yape o Plin: 50 % al empezar y el otro 50 % cuando apruebes el resultado.</p></details>
+    <details class="rv"><summary>¿Los pedidos tienen comisión?</summary><p>No. Los pedidos llegan directo a tu WhatsApp. No hay apps intermedias ni porcentajes por venta.</p></details>
+  </div>
+</div></section>
+
+<section class="final"><div class="wrap">
+  <h2 class="rv">¿Empezamos con tu <span>muestra gratis</span>?</h2>
+  <p class="rv">Mándame el nombre de tu negocio o tu enlace de Google Maps y te preparo una muestra con tu estilo.</p>
+  <div class="cta rv"><a class="btn wa" data-wa="Hola Cartify 👋 Quiero una muestra gratis. Mi negocio es: " href="#"><svg width="22" height="22"><use href="#wai"/></svg>Quiero mi muestra</a><a class="btn white" href="#ejemplos">Ver ejemplos</a></div>
+</div></section>
+
+<footer><div class="wrap">
+  <a class="logo" href="#inicio"><svg><use href="#ic"/></svg><b>Cart<span>ify</span></b></a>
+  <p>Páginas, cartas digitales y QR para negocios · Lima, Perú</p>
+  <p>© <span id="yr"></span> Cartify</p>
+</div></footer>
+
+<a class="fab hide" id="fab" data-wa="Hola Cartify 👋 Quiero información." href="#" aria-label="Escríbeme por WhatsApp"><svg><use href="#wai"/></svg>Escríbeme</a>
+
+<script>
+/* ===== Configuración: cambia aquí tu número de WhatsApp (código de país + número, sin espacios) ===== */
+var WHATSAPP='51900000000';
+function wa(t){return 'https://wa.me/'+WHATSAPP+'?text='+encodeURIComponent(t);}
+document.querySelectorAll('[data-wa]').forEach(function(a){a.href=wa(a.dataset.wa);a.target='_blank';a.rel='noopener';});
+document.getElementById('yr').textContent=new Date().getFullYear();
+var RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ===== Anillo 3D de celulares ===== */
+var EX=[
+ {id:'paralelo',n:'Paralelo',t:'Web a medida',url:'paralelo/'},
+ {id:'navaja-norte',n:'Navaja Norte',t:'Página web',url:'navaja-norte/'},
+ {id:'curayacu',n:'Curayacu',t:'Carta interactiva',url:'curayacu/'},
+ {id:'four-seas',n:'Four Seas',t:'Carta digital',url:'four-seas/'},
+ {id:'la-colibri-links',n:'La Colibrí',t:'Un solo enlace',url:'la-colibri/links/'},
+ {id:'don-guillermo',n:'Don Guillermo',t:'Carta y reservas',url:'don-guillermo/'},
+ {id:'el-lomito',n:'El Lomito',t:'Carta con QR',url:'el-lomito/'},
+ {id:'la-colibri',n:'La Colibrí',t:'Carta digital',url:'la-colibri/'}
+];
+var ring=document.getElementById('ring'),stage=document.getElementById('stage'),RN=EX.slice(0,6);
+function radius(){return innerWidth<900?230:300;}
+RN.forEach(function(e,i){var p=document.createElement('div');p.className='ph';p.innerHTML='<img src="assets/'+e.id+'.jpg" alt="Ejemplo: '+e.n+'" loading="'+(i<3?'eager':'lazy')+'">';ring.appendChild(p);});
+function place(){var r=radius(),st=360/RN.length;ring.querySelectorAll('.ph').forEach(function(p,i){p.style.transform='rotateY('+(i*st)+'deg) translateZ('+r+'px)';});}
+place();addEventListener('resize',place);
+var ang=0,vel=RM?0:.12,drag=false,lx=0,tilt=-6;
+stage.addEventListener('pointerdown',function(e){drag=true;lx=e.clientX;stage.setPointerCapture(e.pointerId);});
+stage.addEventListener('pointermove',function(e){if(!drag)return;var dx=e.clientX-lx;lx=e.clientX;ang+=dx*.35;vel=dx*.05;});
+stage.addEventListener('pointerup',function(){drag=false;});stage.addEventListener('pointercancel',function(){drag=false;});
+(function loop(){if(!drag){vel+=((RM?0:.12)-vel)*.02;ang+=vel;}ring.style.transform='translateZ(-'+radius()+'px) rotateX('+tilt+'deg) rotateY('+ang+'deg)';requestAnimationFrame(loop);})();
+
+/* ===== Marquesina ===== */
+(function(){var t=['Restaurantes','Cafeterías','Bares','Barberías','Salones','Chifas','Anticucherías','Pastelerías','Tiendas','Emprendimientos'],h='';
+  for(var k=0;k<2;k++)t.forEach(function(x){h+='<span>'+x+'</span>';});document.getElementById('mq').innerHTML=h;})();
+
+/* ===== Inclinación 3D de tarjetas ===== */
+document.querySelectorAll('.card,.plan').forEach(function(c){
+  c.addEventListener('pointermove',function(e){if(e.pointerType!=='mouse'||RM)return;var r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;
+    c.style.transform='perspective(900px) rotateX('+((.5-y)*10)+'deg) rotateY('+((x-.5)*12)+'deg) translateZ(4px)';});
+  c.addEventListener('pointerleave',function(){c.style.transform='';});});
+
+/* ===== Galería de ejemplos ===== */
+(function(){var G=document.getElementById('gal');EX.forEach(function(e){var a=document.createElement('a');a.className='ex';a.href=e.url;a.target='_blank';a.rel='noopener';
+  a.innerHTML='<div class="ph2"><img src="assets/'+e.id+'.jpg" alt="Ejemplo: '+e.n+'" loading="lazy"></div><div class="lb"><div><b>'+e.n+'</b><small>'+e.t+'</small></div><span>↗</span></div>';G.appendChild(a);});
+  function cf(){var c=G.getBoundingClientRect(),mid=c.left+c.width/2;G.querySelectorAll('.ex').forEach(function(x){var r=x.getBoundingClientRect(),o=((r.left+r.width/2)-mid)/c.width;var cl=Math.max(-1,Math.min(1,o*1.4));
+    x.style.transform=RM?'':'rotateY('+(-cl*18)+'deg) translateZ('+(-Math.abs(cl)*40)+'px)';});}
+  G.addEventListener('scroll',function(){requestAnimationFrame(cf)},{passive:true});addEventListener('resize',cf);cf();})();
+
+/* ===== Demo interactiva ===== */
+(function(){var I=[{n:'Lomo saltado',p:35,img:'1713742000609-7dfb86bfc720'},{n:'Ceviche clásico',p:32,img:'1761314036542-6570ef45dbb3'},{n:'Chicha morada',p:15,img:'1745725247846-12a3e3109bbf'}],cart={};
+  var D=document.getElementById('ditems');
+  I.forEach(function(x,k){var d=document.createElement('div');d.className='di';d.innerHTML='<img src="https://images.unsplash.com/photo-'+x.img+'?w=120&h=120&fit=crop&q=70&auto=format" alt=""><div><b>'+x.n+'</b><span>S/ '+x.p+'</span></div><button type="button">Agregar</button>';
+    var b=d.querySelector('button');b.onclick=function(){cart[k]=(cart[k]||0)+1;b.classList.add('on');b.textContent='+1 ('+cart[k]+')';upd();};D.appendChild(d);});
+  function lines(){var t=0,l=[];I.forEach(function(x,k){if(cart[k]){t+=cart[k]*x.p;l.push(cart[k]+'x '+x.n+' — S/ '+cart[k]*x.p);}});return {t:t,l:l};}
+  function upd(){var r=lines(),n=Object.keys(cart).reduce(function(a,k){return a+cart[k]},0);document.getElementById('dcnt').textContent=n+(n===1?' plato':' platos');document.getElementById('dtot').textContent='S/ '+r.t;}
+  document.getElementById('dsend').onclick=function(){var r=lines();if(!r.l.length){document.getElementById('hint').textContent='Primero agrega un plato 👆';return;}
+    var C=document.getElementById('chat'),h=document.getElementById('hint');if(h)h.remove();
+    var now=new Date(),tm=now.getHours()+':'+('0'+now.getMinutes()).slice(-2);
+    var b=document.createElement('div');b.className='bub';b.innerHTML=('Hola, quiero pedir:\n'+r.l.join('\n')+'\nTotal: S/ '+r.t).replace(/</g,'&lt;')+'<time>'+tm+' ✓✓</time>';C.appendChild(b);
+    setTimeout(function(){var a=document.createElement('div');a.className='bub in';a.innerHTML='¡Recibido! 🙌 Tu pedido estará listo en 25 min. ¿Yape o Plin?<time>'+tm+'</time>';C.appendChild(a);},1100);
+    cart={};D.querySelectorAll('button').forEach(function(x){x.classList.remove('on');x.textContent='Agregar';});upd();};
+  upd();})();
+
+/* ===== Cotizador ===== */
+(function(){var O=[
+  {k:'carta',n:'Carta o catálogo con QR',d:'Con fotos, pedido por WhatsApp',p:80},
+  {k:'enlace',n:'Un solo enlace',d:'Para tu Instagram y WhatsApp',p:50},
+  {k:'imgs',n:'Imágenes para redes',d:'Para estados e Instagram',p:50},
+  {k:'web',n:'Página web',d:'Una página profesional',p:250},
+  {k:'maps',n:'Google Maps arreglado',d:'Horario, fotos y enlace',p:60},
+  {k:'dom',n:'Conexión de dominio .com',d:'El dominio lo compras tú',p:40},
+  {k:'mant',n:'Mantenimiento mensual',d:'Cambios y promos cada mes',p:25,m:1}],S={carta:true};
+  var W=document.getElementById('opts');
+  O.forEach(function(o){var l=document.createElement('label');l.className='qo';l.innerHTML='<input type="checkbox"'+(S[o.k]?' checked':'')+'><span class="bx">✓</span><span class="tx"><b>'+o.n+'</b><small>'+o.d+'</small></span><span class="pp">S/ '+o.p+(o.m?'<small style="font-size:.7rem">/mes</small>':'')+'</span>';
+    l.querySelector('input').onchange=function(e){S[o.k]=e.target.checked;calc();};W.appendChild(l);});
+  function calc(){var once=0,mon=0,l=[],sv=0;O.forEach(function(o){if(S[o.k]){if(o.m)mon+=o.p;else once+=o.p;l.push(o.n+(o.m?' (S/ '+o.p+'/mes)':' — S/ '+o.p));}});
+    if(S.carta&&S.enlace&&S.imgs){sv=30;once-=sv;}
+    document.getElementById('qn').textContent='S/ '+once+(mon?' + '+mon+'/mes':'');
+    var s=document.getElementById('qsv');s.hidden=!sv;s.textContent='Pack completo · ahorras S/ '+sv;
+    document.getElementById('ql').innerHTML=l.length?l.map(function(x){return '<li>• '+x+'</li>'}).join(''):'<li>Marca al menos una opción</li>';
+    var b=document.getElementById('qbtn');b.href=wa('Hola Cartify 👋 Quiero cotizar:\n'+l.map(function(x){return '• '+x}).join('\n')+(sv?'\n(Pack completo, ahorro S/ '+sv+')':'')+'\nTotal estimado: S/ '+once+(mon?' + S/ '+mon+' al mes':''));b.target='_blank';b.rel='noopener';}
+  calc();})();
+
+/* ===== Aparición al hacer scroll y botón flotante ===== */
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{threshold:.12});
+document.querySelectorAll('.rv').forEach(function(el,i){el.style.transitionDelay=(i%4*70)+'ms';io.observe(el);});
+addEventListener('scroll',function(){document.getElementById('fab').classList.toggle('hide',scrollY<500);},{passive:true});
+</script>
+</body>
+</html>
