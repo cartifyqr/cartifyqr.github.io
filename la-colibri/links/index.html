@@ -10,10 +10,12 @@
 /* Enlace único (link en bio): una columna, botones grandes. Estética La Colibrí */
 :root{--teal:#1F6F75;--teal2:#2A8C8F;--cream:#FBF6EE;--ink:#23302F;--muted:#6B7774;--line:#EADFCF;--terra:#D06A35;--leaf:#6E9F55;--soft:#F3E9DA;--wa:#25D366;color-scheme:light}
 *{box-sizing:border-box}
-body{margin:0;min-height:100vh;background:linear-gradient(180deg,var(--teal2) 0,var(--teal) 150px,var(--cream) 150px);font-family:"Figtree",system-ui,sans-serif;color:var(--ink)}
+.cover{position:absolute;left:0;right:0;top:0;height:190px;background:linear-gradient(180deg,rgba(31,111,117,.45),rgba(31,111,117,.8)),url('https://images.unsplash.com/photo-1633944241961-e511ab23455f?w=900&q=70&auto=format') center/cover;border-radius:0 0 28px 28px}
+.wrap{position:relative}
+body{margin:0;min-height:100vh;background:var(--cream);font-family:"Figtree",system-ui,sans-serif;color:var(--ink)}
 .wrap{max-width:440px;margin:0 auto;padding:calc(28px + env(safe-area-inset-top,0px)) max(18px,env(safe-area-inset-right,0px)) calc(28px + env(safe-area-inset-bottom,0px)) max(18px,env(safe-area-inset-left,0px));text-align:center}
 .demo{display:inline-block;font-size:.75rem;font-weight:700;background:rgba(255,255,255,.18);color:#fff;border-radius:999px;padding:4px 12px;margin-bottom:16px}
-.logo{width:108px;height:108px;border-radius:50%;background:#fff;display:grid;place-items:center;margin:0 auto;box-shadow:0 10px 26px rgba(0,0,0,.18);border:4px solid var(--cream)}
+.logo{width:108px;height:108px;border-radius:50%;background:#fff;display:grid;place-items:center;margin:58px auto 0;box-shadow:0 10px 26px rgba(0,0,0,.18);border:4px solid var(--cream)}
 .logo svg{width:80px;height:80px}
 h1{font-family:"Fredoka",sans-serif;font-weight:700;font-size:2rem;margin:14px 0 0;line-height:1}
 h1 span{display:block;font-size:.9rem;letter-spacing:.3em;color:var(--terra);margin-top:4px}
@@ -46,6 +48,7 @@ h1 span{display:block;font-size:.9rem;letter-spacing:.3em;color:var(--terra);mar
 </style>
 </head>
 <body>
+<div class="cover" aria-hidden="true"></div>
 <div class="wrap">
   <span class="demo">Muestra hecha para La Colibrí Café</span>
   <div class="logo" aria-hidden="true"><svg viewBox="0 0 64 64">
