@@ -42,7 +42,7 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 h1,h2,h3{font-family:var(--display);font-weight:800;letter-spacing:-.035em;line-height:.98;margin:0;font-variant-ligatures:none}
 p{margin:0}
 .wrap{max-width:1160px;margin:0 auto;padding:0 max(20px,env(safe-area-inset-left,0px))}
-.hl{color:var(--pink);text-shadow:4px 4px 0 var(--ink)}
+.hl{color:var(--pink);text-shadow:2px 2px 0 var(--ink)}
 .kick{display:inline-flex;align-items:center;gap:8px;font-weight:800;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;background:var(--paper);border:2.5px solid var(--ink);padding:6px 12px;border-radius:999px}
 .kick i{width:8px;height:8px;border-radius:50%;background:var(--pink);font-style:normal}
 
@@ -134,7 +134,7 @@ section{padding:84px 0;position:relative;overflow-x:clip}
 .try{background:var(--ink);color:var(--paper);border-top:3px solid var(--ink);border-bottom:3px solid var(--ink);overflow:hidden}
 .try .sh p{color:#BDB4C8}
 .try .kick{background:transparent;border-color:var(--sun);color:var(--sun)}
-.try .hl{color:var(--sun);text-shadow:4px 4px 0 var(--pink)}
+.try .hl{color:var(--sun);text-shadow:2px 2px 0 var(--pink)}
 .tgrid{display:grid;gap:30px;align-items:center}
 .device{width:min(330px,88vw);margin:0 auto;border:10px solid #0D0D0D;border-radius:46px;background:#FFF6EE;overflow:hidden;box-shadow:0 0 0 3px var(--sun),0 30px 70px rgba(0,0,0,.5);color:var(--ink);position:relative;transform:rotateY(-12deg) rotateX(4deg);transition:transform .5s}
 .device:hover{transform:none}
@@ -242,13 +242,14 @@ section{padding:84px 0;position:relative;overflow-x:clip}
 .tile[aria-checked="true"]{background:var(--c,var(--sunsoft));box-shadow:5px 5px 0 var(--ink)}
 .tile[aria-checked="true"] .art{transform:rotate(-8deg) scale(1.08);background:var(--paper)}
 .tile[aria-checked="true"] .ck{background:var(--pink);color:#fff;transform:scale(1.15)}
-.tiles.sm{grid-template-columns:repeat(2,1fr)}
-.tiles.sm .tile{flex-direction:row;align-items:center;padding:12px;border-radius:18px;gap:12px}
+.tiles.sm{grid-template-columns:minmax(0,1fr);gap:10px}
+.tiles.sm .tile{flex-direction:row;align-items:center;padding:10px 46px 10px 10px;border-radius:18px;gap:12px;min-height:66px}
 .tiles.sm .art{width:46px;height:46px;font-size:1.5rem;border-radius:14px;flex:none}
-.tiles.sm .tile b{font-size:.92rem;flex:1;min-width:0}
+.tiles.sm .tile b{font-size:.98rem;flex:1;min-width:0;line-height:1.2}
 .tiles.sm .pp{margin:0;font-size:1.05rem;white-space:nowrap}
-.tiles.sm .pp small{display:block;text-align:right}
-.tiles.sm .ck{top:-10px;right:-8px;width:26px;height:26px}
+.tiles.sm .pp small{display:inline;margin-left:2px}
+.tiles.sm .ck{top:50%;right:12px;width:26px;height:26px;margin-top:-13px}
+.tiles.sm .tile[aria-checked="true"] .ck{transform:scale(1.1)}
 .total{background:var(--ink);color:#fff;border-radius:26px;padding:24px;box-shadow:7px 7px 0 var(--pink);position:sticky;top:90px;align-self:start}
 .total small.k{font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--sun);font-size:.78rem}
 .prog{background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.18);border-radius:16px;padding:12px 14px;margin-bottom:18px}
@@ -290,7 +291,7 @@ details p{padding:0 0 18px;color:var(--muted);font-weight:500}
 /* cierre */
 .final{background:var(--pink);color:#fff;border-top:3px solid var(--ink);text-align:center;overflow:hidden}
 .final h2{font-size:clamp(2.6rem,10vw,5rem);max-width:14ch;margin:0 auto}
-.final h2 span{color:var(--sun);text-shadow:4px 4px 0 var(--ink)}
+.final h2 span{color:var(--sun);text-shadow:2px 2px 0 var(--ink)}
 .final p{margin:18px auto 0;font-size:1.15rem;max-width:38ch;font-weight:600}
 .final .cta{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:28px}
 footer{background:var(--ink);color:#BDB4C8;padding:34px 0 110px;font-size:.88rem}
@@ -319,7 +320,7 @@ footer .logo b{color:#fff}
   .shop{grid-template-columns:1.4fr .6fr;align-items:center}
   .qgrid{grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr)}
   .tiles{grid-template-columns:repeat(4,1fr)}
-  .tiles.sm{grid-template-columns:repeat(3,1fr)}
+  .tiles.sm{grid-template-columns:repeat(2,minmax(0,1fr))}
   .steps{grid-template-columns:repeat(4,1fr)}
   .st{flex-direction:column}
 }
