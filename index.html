@@ -324,12 +324,93 @@ footer .logo b{color:#fff}
   .steps{grid-template-columns:repeat(4,1fr)}
   .st{flex-direction:column}
 }
+
+/* ===== Estética riso: papel crema, tres tintas corridas (azul, amarillo, rosa) y puntos de imprenta ===== */
+:root{--paper:#FFFDF6;--cream:#FBF3E1;--blue:#2A7BF6;--shadow:6px 6px 0 var(--pink)}
+body{background:var(--cream)}
+body::before{content:"";position:fixed;inset:0;z-index:70;pointer-events:none;opacity:.55;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.4' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.1  0 0 0 0 0.08  0 0 0 0 0.14  0 0 0 .16 0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E")}
+.hl{color:var(--pink);text-shadow:-.05em .04em 0 rgba(255,200,31,.95)}
+h1 .hl,h2 .hl{text-shadow:-.055em .045em 0 rgba(255,200,31,.95),.045em -.035em 0 rgba(42,123,246,.35)}
+.kick{border-width:2px;box-shadow:3px 3px 0 var(--sun)}
+.kick i{box-shadow:3px -2px 0 var(--blue)}
+/* sombras de tinta corrida en vez de sombra negra */
+.btn{border-width:2.5px;box-shadow:4px 4px 0 var(--pink)}
+.btn:hover{box-shadow:6px 6px 0 var(--pink)}
+.btn:active{box-shadow:1px 1px 0 var(--pink)}
+.btn.wa{box-shadow:4px 4px 0 var(--blue)}.btn.wa:hover{box-shadow:6px 6px 0 var(--blue)}.btn.wa:active{box-shadow:1px 1px 0 var(--blue)}
+.btn.white{box-shadow:4px 4px 0 var(--sun)}.btn.white:hover{box-shadow:6px 6px 0 var(--sun)}
+nav{background:rgba(251,243,225,.88);border-bottom:2.5px solid var(--ink)}
+nav .btn{box-shadow:3px 3px 0 var(--blue)}
+.navl a::after{background:var(--sun);height:6px;bottom:-2px;z-index:-1}
+/* hero en papel */
+.hero{background:var(--cream);border-bottom:2.5px solid var(--ink)}
+.hero h1{text-shadow:-.035em .03em 0 rgba(42,123,246,.22)}
+.hero .blob{filter:url(#rough);mix-blend-mode:multiply}
+.hero .blob.b1{background:radial-gradient(circle,var(--blue) 0 34%,transparent 37%) 0 0/15px 15px!important;opacity:.8;transform:rotate(18deg)}
+.hero .blob.b2{background:radial-gradient(circle,var(--sun) 0 38%,transparent 41%) 0 0/13px 13px!important;transform:rotate(-12deg)}
+.hero .blob.b3{background:var(--pink);opacity:.9}
+.hero .blob.b4{background:var(--sun);opacity:.95}
+.trust span{border-width:2px;box-shadow:2px 2px 0 var(--sun)}
+.trust span:nth-child(2){box-shadow:2px 2px 0 var(--pink)}
+.trust span:nth-child(3){box-shadow:2px 2px 0 var(--blue)}
+.sticker{border-width:2px;box-shadow:4px 4px 0 var(--sun)}
+.sticker+.sticker{box-shadow:4px 4px 0 var(--blue)}
+/* marquesina rosa */
+.marq{background:var(--pink);color:var(--paper);border-top:2.5px solid var(--ink);border-bottom:2.5px solid var(--ink)}
+.marq span::after{color:var(--sun);text-shadow:2px 1px 0 var(--blue)}
+/* tarjetas con tintas que rotan */
+.card,.plan,.st,.shop{border-width:2.5px}
+.svc .card:nth-child(3n+1),.st:nth-child(3n+1){box-shadow:6px 6px 0 var(--sun)}
+.svc .card:nth-child(3n+2),.st:nth-child(3n+2){box-shadow:6px 6px 0 var(--pink)}
+.svc .card:nth-child(3n),.st:nth-child(3n){box-shadow:6px 6px 0 var(--blue)}
+.card .ic{box-shadow:2px 2px 0 var(--pink)}
+.card.big{background:var(--pink);box-shadow:6px 6px 0 var(--blue)!important;overflow:hidden;isolation:isolate}
+.card.big::after{content:"";position:absolute;right:-60px;top:-70px;width:220px;height:220px;border-radius:50%;z-index:-1;background:radial-gradient(circle,var(--sun) 0 34%,transparent 37%) 0 0/12px 12px;opacity:.7;filter:url(#rough)}
+.card .from{background:var(--sun);color:var(--ink)}
+.pair div{border-width:2.5px}
+.pair .yes{background:#DDEBFF;box-shadow:5px 5px 0 var(--blue)}
+.pair .yes small{color:var(--blue)}
+.st b{box-shadow:3px 3px 0 var(--pink);border-width:2.5px}
+/* secciones con punto de imprenta */
+.try{background:var(--ink);background-image:radial-gradient(circle,rgba(42,123,246,.28) 0 30%,transparent 33%);background-size:16px 16px}
+.try::before,.final::before,.quote::before{content:"";position:absolute;border-radius:50%;pointer-events:none;filter:url(#rough)}
+.try::before{width:300px;height:300px;right:-110px;top:-110px;background:var(--pink);opacity:.9}
+.try .wrap,.final .wrap,.quote .wrap{position:relative;z-index:1}
+.try .hl{color:var(--sun);text-shadow:-.05em .04em 0 var(--pink)}
+.quote{background:#E6EFFD;border-top:2.5px solid var(--ink);border-bottom:2.5px solid var(--ink)}
+.quote::before{width:340px;height:340px;left:-150px;bottom:-130px;background:radial-gradient(circle,var(--blue) 0 34%,transparent 37%) 0 0/15px 15px;opacity:.5}
+.tile{border-width:2.5px}
+.tile:hover{box-shadow:5px 6px 0 var(--pink)}
+.tile[aria-checked="true"]{box-shadow:5px 5px 0 var(--blue)}
+.total{box-shadow:7px 7px 0 var(--pink),11px 11px 0 var(--sun)}
+.plan.star{box-shadow:6px 6px 0 var(--sun)}
+.plan:not(.star):not(.dark){box-shadow:6px 6px 0 var(--blue)}
+.plan.dark{box-shadow:6px 6px 0 var(--pink)}
+.ribbon{box-shadow:2px 2px 0 var(--pink)}
+.launch{background:var(--sun);box-shadow:5px 5px 0 var(--pink);border-width:2.5px}
+.shop{background:#DDEBFF;box-shadow:6px 6px 0 var(--sun)}
+.extras div{border-width:2px;box-shadow:3px 3px 0 var(--sun)}
+details{border-width:2.5px}
+details[open]{box-shadow:5px 5px 0 var(--sun)}
+.ex .ph2{box-shadow:0 0 0 3px var(--ink),10px 14px 0 var(--pink)}
+.gal .ex:nth-child(3n+2) .ph2{box-shadow:0 0 0 3px var(--ink),10px 14px 0 var(--blue)}
+.gal .ex:nth-child(3n) .ph2{box-shadow:0 0 0 3px var(--ink),10px 14px 0 var(--sun)}
+#gRange{box-shadow:3px 3px 0 var(--sun)}
+/* cierre rosa con sol de puntos */
+.final{background:var(--pink);background-image:radial-gradient(circle,rgba(26,20,35,.1) 0 28%,transparent 31%);background-size:14px 14px}
+.final::before{width:380px;height:380px;left:-140px;top:-160px;background:radial-gradient(circle,var(--sun) 0 38%,transparent 41%) 0 0/13px 13px}
+.final::after{content:"";position:absolute;width:220px;height:220px;right:-70px;bottom:-90px;border-radius:50%;background:var(--blue);opacity:.85;filter:url(#rough);pointer-events:none}
+.final h2 span{color:var(--sun);text-shadow:-.05em .04em 0 var(--blue)}
+.fab{box-shadow:4px 4px 0 var(--blue);border-width:2.5px}
+.quote,.final,.try{overflow:clip}
+@media (max-width:899px){.hero .blob.b1{width:300px!important;height:300px!important;right:-170px!important;top:-150px!important;opacity:.45}.hero .blob.b3{width:80px!important;height:80px!important;left:-50px!important;top:40px!important}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}.rv{opacity:1;transform:none}}
 </style>
 </head>
 <body>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<filter id="rough"><feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="12" xChannelSelector="R" yChannelSelector="G"/></filter>
 <symbol id="ic" viewBox="0 0 100 100"><rect width="100" height="100" rx="24" fill="#FFF8E6" stroke="#1A1423" stroke-width="5"/><g transform="translate(50 52) scale(.86) translate(-50 -52)" style="isolation:isolate"><g style="mix-blend-mode:multiply"><path d="M24.51-14.91Q24.51-11.95 22.98-9.05Q21.44-6.14 18.56-3.76Q15.67-1.37 11.60 0.06Q7.53 1.48 2.46 1.48Q-5.83 1.48-11.86-1.98Q-17.89-5.44-21.18-11.56Q-24.48-17.690-24.48-25.64Q-24.48-31.60-22.51-36.63Q-20.55-41.66-17.02-45.40Q-13.49-49.14-8.77-51.21Q-4.05-53.28 1.42-53.28Q4.87-53.28 7.01-52.69Q9.16-52.10 10.45-51.47Q11.75-50.84 12.64-50.84Q13.71-50.84 14.41-51.43Q15.11-52.02 15.84-52.58Q16.56-53.13 17.67-53.13Q18.56-53.13 19.15-52.54Q19.74-51.95 20.15-50.58L23.96-37.41Q24.29-36.26 23.68-35.37Q23.07-34.48 21.96-34.19Q20.74-33.930 19.72-34.37Q18.70-34.82 18.15-36.11Q16.26-40.59 13.99-43.07Q11.71-45.55 9.25-46.55Q6.79-47.54 4.24-47.54Q1.54-47.54-0.59-46.25Q-2.72-44.95-4.20-42.49Q-5.68-40.03-6.48-36.57Q-7.27-33.11-7.27-28.75Q-7.27-21.64-5.38-16.91Q-3.50-12.17-0.13-9.80Q3.24-7.44 7.64-7.44Q11.49-7.44 14.73-9.45Q17.96-11.47 20.04-15.35Q20.66-16.54 21.39-16.89Q22.11-17.24 22.96-17.09Q23.81-16.95 24.16-16.37Q24.51-15.80 24.51-14.91Z" transform="translate(45 76)" fill="#2A7BF6" opacity="0.75"/><path d="M24.51-14.91Q24.51-11.95 22.98-9.05Q21.44-6.14 18.56-3.76Q15.67-1.37 11.60 0.06Q7.53 1.48 2.46 1.48Q-5.83 1.48-11.86-1.98Q-17.89-5.44-21.18-11.56Q-24.48-17.690-24.48-25.64Q-24.48-31.60-22.51-36.63Q-20.55-41.66-17.02-45.40Q-13.49-49.14-8.77-51.21Q-4.05-53.28 1.42-53.28Q4.87-53.28 7.01-52.69Q9.16-52.10 10.45-51.47Q11.75-50.84 12.64-50.84Q13.71-50.84 14.41-51.43Q15.11-52.02 15.84-52.58Q16.56-53.13 17.67-53.13Q18.56-53.13 19.15-52.54Q19.74-51.95 20.15-50.58L23.96-37.41Q24.29-36.26 23.68-35.37Q23.07-34.48 21.96-34.19Q20.74-33.930 19.72-34.37Q18.70-34.82 18.15-36.11Q16.26-40.59 13.99-43.07Q11.71-45.55 9.25-46.55Q6.79-47.54 4.24-47.54Q1.54-47.54-0.59-46.25Q-2.72-44.95-4.20-42.49Q-5.68-40.03-6.48-36.57Q-7.27-33.11-7.27-28.75Q-7.27-21.64-5.38-16.91Q-3.50-12.17-0.13-9.80Q3.24-7.44 7.64-7.44Q11.49-7.44 14.73-9.45Q17.96-11.47 20.04-15.35Q20.66-16.54 21.39-16.89Q22.11-17.24 22.96-17.09Q23.81-16.95 24.16-16.37Q24.51-15.80 24.51-14.91Z" transform="translate(50 73)" fill="#FFC81F"/><path d="M24.51-14.91Q24.51-11.95 22.98-9.05Q21.44-6.14 18.56-3.76Q15.67-1.37 11.60 0.06Q7.53 1.48 2.46 1.48Q-5.83 1.48-11.86-1.98Q-17.89-5.44-21.18-11.56Q-24.48-17.690-24.48-25.64Q-24.48-31.60-22.51-36.63Q-20.55-41.66-17.02-45.40Q-13.49-49.14-8.77-51.21Q-4.05-53.28 1.42-53.28Q4.87-53.28 7.01-52.69Q9.16-52.10 10.45-51.47Q11.75-50.84 12.64-50.84Q13.71-50.84 14.41-51.43Q15.11-52.02 15.84-52.58Q16.56-53.13 17.67-53.13Q18.56-53.13 19.15-52.54Q19.74-51.95 20.15-50.58L23.96-37.41Q24.29-36.26 23.68-35.37Q23.07-34.48 21.96-34.19Q20.74-33.930 19.72-34.37Q18.70-34.82 18.15-36.11Q16.26-40.59 13.99-43.07Q11.71-45.55 9.25-46.55Q6.79-47.54 4.24-47.54Q1.54-47.54-0.59-46.25Q-2.72-44.95-4.20-42.49Q-5.68-40.03-6.48-36.57Q-7.27-33.11-7.27-28.75Q-7.27-21.64-5.38-16.91Q-3.50-12.17-0.13-9.80Q3.24-7.44 7.64-7.44Q11.49-7.44 14.73-9.45Q17.96-11.47 20.04-15.35Q20.66-16.54 21.39-16.89Q22.11-17.24 22.96-17.09Q23.81-16.95 24.16-16.37Q24.51-15.80 24.51-14.91Z" transform="translate(55 70)" fill="#F0157C" opacity="0.88"/></g></g></symbol>
 <symbol id="wai" viewBox="0 0 32 32"><path fill="currentColor" d="M16 3C9 3 3.3 8.6 3.3 15.6c0 2.4.7 4.7 1.9 6.6L3 29l7-2.2c1.8 1 3.9 1.6 6 1.6 7 0 12.7-5.6 12.7-12.6S23 3 16 3zm0 23c-1.9 0-3.8-.5-5.4-1.5l-.4-.2-4.1 1.3 1.3-4-.3-.4c-1.1-1.7-1.7-3.6-1.7-5.6C5.4 9.9 10.1 5.3 16 5.3s10.6 4.6 10.6 10.3S21.9 26 16 26zm5.8-7.7c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.4-.5-2.6-1.6-1-.9-1.6-1.9-1.8-2.2-.2-.3 0-.5.1-.7l.5-.6c.2-.2.2-.4.3-.6.1-.2 0-.4 0-.6l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.7s1.2 3.2 1.4 3.4c.2.2 2.4 3.6 5.8 5 .8.4 1.4.6 1.9.7.8.3 1.5.2 2.1.1.6-.1 1.9-.8 2.2-1.5.3-.7.3-1.4.2-1.5-.1-.1-.3-.2-.6-.4z"/></symbol>
 </defs></svg>
@@ -341,8 +422,10 @@ footer .logo b{color:#fff}
 </div></nav>
 
 <header class="hero" id="inicio">
-  <span class="blob" style="width:520px;height:520px;right:-180px;top:-120px;background:#FFDA5C"></span>
-  <span class="blob" style="width:260px;height:260px;left:-120px;bottom:-110px;background:#FFE58C"></span>
+  <span class="blob b1" style="width:520px;height:520px;right:-180px;top:-120px" aria-hidden="true"></span>
+  <span class="blob b2" style="width:300px;height:300px;left:-130px;bottom:-120px" aria-hidden="true"></span>
+  <span class="blob b3" style="width:120px;height:120px;left:-40px;top:70px" aria-hidden="true"></span>
+  <span class="blob b4" style="width:160px;height:160px;right:8%;bottom:-70px" aria-hidden="true"></span>
   <div class="wrap">
     <div>
       <span class="kick"><i></i>Páginas · Cartas · QR</span>
