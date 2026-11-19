@@ -213,7 +213,7 @@ footer .logo{justify-content:center;margin-bottom:10px}
 <section id="visita" style="padding-top:0"><div class="wrap">
   <div class="head"><div><p class="kick">Visítanos</p><h2>Te <em>esperamos</em></h2></div></div>
   <div class="visit">
-    <div class="card"><h3>Horario</h3><div class="hrs"><div><span>Lunes a viernes</span><b>10:00 – 21:00</b></div><div><span>Sábado</span><b>9:00 – 21:00</b></div><div><span>Domingo</span><b>10:00 – 16:00</b></div></div></div>
+    <div class="card"><h3>Horario</h3><div class="hrs"><div><span>Lunes a viernes</span><b>10:00 – 20:00</b></div><div><span>Sábado</span><b>9:00 – 20:00</b></div><div><span>Domingo</span><b>10:00 – 16:00</b></div></div></div>
     <div class="card"><h3>Dirección</h3><p style="color:var(--muted)">Jr. Emilio Althaus 192, Lince</p>
       <a class="mapbtn" href="https://www.google.com/maps/search/?api=1&query=Holic+Barberia+Jr.+Emilio+Althaus+192+Lince" target="_blank" rel="noopener">📍 Cómo llegar <span>→</span></a>
       <a class="mapbtn" href="https://www.instagram.com" target="_blank" rel="noopener" style="margin-top:10px">📷 Instagram <span>→</span></a></div>
@@ -266,7 +266,7 @@ function limaNow(){try{var p=new Intl.DateTimeFormat('en-US',{timeZone:'America/
 var NOW=limaNow(),DAYS=[];
 for(var i=0;i<7;i++){var d=new Date(NOW.getFullYear(),NOW.getMonth(),NOW.getDate()+i);DAYS.push(d);}
 var DN=['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
-function closeHour(d){return d.getDay()===0?16:21;}
+function closeHour(d){return d.getDay()===0?16:20;}
 function openHour(d){return d.getDay()===6?9:10;}
 function renderDays(){var r=document.getElementById('days');r.innerHTML='';
   DAYS.forEach(function(d,i){var b=el('button','opt');b.type='button';b.setAttribute('aria-pressed',sel.day===i);
@@ -294,7 +294,7 @@ function update(){
 // abierto / cerrado
 (function(){var d=NOW,h=d.getHours(),open=h>=openHour(d)&&h<closeHour(d);
   document.getElementById('open').classList.toggle('off',!open);
-  document.getElementById('openT').textContent=open?'Abierto ahora · hasta las '+(closeHour(d)===21?'9 p. m.':'4 p. m.'):'Cerrado ahora · reserva para mañana';
+  document.getElementById('openT').textContent=open?'Abierto ahora · hasta las '+(closeHour(d)===20?'8 p. m.':'4 p. m.'):'Cerrado ahora · reserva para mañana';
   if(!open&&h>=closeHour(d)){sel.day=1;}})();
 // barra móvil: se oculta cuando el panel de reserva está a la vista
 var io=new IntersectionObserver(function(es){es.forEach(function(e){document.getElementById('bar').classList.toggle('hide',e.isIntersecting||window.scrollY<300)})},{threshold:.2});
