@@ -69,7 +69,7 @@ section{padding:72px 0}
 .head p{color:var(--muted);max-width:40ch}
 
 /* servicios */
-.svc{display:grid;gap:14px}
+.svc{display:grid;gap:14px}.xtra{display:grid;grid-template-columns:64px 1fr auto;gap:14px;align-items:center;background:var(--paper);border:1.5px dashed var(--brass);border-radius:20px;padding:10px 14px 10px 10px}.xtra img{width:64px;height:64px;border-radius:14px;object-fit:cover}.xtra h3{font-family:var(--sans);font-weight:800;font-size:1rem}.xtra p{font-size:.84rem;color:var(--muted);margin-top:2px}.stp{display:flex;align-items:center;gap:8px;background:var(--cream);border-radius:999px;padding:4px}.stp button{width:32px;height:32px;border-radius:50%;background:var(--brass);color:#fff;font-weight:900;font-size:1.1rem;line-height:1}.stp b{min-width:2ch;text-align:center;font-family:var(--serif);font-size:1.2rem}
 .s{display:grid;grid-template-columns:96px 1fr auto;gap:16px;align-items:center;background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:10px 14px 10px 10px;transition:border-color .2s,box-shadow .2s;text-align:left;width:100%}
 .s img{width:96px;height:96px;border-radius:14px;object-fit:cover}
 .s h3{font-family:var(--sans);font-weight:800;font-size:1.02rem;letter-spacing:0}
@@ -173,7 +173,7 @@ footer .logo{justify-content:center;margin-bottom:10px}
 <section id="servicios"><div class="wrap">
   <div class="head"><div><p class="kick">Servicios y precios</p><h2>Elige tu <em>servicio</em></h2></div><p>Toca uno o varios. Al final te armamos el mensaje de reserva.</p></div>
   <div class="split">
-    <div class="svc" id="svc"></div>
+    <div class="svc" id="svc"></div><div class="xtra" style="margin-top:14px"><img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=160&h=160&fit=crop&q=70&auto=format" alt=""><div><h3>💎 Nail art (extra)</h3><p>S/ 5 por uña · diseños, piedras y efectos. Súmalo a tu servicio.</p></div><div class="stp"><button type="button" id="artM" aria-label="Una uña menos">−</button><b id="artN">0</b><button type="button" id="artP" aria-label="Una uña más">+</button></div></div>
     <div class="book" id="reservar">
       <p class="kick" style="color:var(--brass2)">Reserva en 30 segundos</p>
       <h3 style="margin-top:6px">Arma tu cita</h3>
@@ -230,7 +230,6 @@ var SVC=[
  {id:'mani',name:'Manicura clásica',desc:'Limado, cutícula y esmalte tradicional',min:40,price:30,img:'1612887390768-fb02affea7a6'},
  {id:'gel',name:'Esmaltado semipermanente',desc:'Brillo y duración de hasta 3 semanas',min:60,price:50,img:'1607779097040-26e80aa78e66'},
  {id:'poly',name:'Uñas en polygel',desc:'Extensión natural y resistente',min:90,price:90,img:'1772322586785-3a34772cbc61'},
- {id:'art',name:'Nail art (por uña)',desc:'Diseños a mano, piedras y efectos',min:10,price:5,img:'1604654894610-df63bc536371'},
  {id:'pedi',name:'Pedicura spa',desc:'Exfoliación, masaje e hidratación',min:60,price:55,img:'1519415510236-718bdfcd89c8'}
 ];
 var TEAM=[
@@ -240,7 +239,7 @@ var TEAM=[
  {id:'vale',name:'Valeria',role:'Polygel y extensiones',img:'1758178309407-6562d1687b01'}
 ];
 var HOURS=['10:00','11:00','12:00','13:00','15:00','16:00','17:00','18:00','19:00','20:00'];
-var sel={svc:{},mani:'any',day:0,hour:null};
+var ART=0;var sel={svc:{},mani:'any',day:0,hour:null};
 function u(id,w,h){return 'https://images.unsplash.com/photo-'+id+'?w='+w+(h?'&h='+h+'&fit=crop':'')+'&q=70&auto=format';}
 function el(t,c,h){var e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e;}
 
@@ -279,16 +278,16 @@ function renderHours(){var r=document.getElementById('hours');r.innerHTML='';var
     b.onclick=function(){sel.hour=h;renderHours();update();};r.appendChild(b);});
   if(!r.querySelector('button:not(:disabled)'))r.appendChild(el('p',null,'<span style="color:#A39A8C;font-size:.9rem">Ya no hay horas hoy. Elige otro día.</span>'));}
 function update(){
-  var chosen=SVC.filter(function(s){return sel.svc[s.id]}),tot=chosen.reduce(function(a,s){return a+s.price},0);
+  var chosen=SVC.filter(function(s){return sel.svc[s.id]}),tot=chosen.reduce(function(a,s){return a+s.price},0)+ART*5;
   var wa=document.getElementById('wa'),sum=document.getElementById('sumT');
   var mani=TEAM.filter(function(m){return m.id===sel.mani})[0],d=DAYS[sel.day];
   var dayTxt=(sel.day===0?'hoy':sel.day===1?'mañana':DN[d.getDay()].toLowerCase())+' '+d.getDate();
   document.getElementById('barT').textContent=chosen.length?'S/ '+tot:'Elige un servicio';
   document.getElementById('barC').textContent=chosen.length?chosen.length+(chosen.length>1?' servicios':' servicio'):'Reserva tu cita';
   if(!chosen.length){sum.innerHTML='Elige al menos un servicio para continuar.';wa.setAttribute('aria-disabled','true');return;}
-  sum.innerHTML='<b>'+chosen.map(function(s){return s.name}).join(' + ')+'</b> · S/ '+tot+'<br>'+(sel.mani==='any'?'Cualquier manicurista':'Con '+mani.name)+' · '+dayTxt+(sel.hour?' · '+sel.hour:' · <span style="color:var(--brass2)">elige una hora</span>');
+  sum.innerHTML='<b>'+chosen.map(function(s){return s.name}).join(' + ')+'</b>'+(ART?' + nail art ×'+ART:'')+' · S/ '+tot+'<br>'+(sel.mani==='any'?'Cualquier manicurista':'Con '+mani.name)+' · '+dayTxt+(sel.hour?' · '+sel.hour:' · <span style="color:var(--brass2)">elige una hora</span>');
   var ok=!!sel.hour;wa.setAttribute('aria-disabled',ok?'false':'true');
-  var msg='Hola Verana Beauty Studio, quiero reservar:\n• '+chosen.map(function(s){return s.name+' (S/ '+s.price+')'}).join('\n• ')+'\nManicurista: '+(sel.mani==='any'?'cualquiera':mani.name)+'\nDía: '+dayTxt+' a las '+(sel.hour||'')+'\nTotal: S/ '+tot;
+  var msg='Hola Verana Beauty Studio, quiero reservar:\n• '+chosen.map(function(s){return s.name+' (S/ '+s.price+')'}).join('\n• ')+(ART?'\n• Nail art en '+ART+(ART>1?' uñas':' uña')+' (S/ '+ART*5+')':'')+'\nManicurista: '+(sel.mani==='any'?'cualquiera':mani.name)+'\nDía: '+dayTxt+' a las '+(sel.hour||'')+'\nTotal: S/ '+tot;
   wa.href='https://wa.me/'+PHONE+'?text='+encodeURIComponent(msg);
 }
 // abierto / cerrado
@@ -302,6 +301,7 @@ io.observe(document.getElementById('reservar'));
 window.addEventListener('scroll',function(){if(window.scrollY<300)document.getElementById('bar').classList.add('hide')},{passive:true});
 document.getElementById('bar').classList.add('hide');
 rendermanis();renderDays();renderHours();update();
+document.getElementById('artP').onclick=function(){ART=Math.min(10,ART+1);document.getElementById('artN').textContent=ART;update();};document.getElementById('artM').onclick=function(){ART=Math.max(0,ART-1);document.getElementById('artN').textContent=ART;update();};
 </script>
 </body>
 </html>
