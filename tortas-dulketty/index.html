@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tortas Dulketty · Los Olivos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@400;600;700;800&display=swap">
+<style>
+/* Plantilla Cartify para pastelerías: catálogo con carrito + "Arma tu torta" + pedido por WhatsApp. Móvil primero */
+:root{--main:#D35400;--acc:#FDEBD0;--ink:#3A1E0E;--bg:#FFF9F3;--bg2:#F5E5D6;--card:#FFFFFF;--soft:#FCEBDD;--muted:#8A6E5D;--heroFade:#D35400;--display:"Fredoka",system-ui,sans-serif;--dw:700;--body:"Nunito",system-ui,sans-serif; color-scheme:light}
+*{box-sizing:border-box}
+html,body{margin:0;overflow-x:hidden;overflow-x:clip}
+body{background:var(--bg2);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+h1,h2,h3{font-family:var(--display);font-weight:var(--dw);margin:0;line-height:1.05}
+p{margin:0}
+.app{max-width:500px;margin:0 auto;background:var(--bg);min-height:100vh;padding-bottom:calc(120px + env(safe-area-inset-bottom,0px));box-shadow:0 0 40px rgba(0,0,0,.08)}
+.pad{padding-left:18px;padding-right:18px}
+.demo{font-size:.74rem;font-weight:700;text-align:center;background:var(--ink);color:var(--bg);padding:6px 12px}
+
+header{position:relative;color:#fff;text-align:center;padding:34px 18px 70px;overflow:hidden;background:linear-gradient(180deg,rgba(0,0,0,.15),rgba(0,0,0,.25) 40%,var(--heroFade) 100%),url('https://images.unsplash.com/photo-1610670444950-0b29430891b4?w=1000&q=72&auto=format') center/cover}
+.mono{width:84px;height:84px;margin:0 auto;border-radius:50%;background:var(--bg);display:grid;place-items:center;border:3px solid var(--acc);box-shadow:0 8px 24px rgba(0,0,0,.25);color:var(--main);font-family:var(--display);font-size:2.2rem;font-weight:var(--dw)}
+header h1{font-size:clamp(2.4rem,11vw,3.3rem);margin-top:12px;text-shadow:0 3px 14px rgba(0,0,0,.35)}
+.sub{margin-top:6px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;font-size:.74rem;opacity:.95}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:16px}
+.chip{font-size:.8rem;font-weight:700;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);padding:5px 12px;border-radius:999px;backdrop-filter:blur(6px)}
+.wave{position:absolute;left:0;right:0;bottom:-1px;height:40px;width:100%}
+.wave path{fill:var(--bg)}
+
+.cta{margin:-34px 18px 0;position:relative;z-index:3;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cta a,.cta button{display:flex;flex-direction:column;gap:2px;align-items:flex-start;text-align:left;text-decoration:none;background:var(--card);border-radius:18px;padding:14px;box-shadow:0 8px 24px rgba(0,0,0,.1);font-weight:800}
+.cta small{font-weight:600;color:var(--muted);font-size:.78rem}
+.cta .hot{background:var(--main);color:#fff}.cta .hot small{color:rgba(255,255,255,.85)}
+
+.sec{padding-top:28px}
+.sec h2{font-size:1.65rem;color:var(--main)}
+.sec p.s{color:var(--muted);font-size:.9rem;margin-top:4px}
+.tabs{position:sticky;top:0;z-index:10;display:flex;gap:8px;overflow-x:auto;padding:12px 0;background:var(--bg);scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:none;padding:9px 15px;border-radius:999px;font-weight:700;font-size:.88rem;background:var(--soft);color:var(--main)}
+.tab[aria-selected="true"]{background:var(--main);color:#fff}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.p{background:var(--card);border-radius:20px;overflow:hidden;box-shadow:0 3px 14px rgba(0,0,0,.06);display:flex;flex-direction:column;animation:up .35s ease both}
+@keyframes up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.p .im{position:relative}
+.p img{width:100%;aspect-ratio:1;object-fit:cover}
+.p .tg{position:absolute;top:8px;left:8px;font-size:.64rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;background:var(--acc);color:var(--ink);padding:3px 8px;border-radius:999px}
+.p .i{padding:10px 12px 12px;display:flex;flex-direction:column;gap:4px;flex:1}
+.p h3{font-family:var(--body);font-size:.95rem;font-weight:800;line-height:1.2}
+.p .d{font-size:.78rem;color:var(--muted);line-height:1.3}
+.p .b{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:6px}
+.pr{font-weight:800;color:var(--main)}
+.add{background:var(--main);color:#fff;font-weight:800;font-size:.8rem;padding:6px 12px;border-radius:999px}
+.q{display:flex;align-items:center;gap:6px;background:var(--soft);border-radius:999px;padding:2px}
+.q button{width:26px;height:26px;border-radius:50%;background:#fff;color:var(--main);font-weight:900}
+.q b{min-width:1.1ch;text-align:center;font-size:.85rem}
+
+/* arma tu torta */
+.build{margin-top:14px;background:var(--card);border-radius:24px;padding:18px;box-shadow:0 6px 20px rgba(0,0,0,.07)}
+.lbl{font-size:.7rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--main);margin:14px 0 8px}
+.lbl:first-child{margin-top:0}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.o{border:2px solid var(--soft);background:var(--bg);border-radius:14px;padding:8px 12px;font-weight:700;font-size:.85rem;text-align:left}
+.o small{display:block;font-weight:600;color:var(--muted);font-size:.72rem}
+.o[aria-pressed="true"]{border-color:var(--main);background:var(--soft);color:var(--main)}
+.msg{width:100%;border:2px solid var(--soft);border-radius:14px;padding:10px 12px;font:inherit;background:var(--bg);color:var(--ink)}
+.msg:focus{outline:none;border-color:var(--main)}
+.bt{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:16px;padding-top:14px;border-top:2px dashed var(--soft)}
+.bt b{font-family:var(--display);font-size:1.6rem;color:var(--main);font-weight:var(--dw)}
+.bt button{background:var(--main);color:#fff;font-weight:800;padding:12px 16px;border-radius:14px}
+.ok{font-size:.8rem;font-weight:700;color:#15803D;margin-top:8px;min-height:1.2em}
+
+.info{display:grid;gap:10px;margin-top:28px}
+.box{background:var(--card);border-radius:18px;padding:16px;box-shadow:0 3px 14px rgba(0,0,0,.05)}
+.box h3{font-size:1.15rem;color:var(--main)}
+.box p{color:var(--muted);font-size:.9rem;margin-top:4px}
+.box a{display:inline-flex;margin-top:10px;font-weight:800;text-decoration:none;color:var(--main)}
+.made{text-align:center;color:var(--muted);font-size:.78rem;padding-top:20px}
+
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:30;display:flex;justify-content:center;padding:0 12px calc(12px + env(safe-area-inset-bottom,0px));pointer-events:none}
+.bar-in{pointer-events:auto;width:100%;max-width:476px;background:var(--ink);color:#fff;border-radius:20px;padding:10px 10px 10px 16px;display:flex;justify-content:space-between;align-items:center;gap:10px;box-shadow:0 14px 34px rgba(0,0,0,.3);transition:transform .25s,opacity .25s}
+.bar.empty .bar-in{transform:translateY(140%);opacity:0}
+.bar small{display:block;opacity:.75;font-size:.76rem}
+.bar .t{font-weight:800;font-size:1.2rem;color:var(--acc)}
+.send{background:#25D366;color:#063B1D;font-weight:800;text-decoration:none;padding:12px 14px;border-radius:14px;white-space:nowrap}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="app">
+  <p class="demo">Muestra hecha para Dulketty · fotos y precios referenciales</p>
+  <header>
+    <div class="mono" aria-hidden="true">D</div>
+    <h1>Dulketty</h1>
+    <p class="sub">Tortas por pedido · Los Olivos</p>
+    <div class="chips" id="chips"></div>
+    <svg class="wave" viewBox="0 0 480 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 22 C 80 0, 160 40, 240 20 S 400 0, 480 22 V40 H0Z"/></svg>
+  </header>
+  <div class="cta">
+    <a class="hot" href="#arma">🎂 Arma tu torta<small>Tamaño, sabor y mensaje</small></a>
+    <a href="#catalogo">🧁 Ver catálogo<small>Listos para pedir</small></a>
+  </div>
+
+  <section class="sec pad" id="catalogo">
+    <h2>Nuestro catálogo</h2><p class="s">Elige, agrega y pide por WhatsApp.</p>
+    <nav class="tabs" id="tabs" role="tablist"></nav>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <section class="sec pad" id="arma">
+    <h2>Arma tu torta</h2><p class="s">Personalizada para tu celebración.</p>
+    <div class="build">
+      <p class="lbl">Tamaño</p><div class="opts" id="bSize"></div>
+      <p class="lbl">Sabor</p><div class="opts" id="bFlav"></div>
+      <p class="lbl">Relleno</p><div class="opts" id="bFill"></div>
+      <p class="lbl">Mensaje en la torta</p><input class="msg" id="bMsg" maxlength="40" placeholder="Ej.: ¡Feliz cumple, Sofi!">
+      <div class="bt"><div><small style="color:var(--muted);font-weight:700;font-size:.75rem">Tu torta</small><br><b id="bTot">S/ 0</b></div><button type="button" id="bAdd">Agregar al pedido</button></div>
+      <p class="ok" id="bOk" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <div class="pad info">
+    <div class="box"><h3>¿Cómo pedir?</h3><p>Elige tu torta o arma una a tu gusto y envíanos el pedido por WhatsApp. Abierto hasta las 10 p. m.</p></div>
+    <div class="box"><h3>Encuéntranos</h3><p>Huacllán 4856, Los Olivos</p><a href="https://www.google.com/maps/search/?api=1&query=Tortas+Dulketty+Huacllan+4856+Los+Olivos" target="_blank" rel="noopener">📍 Cómo llegar →</a></div>
+  </div>
+  <p class="made">Muestra hecha por Cartify</p>
+</div>
+
+<div class="bar empty" id="bar"><div class="bar-in"><div><small id="cnt">0 productos</small><span class="t" id="tot">S/ 0</span></div><a class="send" id="send" href="#" target="_blank" rel="noopener">Pedir por WhatsApp →</a></div></div>
+
+<script>
+var D={"name":"Dulketty","chips":["★ 4,7 en Google","🎂 Tortas por pedido","📍 Los Olivos"],"cats":[{"k":"tor","n":"Tortas","items":[{"id":"t1","n":"Torta de chocolate","d":"Con velas y mensaje","p":80,"t":"La favorita","img":"1610670444950-0b29430891b4"},{"id":"t2","n":"Selva negra","d":"Chocolate y cerezas","p":90,"img":"1779282312464-d556d852daa4"},{"id":"t3","n":"Tres leches","d":"Clásica","p":70,"img":"1577998474517-7eeeed4e448a"},{"id":"t4","n":"Torta temática","d":"Con tu personaje favorito","p":140,"t":"A pedido","img":"1621303837174-89787a7d4729"}]},{"k":"cup","n":"Cupcakes","items":[{"id":"c1","n":"Cupcakes de chocolate","d":"6 unidades","p":32,"img":"1603532648955-039310d9ed75"}]}],"sizes":[{"n":"Pequeña","d":"8 porciones","p":65},{"n":"Mediana","d":"15 porciones","p":95},{"n":"Grande","d":"25 porciones","p":145}],"flavors":[{"n":"Vainilla"},{"n":"Chocolate","p":5},{"n":"Red velvet","p":10},{"n":"Zanahoria","p":5}],"fills":[{"n":"Manjar blanco"},{"n":"Fudge","p":5},{"n":"Fresas con crema","p":10},{"n":"Maracuyá","p":5}],"bname":"Torta","bnote":"mensaje","close":"\n¿Para qué fecha me lo pueden tener?"};
+var PHONE='51900000000';
+function U(id,w){return 'https://images.unsplash.com/photo-'+id+'?w='+w+'&h='+w+'&fit=crop&q=72&auto=format';}
+document.getElementById('chips').innerHTML=D.chips.map(function(c){return '<span class="chip">'+c+'</span>'}).join('');
+var ALL=[],cart={},custom=[],cur=D.cats[0].k;
+D.cats.forEach(function(c){c.items.forEach(function(i){ALL.push(i)})});
+function tabs(){var T=document.getElementById('tabs');T.innerHTML='';D.cats.forEach(function(c){var b=document.createElement('button');b.type='button';b.className='tab';b.setAttribute('role','tab');b.setAttribute('aria-selected',c.k===cur);b.textContent=c.n;b.onclick=function(){cur=c.k;grid();tabs();};T.appendChild(b);});}
+function grid(){var G=document.getElementById('grid');G.innerHTML='';D.cats.filter(function(c){return c.k===cur})[0].items.forEach(function(i){var q=cart[i.id]||0,d=document.createElement('article');d.className='p';
+  d.innerHTML='<div class="im"><img src="'+U(i.img,360)+'" alt="'+i.n+'" loading="lazy">'+(i.t?'<span class="tg">'+i.t+'</span>':'')+'</div><div class="i"><h3>'+i.n+'</h3><p class="d">'+i.d+'</p><div class="b"><span class="pr">S/ '+i.p+'</span><span class="c"></span></div></div>';
+  var c=d.querySelector('.c');
+  if(!q){var a=document.createElement('button');a.type='button';a.className='add';a.textContent='+';a.setAttribute('aria-label','Agregar '+i.n);a.style.padding='6px 13px';a.onclick=function(){set(i.id,1)};c.appendChild(a);}
+  else{var w=document.createElement('div');w.className='q';w.innerHTML='<button type="button" aria-label="Quitar uno">−</button><b>'+q+'</b><button type="button" aria-label="Agregar uno">+</button>';w.firstChild.onclick=function(){set(i.id,q-1)};w.lastChild.onclick=function(){set(i.id,q+1)};c.appendChild(w);}
+  G.appendChild(d);});}
+function set(id,q){if(q<=0)delete cart[id];else cart[id]=q;grid();bar();}
+// arma tu torta
+var B={s:0,f:0,r:0};
+function opts(el,arr,key,fmt){var E=document.getElementById(el);E.innerHTML='';arr.forEach(function(o,k){var b=document.createElement('button');b.type='button';b.className='o';b.setAttribute('aria-pressed',B[key]===k);b.innerHTML=fmt(o);b.onclick=function(){B[key]=k;build();};E.appendChild(b);});}
+function bprice(){return D.sizes[B.s].p+(D.flavors[B.f].p||0)+(D.fills[B.r].p||0);}
+function build(){opts('bSize',D.sizes,'s',function(o){return o.n+'<small>'+o.d+' · S/ '+o.p+'</small>'});
+  opts('bFlav',D.flavors,'f',function(o){return o.n+(o.p?'<small>+S/ '+o.p+'</small>':'')});
+  opts('bFill',D.fills,'r',function(o){return o.n+(o.p?'<small>+S/ '+o.p+'</small>':'')});
+  document.getElementById('bTot').textContent='S/ '+bprice();}
+document.getElementById('bAdd').onclick=function(){var m=document.getElementById('bMsg').value.trim();
+  custom.push({n:D.bname+' '+D.sizes[B.s].n.toLowerCase()+' · '+D.flavors[B.f].n+' · '+D.fills[B.r].n+(m?' · '+D.bnote+': "'+m+'"':''),p:bprice()});
+  document.getElementById('bOk').textContent='✓ ¡Agregado a tu pedido!';setTimeout(function(){document.getElementById('bOk').textContent=''},2200);bar();};
+function bar(){var n=0,t=0,l=[];ALL.forEach(function(i){var q=cart[i.id];if(q){n+=q;t+=q*i.p;l.push(q+'x '+i.n+' — S/ '+q*i.p);}});
+  custom.forEach(function(c){n++;t+=c.p;l.push('1x '+c.n+' — S/ '+c.p);});
+  document.getElementById('bar').classList.toggle('empty',!n);
+  document.getElementById('cnt').textContent=n+(n===1?' producto':' productos');document.getElementById('tot').textContent='S/ '+t;
+  document.getElementById('send').href='https://wa.me/'+PHONE+'?text='+encodeURIComponent('Hola '+D.name+' 😊 quiero hacer un pedido:\n'+l.join('\n')+'\nTotal: S/ '+t+D.close);}
+tabs();grid();build();bar();
+</script>
+</body>
+</html>
